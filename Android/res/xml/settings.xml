@@ -19,7 +19,7 @@
     	android:title="@string/pref_cat_b">
         
         <!-- To set time notification start (morning) -->
-        <com.example.firstpage.TimePreference
+        <com.example.android.TimePreference
             android:key="pref_StartNotTime"
   			android:title="@string/pref_start_not_time"
  			android:summary="@string/pref_start_not_time_summ"
@@ -27,7 +27,7 @@
   			android:dependency="pref_Notification"/>
         
         <!-- To set time notification stop (evening) -->
-        <com.example.firstpage.TimePreference
+        <com.example.android.TimePreference
             android:key="pref_StopNotTime"
   			android:title="@string/pref_stop_not_time"
  			android:summary="@string/pref_stop_not_time_summ"
