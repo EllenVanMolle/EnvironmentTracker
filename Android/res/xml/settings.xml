@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory
+        android:title="@string/pref_cat_a">
+    
+    <!-- When checked user wants notifications -->
+    <CheckBoxPreference
+        android:key="pref_Notification"
+        android:title="@string/pref_notification"
+        android:summaryOn="@string/on"
+        android:summaryOff="@string/off"
+        android:defaultValue="false"/>  
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:key="pref_CatB"
+    	android:title="@string/pref_cat_b">
+        
+        <!-- To set time notification start (morning) -->
+        <com.example.firstpage.TimePreference
+            android:key="pref_StartNotTime"
+  			android:title="@string/pref_start_not_time"
+ 			android:summary="@string/pref_start_not_time_summ"
+  			android:dialogLayout="@layout/time_preference"
+  			android:dependency="pref_Notification"/>
+        
+        <!-- To set time notification stop (evening) -->
+        <com.example.firstpage.TimePreference
+            android:key="pref_StopNotTime"
+  			android:title="@string/pref_stop_not_time"
+ 			android:summary="@string/pref_stop_not_time_summ"
+  			android:dialogLayout="@layout/time_preference"
+  			android:dependency="pref_Notification"/>
+        <!--  
+        <com.example.firstpage.NumberPicker
+            android:key="pref_TimeInterval"
+  			android:title="@string/pref_time_interval"
+  			android:dialogLayout="@layout/number_picker_pref"/> -->
+     
+     </PreferenceCategory>
+        
+
+</PreferenceScreen>
