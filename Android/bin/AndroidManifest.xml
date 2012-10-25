@@ -12,8 +12,17 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:name=".HomePage"
+            android:label="@string/title_activity_home_page" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".OptionMenu"
+            android:label="@string/title_activity_option_menu" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
