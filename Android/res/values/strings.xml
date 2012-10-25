@@ -25,6 +25,13 @@
 
     <!-- Camera Activiteit -->
     <string name="title_activity_camera">Camera</string>
+    <string name="picture_instruction">Take a Picture</string>
+    <string name="go_button">Go!</string>
+    
+     <!-- Audio Activity -->
+    <string name="title_activity_audio">Audio Recorder</string>
+    <string name="sound_instruction">Record for 10 sec</string>
+    <string name="record_button">Start Recording</string>
 
     <!-- Settings Activity -->
     <string name="title_activity_settings_page">Settings</string>
@@ -43,14 +50,8 @@
     <string name="off">Disabled</string>
     <string name="pref_start_not_time_summ">First hour when you are notified every day.</string>
     <string name="pref_stop_not_time_summ">Last hour when you are notified every day.</string>
-    
-    
     <string name="pref_interval">Time interval</string>
     <string name="pref_interval_summ">Enter the number of minutes between every notification</string>
-    <string name="pref_days">Days</string>
-    <string name="pref_days_summ">Select the days on which you want to receive notifications.</string>
-    <string name="notificationTime">Notification Time</string>
-
-    
-
+ 
+	
 </resources>

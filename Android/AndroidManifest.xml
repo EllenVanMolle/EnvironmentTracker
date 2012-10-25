@@ -3,9 +3,16 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.microphone" />
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="15" />
+    <!-- changed because of SettingsFragment -->
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -39,8 +46,33 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SettingsFragment"
+            android:label="@string/title_settings_fragment" />
+
+        <receiver android:name=".AlarmReceiver" >
+        </receiver>
+
+        <activity
             android:name=".MoodPage"
             android:label="@string/title_activity_mood_page" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Camera"
+            android:label="@string/title_activity_camera" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Audio"
+            android:label="@string/title_activity_audio" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

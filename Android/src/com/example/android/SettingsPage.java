@@ -2,7 +2,6 @@ package com.example.android;
 
 import java.util.Calendar;
 
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import android.app.AlarmManager;
@@ -12,9 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 
