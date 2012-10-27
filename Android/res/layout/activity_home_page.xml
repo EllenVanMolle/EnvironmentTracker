@@ -28,7 +28,7 @@
         android:layout_marginTop="40dp"
         android:ems="5"
         android:text="@string/settings" 
-        android:onClick="OpenSettings" /> 
+        android:onClick="openSettings" /> 
 
     <!-- When clicking on the button a activity will open
     There the user can view his personal results -->
@@ -52,7 +52,7 @@
         android:layout_marginTop="20dp"
         android:ems="5"
         android:text="@string/launch"
-        android:onClick="OpenMoodPage" />
+        android:onClick="openMoodPage" />
         
 </RelativeLayout>
 

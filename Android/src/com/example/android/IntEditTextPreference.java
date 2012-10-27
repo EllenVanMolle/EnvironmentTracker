@@ -1,3 +1,5 @@
+/**Custom preference for entering an integer. */
+
 package com.example.android;
 
 import android.content.Context;

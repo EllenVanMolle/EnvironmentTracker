@@ -1,3 +1,6 @@
+/**This activity defines a menu with two buttons Exit and Home
+ * most of the other activities are extensions of this activity */
+
 package com.example.android;
 
 import android.os.Bundle;
@@ -17,7 +20,6 @@ public class OptionMenu extends Activity {
     }
 
     /** Menu Creation*/
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	MenuInflater inflater = getMenuInflater();
@@ -37,7 +39,7 @@ public class OptionMenu extends Activity {
             	ExitApp();
             	return true;
             case R.id.menu_home:
-            	//Go to homepage
+            	//Go to HomePage
             	GoHome();
             	return true;
             default:
@@ -53,7 +55,7 @@ public class OptionMenu extends Activity {
     	startActivity(intent);
     }
     
-    /** Method for going to homepage */
+    /** Method for going to HomePage */
     private void GoHome() {
     	Intent intent = new Intent(this, HomePage.class);
     	startActivity(intent);

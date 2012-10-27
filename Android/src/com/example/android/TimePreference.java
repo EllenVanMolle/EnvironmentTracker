@@ -1,3 +1,8 @@
+/**Custom preference for time selection. Hour and minute are persistent and
+ * stored separately as ints in the underlying shared preferences under keys
+ * KEY.hour and KEY.minute, where KEY is the preference's key.
+ */
+
 package com.example.android;
 
 
@@ -8,13 +13,6 @@ import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
-
-
-/**
- * Custom preference for time selection. Hour and minute are persistent and
- * stored separately as ints in the underlying shared preferences under keys
- * KEY.hour and KEY.minute, where KEY is the preference's key.
- */
 
 
 public class TimePreference extends DialogPreference {
@@ -29,10 +27,10 @@ public class TimePreference extends DialogPreference {
   private static final int DEFAULT_MINUTE = 0;
 
   /** Creates a preference for choosing a time based on its XML declaration.   */
-   public TimePreference(Context context, AttributeSet attributes) {
-   super(context, attributes);
-   setPersistent(false);
-   }
+  public TimePreference(Context context, AttributeSet attributes) {
+  super(context, attributes);
+  setPersistent(false);
+  }
 
   /** Initialize time picker to currently stored time preferences.   */
   @Override

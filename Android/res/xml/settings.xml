@@ -13,11 +13,11 @@
         android:defaultValue="false"/>  
         
     </PreferenceCategory>
-    
-      
+          
     <PreferenceCategory
     	android:title="@string/pref_cat_b">
     
+        <!-- the user can set the minutes between two notifications -->
         <com.example.android.IntEditTextPreference
             android:key="pref_NotInterval"
             android:title="@string/pref_not_interval"
@@ -26,7 +26,7 @@
             android:maxLength="6"
             android:numeric="integer"/>
         
-        <!-- To set time notification start (morning) -->
+        <!-- the user can set the time before which he doesn't want to receive notifications -->
         <com.example.android.TimePreference
             android:key="pref_StartNotTime"
   			android:title="@string/pref_start_not_time"
@@ -34,7 +34,7 @@
   			android:dialogLayout="@layout/time_preference"
   			android:dependency="pref_Notification"/>
         
-        <!-- To set time notification stop (evening) -->
+       <!-- the user can set the time after which he doesn't want to receive notifications -->
         <com.example.android.TimePreference
             android:key="pref_StopNotTime"
   			android:title="@string/pref_stop_not_time"

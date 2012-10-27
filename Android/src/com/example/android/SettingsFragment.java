@@ -1,3 +1,6 @@
+/**This class defines a SettingsFragment.
+ * is used in SettingsPage */
+
 package com.example.android;
 
 import android.os.Bundle;
@@ -10,9 +13,7 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.settings);
-           
-        
+        addPreferencesFromResource(R.xml.settings);      
     }
 }
  

@@ -53,6 +53,5 @@
     <string name="pref_start_not_time_summ">Moment before which you do not want to receive notifications</string>
     <string name="pref_stop_not_time_summ">Moment after which you do not want to receive notifications</string>
     <string name="pref_not_interval_summ">Number of minutes between every notification</string>
- 
 	
 </resources>
