@@ -18,7 +18,10 @@ import android.widget.Toast;
 public class SettingsPage extends OptionMenu implements OnSharedPreferenceChangeListener {
 	
 	private static final String KEY_PREF_NOT = "pref_Notification"; // KeyValue of Notifications
-	private static final String KEY_PREF_START = "pref_StartNotTime";
+	private static final String KEY_PREF_START = "pref_StartNotTime"; // KeyValue of StartTime van notifications
+	private static final String KEY_PREF_STOP = "pref_StopNotTime"; // KeyValue of StopTime van notifications
+	private static final String KEY_PREF_INTERVAL = "pref_NotInterval";
+	
 	private SharedPreferences prefs;
 	
 	final static int RQS_1 = 1;
@@ -44,77 +47,80 @@ public class SettingsPage extends OptionMenu implements OnSharedPreferenceChange
         
     }
     
-    /** Method called when activity is Resumed*/
+    /** Method called when activity is Resumed */
     @Override
     protected void onResume() {
         super.onResume();
         prefs.registerOnSharedPreferenceChangeListener(this);
     }
     
-    /** Method called when activity is interrupted*/
+    /** Method called when activity is interrupted */
     @Override
     protected void onPause() {
         super.onPause();
         prefs.unregisterOnSharedPreferenceChangeListener(this);
     }
     
-    /** Method called when shared preference is changed*/
+    /** Method called when one of the Preferences is changed */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key){
+    	
+    	// If the CheckBox Notification preference changed //  
     	if (key.equals(KEY_PREF_NOT)){
-    		// get current value of Pref_notification
+    		// get current value of Pref_Notification
     		boolean Return = prefs.getBoolean(key,false);
+    		// If CheckBox Notification is enabled set the alarm
     		if (Return){  
     			Toast.makeText(this, "Enabled", Toast.LENGTH_LONG).show();
-    			Alarm();
+    			setAlarm();
     		}
     		
-    		else {Toast.makeText(this, "Disabled", Toast.LENGTH_LONG).show();
-    		cancelAlarm();}
+    		// If CheckBox Notification is disabled cancel the alarm
+    		else {
+    			Toast.makeText(this, "Disabled", Toast.LENGTH_LONG).show();
+    			cancelAlarm();
+    		}
     	}
+    	else if (key.equals(KEY_PREF_START + ".minute") || key.equals(KEY_PREF_START + ".hour"))
+    		{resetAlarm();
+    		}
+    	else if (key.equals(KEY_PREF_STOP + ".minute") || key.equals(KEY_PREF_STOP + ".hour"))
+			{resetAlarm();
+		}
+    	else if (key.equals(KEY_PREF_INTERVAL)){
+    		resetAlarm();
+    	}
+    	else{};
     }
-    
-    
        
     /** Method called when notification are enabled to set the alarm */
-    private void Alarm(){
-    	
-    	int hour = prefs.getInt(KEY_PREF_START + ".hour",8);
-    	int minute = prefs.getInt(KEY_PREF_START + ".minute", 0);
-    	
-    
+   private void setAlarm() {
+	   
+	   int interval = prefs.getInt(KEY_PREF_INTERVAL, 120);
+			   
     	Calendar calNow = Calendar.getInstance();
-    	Calendar calSet = (Calendar) calNow.clone();
-    	
-    	calSet.set(Calendar.HOUR_OF_DAY, hour);
-    	calSet.set(Calendar.MINUTE, minute);
-    	calSet.set(Calendar.SECOND, 0);
-    	calSet.set(Calendar.MILLISECOND, 0);
-	
-    	if(calSet.compareTo(calNow) <= 0){
-		//Today Set time passed, count to tomorrow
-		calSet.add(Calendar.DATE, 1);
-	}
-	
-    	setAlarm(calSet);
-    	
-    	
-    }
-    
-    private void setAlarm(Calendar targetCal){
+    	calNow.add(Calendar.MINUTE,interval);    	
 		
 		Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
+				
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
+		
 		AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-		alarmManager.set(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), pendingIntent);
+		alarmManager.set(AlarmManager.RTC, calNow.getTimeInMillis(), pendingIntent);
 
-		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 
-					targetCal.getTimeInMillis(), 
-					TimeUnit.MINUTES.toMillis(5),
+		alarmManager.setRepeating(AlarmManager.RTC, 
+					calNow.getTimeInMillis(), 
+					TimeUnit.MINUTES.toMillis(interval),
 					pendingIntent);
-			Toast.makeText(this, "Alarm is set@" + targetCal.getTime(), Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Alarm is set:" + calNow.getTime(), Toast.LENGTH_LONG).show();
 
 	}
+    
+    private void resetAlarm(){
+    	cancelAlarm();
+    	setAlarm();
+ 	
+    }
 	
 	private void cancelAlarm(){
 
@@ -129,4 +135,3 @@ public class SettingsPage extends OptionMenu implements OnSharedPreferenceChange
 		
     	
 }
-

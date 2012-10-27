@@ -1,8 +1,11 @@
+<!-- Layout of the HomePage Activity -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!-- Text displaid when activity is created -->
     <TextView
         android:id="@+id/Welcome"
         android:layout_width="wrap_content"
@@ -14,7 +17,7 @@
         android:textStyle="bold"
         tools:context=".HomePage" />
 
-    <!-- SettingsButton opens new activity when clicked. 
+    <!-- When clicking on the button the SettingsPage activity is openend
     There the user can adapt certain settings -->
     <Button
         android:id="@+id/Settings"
@@ -27,7 +30,7 @@
         android:text="@string/settings" 
         android:onClick="OpenSettings" /> 
 
-    <!-- ResultsButton opens new activity when clicked.
+    <!-- When clicking on the button a activity will open
     There the user can view his personal results -->
     <Button
         android:id="@+id/Results"
@@ -39,7 +42,7 @@
         android:ems="5"
         android:text="@string/results" />
     
-    <!-- LaunchButton starts datacollection when clicked -->
+    <!-- By clicking on the button the user can start datacollection -->
      <Button
         android:id="@+id/Launch"
         android:layout_width="wrap_content"

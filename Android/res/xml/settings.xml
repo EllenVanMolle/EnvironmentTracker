@@ -14,9 +14,17 @@
         
     </PreferenceCategory>
     
+      
     <PreferenceCategory
-        android:key="pref_CatB"
     	android:title="@string/pref_cat_b">
+    
+        <com.example.android.IntEditTextPreference
+            android:key="pref_NotInterval"
+            android:title="@string/pref_not_interval"
+            android:summary="@string/pref_not_interval_summ"
+            android:dependency="pref_Notification"
+            android:maxLength="6"
+            android:numeric="integer"/>
         
         <!-- To set time notification start (morning) -->
         <com.example.android.TimePreference
@@ -33,13 +41,21 @@
  			android:summary="@string/pref_stop_not_time_summ"
   			android:dialogLayout="@layout/time_preference"
   			android:dependency="pref_Notification"/>
-        <!--  
-        <com.example.firstpage.NumberPicker
-            android:key="pref_TimeInterval"
-  			android:title="@string/pref_time_interval"
-  			android:dialogLayout="@layout/number_picker_pref"/> -->
+
      
      </PreferenceCategory>
+    <!--  
+    <PreferenceCategory 
+        android:title="@string/pref_cat_c">
+        
+        <RingtonePreference
+            android:key="pref_Ringtone"
+            android:title="@string/pref_ringtone"
+            android:ringtoneType="notification"
+            android:showDefault="true"
+            android:showSilent="true"/> 
+        
+    </PreferenceCategory>-->
         
 
 </PreferenceScreen>

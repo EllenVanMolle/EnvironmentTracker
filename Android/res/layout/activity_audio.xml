@@ -1,8 +1,11 @@
+<!-- Layout of Audio Activity -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!-- Text displaid on screen when Activity is created -->
     <TextView
         android:id="@+id/SoundInstruction"
         android:layout_width="wrap_content"
@@ -14,6 +17,7 @@
         android:text="@string/sound_instruction"
         tools:context=".Audio" />
     
+    <!-- When clicking on this button the user will start recording -->
     <Button
         android:id="@+id/RecordButton"
         android:layout_width="wrap_content"
@@ -21,7 +25,8 @@
         android:layout_centerInParent="true"
         android:text="@string/record_button"
         android:onClick="startRecording" />
-
+	
+    <!-- Display of the CountDownTimer is not visible when activity is created -->
     <TextView
         android:id="@+id/Counter"
         android:layout_width="wrap_content"

@@ -40,18 +40,19 @@
     <string name="title_settings_fragment">Preferences</string>
 
     <!-- Settings XML -->
-    <string name="pref_cat_a">General</string>
-    <string name="pref_cat_b">Time</string>
+    <string name="pref_cat_a">General settings</string>
+    <string name="pref_cat_b">Time settings</string>
+    <string name="pref_cat_c">Ringtone settings</string>
     <string name="pref_notification">Enable Notifications</string>
     <string name="pref_start_not_time">Start Time</string>
     <string name="pref_stop_not_time">Stop Time</string>
-    <string name="pref_time_interval">Time Interval</string>
+    <string name="pref_not_interval">Notification Interval</string>
+    <string name="pref_ringtone">Ringtone</string>
     <string name="on">Enalbed</string>
     <string name="off">Disabled</string>
-    <string name="pref_start_not_time_summ">First hour when you are notified every day.</string>
-    <string name="pref_stop_not_time_summ">Last hour when you are notified every day.</string>
-    <string name="pref_interval">Time interval</string>
-    <string name="pref_interval_summ">Enter the number of minutes between every notification</string>
+    <string name="pref_start_not_time_summ">Moment before which you do not want to receive notifications</string>
+    <string name="pref_stop_not_time_summ">Moment after which you do not want to receive notifications</string>
+    <string name="pref_not_interval_summ">Number of minutes between every notification</string>
  
 	
 </resources>

@@ -1,3 +1,4 @@
+
 package com.example.android;
 
 import android.os.Bundle;
@@ -19,10 +20,10 @@ public class HomePage extends OptionMenu {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        Toast.makeText(this, "From Audio =" + FromAudio, Toast.LENGTH_LONG).show();
+        
         Intent i = getIntent();
         FromAudio = i.getBooleanExtra("FromAudio",false);
-        Toast.makeText(this, "From Audio =" + FromAudio, Toast.LENGTH_LONG).show();
+        
         
         textview = (TextView)findViewById(R.id.Welcome);
         

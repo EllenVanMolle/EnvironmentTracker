@@ -8,7 +8,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.app.Activity;
 import android.content.Intent;
 
-public class MoodPage extends Activity implements OnSeekBarChangeListener {
+public class MoodPage extends OptionMenu  implements OnSeekBarChangeListener {
 
 		/** Creation objects */
 	  	private SeekBar Bar ;

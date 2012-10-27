@@ -56,21 +56,22 @@ public final class R {
         public static final int menu_settings=0x7f050002;
         public static final int menu_stop=0x7f050009;
         public static final int next_button=0x7f05000f;
-        public static final int off=0x7f05001f;
-        public static final int on=0x7f05001e;
+        public static final int off=0x7f050021;
+        public static final int on=0x7f050020;
         public static final int picture_instruction=0x7f050011;
         /**  Settings XML 
          */
         public static final int pref_cat_a=0x7f050018;
         public static final int pref_cat_b=0x7f050019;
-        public static final int pref_interval=0x7f050022;
-        public static final int pref_interval_summ=0x7f050023;
-        public static final int pref_notification=0x7f05001a;
-        public static final int pref_start_not_time=0x7f05001b;
-        public static final int pref_start_not_time_summ=0x7f050020;
-        public static final int pref_stop_not_time=0x7f05001c;
-        public static final int pref_stop_not_time_summ=0x7f050021;
-        public static final int pref_time_interval=0x7f05001d;
+        public static final int pref_cat_c=0x7f05001a;
+        public static final int pref_not_interval=0x7f05001e;
+        public static final int pref_not_interval_summ=0x7f050024;
+        public static final int pref_notification=0x7f05001b;
+        public static final int pref_ringtone=0x7f05001f;
+        public static final int pref_start_not_time=0x7f05001c;
+        public static final int pref_start_not_time_summ=0x7f050022;
+        public static final int pref_stop_not_time=0x7f05001d;
+        public static final int pref_stop_not_time_summ=0x7f050023;
         public static final int question_mood=0x7f05000c;
         public static final int record_button=0x7f050015;
         public static final int results=0x7f050006;
