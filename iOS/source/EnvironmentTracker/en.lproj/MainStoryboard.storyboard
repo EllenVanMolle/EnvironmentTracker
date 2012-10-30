@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="11G56" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="OML-PJ-E8Q">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller - Environment Tracker-->
+        <scene sceneID="5">
+            <objects>
+                <viewController id="2" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aac-KB-JYn">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Continue">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Gn2-7S-jTt" kind="push" id="Bw1-MN-jHB"/>
+                                </connections>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ULN-0m-g5G">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="114" id="f1b-Wj-PXS"/>
+                                </constraints>
+                            </slider>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="How are you feeling?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBu-k9-twc">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aBu-k9-twc" firstAttribute="centerX" secondItem="ULN-0m-g5G" secondAttribute="centerX" type="default" id="CNb-cg-a7m"/>
+                            <constraint firstAttribute="bottom" secondItem="Aac-KB-JYn" secondAttribute="bottom" constant="120" id="DK4-tk-oDq"/>
+                            <constraint firstItem="aBu-k9-twc" firstAttribute="top" secondItem="3" secondAttribute="top" constant="57" id="GHT-1X-04C"/>
+                            <constraint firstItem="aBu-k9-twc" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" type="default" id="MTq-3g-BGo"/>
+                            <constraint firstItem="ULN-0m-g5G" firstAttribute="centerX" secondItem="Aac-KB-JYn" secondAttribute="centerX" type="default" id="Ohy-QT-5fZ"/>
+                            <constraint firstAttribute="bottom" secondItem="ULN-0m-g5G" secondAttribute="bottom" constant="224" id="kUo-Gt-5Si"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Environment Tracker" id="VgO-ew-duX"/>
+                    <connections>
+                        <outlet property="continueFromMood" destination="Aac-KB-JYn" id="9yW-mi-zBN"/>
+                        <outlet property="moodSlider" destination="ULN-0m-g5G" id="WiD-uI-Wnf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="655" y="89"/>
+        </scene>
+        <!--View Controller - Environment Tracker-->
+        <scene sceneID="V8F-WI-4mW">
+            <objects>
+                <viewController id="Gn2-7S-jTt" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9uZ-hN-8Ga">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3e9-J0-uXF">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Continue">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="pPM-J4-rUf" kind="push" id="G5Y-pg-pZC"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Take a picture of your surroundings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aY1-5v-WIj">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aY1-5v-WIj" firstAttribute="top" secondItem="9uZ-hN-8Ga" secondAttribute="top" constant="48" id="EgQ-S4-OJz"/>
+                            <constraint firstItem="aY1-5v-WIj" firstAttribute="centerX" secondItem="3e9-J0-uXF" secondAttribute="centerX" type="default" id="IKF-qZ-FFM"/>
+                            <constraint firstAttribute="bottom" secondItem="3e9-J0-uXF" secondAttribute="bottom" constant="126" id="fnp-z0-ofC"/>
+                            <constraint firstItem="aY1-5v-WIj" firstAttribute="centerX" secondItem="9uZ-hN-8Ga" secondAttribute="centerX" type="default" id="uxo-7Y-0da"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Environment Tracker" id="Pab-PV-97Y"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="48A-c2-iFb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1081" y="89"/>
+        </scene>
+        <!--View Controller - Environment Tracker-->
+        <scene sceneID="wAN-L1-pFS">
+            <objects>
+                <viewController id="pPM-J4-rUf" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yEi-Rq-hcQ">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Record environmental sounds" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rPg-7h-Yj0">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gm1-HE-zu7">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Finish Tracking">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Gm1-HE-zu7" firstAttribute="centerX" secondItem="rPg-7h-Yj0" secondAttribute="centerX" type="default" id="3qL-eE-rrk"/>
+                            <constraint firstItem="rPg-7h-Yj0" firstAttribute="top" secondItem="yEi-Rq-hcQ" secondAttribute="top" constant="50" id="QiC-5T-Uss"/>
+                            <constraint firstItem="Gm1-HE-zu7" firstAttribute="centerX" secondItem="yEi-Rq-hcQ" secondAttribute="centerX" type="default" id="RSF-pT-Qt9"/>
+                            <constraint firstAttribute="bottom" secondItem="Gm1-HE-zu7" secondAttribute="bottom" constant="129" id="V1W-4T-QFh"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Environment Tracker" id="DTc-0t-KyV"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F7B-yw-JvX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1494" y="89"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="en4-Vu-hUn">
+            <objects>
+                <navigationController id="OML-PJ-E8Q" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="soI-sQ-Zdn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="2" kind="relationship" relationship="rootViewController" id="cE8-8R-NRD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rj2-1D-Ueh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="125" y="89"/>
+        </scene>
+    </scenes>
+    <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="ViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="continueFromMood" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="moodSlider" candidateClass="UISlider"/>
+            </relationships>
+        </class>
+    </classes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
