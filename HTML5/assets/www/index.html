@@ -9,154 +9,191 @@
 		wordt aan de breedte van de device. -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- De nodige referenties zodanig dat Jquery Mobile kan gebruikt worden. 
-		Later kunnen we deze misschien beter downloaden en bij in de map zetten.-->
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+<!-- De nodige referenties zodanig dat Jquery Mobile kan gebruikt worden.-->
+<link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" />
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="js/jquery.mobile-1.2.0.min.js"></script>
+
 <!-- Het script nodig om phonegap/Cordova te gebruiken. -->
 <script type="text/javascript" src="cordova-2.1.0.js"></script>
+
+<link rel="stylesheet" href="css/smiley.css" type="text/css"/>
 	
 </head>
 
-
 <body>
-
-<!-- De eerste pagina, nadat je de pop-up of alert hebt gekregen. Deze pagina krijgt id stepone. -->
-<div data-role="page" id="stepone" data-theme="e">
-
-	<!-- Begin van de hoofding van de eerste pagina. -->
-	<div data-role="header" data-theme="e">
-		<h1>Environment Tracker</h1>
-	</div><!-- Einde van de hoofding. -->
-
-	<!-- Begin van de inhoud van de eerste pagina. -->
-	<div data-role="content">	
-		<p align="center">You have to save your current mood and environment. Thank you.</p>
-		<!-- De knop launch met check als icon aan de linkerkant. -->
-		<a href="#steptwo" data-role="button" data-icon="check" data-iconpos="left">Launch</a>		
-	</div><!-- Einde van de inhoud. -->
 	
-		<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
-			ook een navigatie gebruiken. -->
-	<div data-role="footer" data-theme="e">
-		<p align="center"> Step 1/5</p>
-	</div><!-- Einde van de voettekst. -->
-	
-</div><!-- Einde van de eerste pagina -->
-
-<!-- Het begin van de tweede pagina met id steptwo. De gebruiker moet zijn mood ingeven. -->
-<div data-role="page" id="steptwo"data-theme="e">
-
-	<!-- Begin van de hoofding van de tweede pagina. -->
-	<div data-role="header" data-theme="e">
-		<h1>Environment Tracker</h1>
-	</div><!-- Einde van de hoofding van de tweede pagina. -->
-
-	<!-- Begin van de inhoud van de tweede pagina. -->
-	<div data-role="content">	
-		<p>How do you feel?</p>
-		<!-- De slider voor het weergeven van de mood. Het label wordt gelinkt met deze slider
-				via het attribuut for. De beginwaarde is 5, hij gaat van 1 tot 10. Deze moet
-				nog duidelijker gemaakt worden wat positief is en wat negatief. -->
-		<label for="moodSlider">Your mood:</label>
-		<input type="range" name="moodSlider" id="moodSlider" value="5" min="1" max="10" data-highlight="true"/>
-		<!-- De knop continue met als icon check aan de linkerkant. -->
-		<a id="buttonMood" href="#stepthree" data-role="button" data-icon="check" data-iconpos="left">Continue</a>
-		<script type="text/javascript" src="storing.js"></script>
-	</div><!-- Einde van de inhoud van de tweede pagina. -->
-	
-	<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
-			ook een navigatie gebruiken. -->
-	<div data-role="footer" data-theme="e">
-		<p align="center">Step 2/5</p>
-	</div><!-- Het einde van de voettekst. -->
-
-</div><!-- Het einde van de tweede pagina -->
-
-<!-- Het begin van de derde pagina. Deze pagina krijgt id stepthree. -->
-<div data-role="page" id="stepthree" data-theme="e">
-
-	<!-- Begin van de hoofding van de derde pagina. Hierop moet de gebruiker een foto trekken.-->
-	<div data-role="header" data-theme="e">
-		<h1>Environment Tracker</h1>
-	</div><!-- Einde van de hoofding. -->
-
-	<!-- Begin van de inhoud van de derde pagina. -->
-	<div data-role="content">
-		<!-- De knop continue met check als icon aan de linkerkant. -->
-		<a id="buttonTakeAPicture" href="#stepfour" data-role="button">Take A Picture</a>
-		<script type="text/javascript" src="camera.js"></script>	
-	</div><!-- Einde van de inhoud. -->
-	
-		<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
-			ook een navigatie gebruiken. -->
-	<div data-role="footer" data-theme="e">
-		<p align="center">Step 3/5</p>
-	</div><!-- Einde van de voettekst. -->
-	
-</div><!-- Einde van de derde pagina -->
-
-<!-- Het begin van de vierde pagina. Deze pagina krijgt id stepfour. De gebruiker neemt 5 seconden
-		geluid op. -->
-<div data-role="page" id="stepfour" data-theme="e">
-
-	<!-- Begin van de hoofding van de eerste pagina. -->
-	<div data-role="header" data-theme="e">
-		<h1>Environment Tracker</h1>
-	</div><!-- Einde van de hoofding. -->
-
-	<!-- Begin van de inhoud van de eerste pagina. -->
-	<div data-role="content">
-		<p>Record 5 sec of the noise of your environment.</p>
-		<!-- De knop om het opnemen van het geluid te starten. -->
-		<a id="buttonStart" href="#stepfive" data-role="button" data-icon="check" data-iconpos="left">Start Recording</a>		
-		<script type="text/javascript" src="recording.js"></script>
-	</div><!-- Einde van de inhoud. -->
-	
-		<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
-			ook een navigatie gebruiken. -->
-	<div data-role="footer" data-theme="e">
-		<p align="center"> Step 4/5</p>
-	</div><!-- Einde van de voettekst. -->
-	
-</div><!-- Einde van de vierde pagina -->
-
-<!-- Het begin van de vijfde pagina. Deze pagina krijgt id stepfive. De gebruiker krijgt een
+<!-- Het begin van de startpagina. Deze pagina krijgt id homepage. De gebruiker krijgt een
 		aantal opties te zien. -->
-<div data-role="page" id="stepfive" data-theme="e">
+<div data-role="page" id="homepage" data-theme="e">
 
-	<!-- Begin van de hoofding van de vijfde pagina. -->
+	<!-- Begin van de hoofding van de startpagina. -->
 	<div data-role="header" data-theme="e">
 		<h1>Environment Tracker</h1>
 	</div><!-- Einde van de hoofding. -->
-
-	<!-- Begin van de inhoud van de vijfde pagina. -->
+	
+	<!-- Begin van de inhoud van de startpagina. -->
 	<div data-role="content">	
-		<p>Thank you!</p>
-		<!-- De knop view results. Ik ben niet zeker welk type knop je hier nodig hebt. -->
-		<a href="#results" data-role="button">View results</a>
-		<!-- De knop settings. -->
+		<p id="homepageText">Welcome!</p>
+		
+		<!-- De knop settings is een link naar de settingspagina. -->
 		<a href="#settings" data-role="button">Settings</a>
-		<!-- De knop close met delete als icon aan de linkerkant. -->
-		<form>
-			<input type="button" value="Close" onclick="CloseWindow()" data-icon="delete">
+		
+		<!-- De knop view results is een link naar de resultatenpagina -->
+		<a href="#results" data-role="button">View results</a>
+		
+		<!-- De knop Launch is een link naar stepone. -->
+		<a href="#stepone" data-role="button">Launch</a>
+		
+		<!-- De knop Close. Om de app te sluiten. Werkt nog niet. -->
+		<a data-role="button" onclick="CloseWindow" data-icon="delete">Close</a>
 			<script type="text/javascript">
 				function CloseWindow() {
 					var wind = window.open('','_self');
 					wind.close();
 				}
 			</script>
-		</form>		
 	</div><!-- Einde van de inhoud. -->
 	
-		<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
-			ook een navigatie gebruiken. -->
+	<!-- Een voettekst. We kunnen hiervoor misschien
+		ook een navigatie gebruiken. -->
 	<div data-role="footer" data-theme="e">
-		<p align="center"> Step 5/5</p>
+		<p align="center">Homepage</p>
 	</div><!-- Einde van de voettekst. -->
 	
-</div><!-- Einde van de vierde pagina -->
+</div><!-- Einde van de startpagina -->
+
+<!-- De eerste pagina, nadat je de pop-up of alert hebt gekregen. Deze pagina krijgt id stepone. 
+	De gebruiker moet zijn mood ingeven.-->
+<div data-role="page" id="stepone" data-theme="e">
+
+	<!-- Begin van de hoofding van de eerste pagina. -->
+	<div data-role="header" data-theme="e">
+		<h1>Environment Tracker</h1>
+	</div><!-- Einde van de hoofding van de eerste pagina. -->
+
+	<!-- Begin van de inhoud van de eerste pagina. -->
+	<div data-role="content">	
+		<p>How do you feel?</p>
+		
+		<!-- Er wordt een smiley weergegeven die blijer wordt naarmate de slider een hogere waarde heeft -->
+		<div id="face">
+			<div id="eye-box1"></div>
+			<div id="eye-box2"></div>
+			<div id="eyeL"></div>
+			<div id="eyeR"></div>
+    		<div id="mouth-box">
+    			<div id="mouth" class="straight"></div>
+    		</div>
+   		</div>
+     
+    	<!-- De slider voor het weergeven van de mood. Het label wordt gelinkt met deze slider
+				via het attribuut for. De beginwaarde is 5, hij gaat van 1 tot 10. -->
+		<div>
+			<label for="moodSlider">Your mood:</label>	
+			<input type="range" id="moodSlider" title="moodSlider" min="1" max="10" value="5" step="1" onchange="sliderChange();"/>
+		</div>
+		
+		<!-- De knop continue met als icon check aan de linkerkant is een link naar de volgende stap. -->
+		<a id="buttonMood" href="#steptwo" data-role="button" data-icon="check" data-iconpos="left">Continue</a>
+	</div><!-- Einde van de inhoud van de eerste pagina. -->
+	
+	<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
+			ook een navigatie gebruiken. -->
+	<div data-role="footer" data-theme="e">
+		<p align="center">Step 1/3</p>
+	</div><!-- Het einde van de voettekst. -->
+
+</div><!-- Het einde van de eerste pagina -->
+
+<!-- Het begin van de tweede pagina. Deze pagina krijgt id steptwo. -->
+<div data-role="page" id="steptwo" data-theme="e">
+
+	<!-- Begin van de hoofding van de tweede pagina. Hier moet de gebruiker een foto trekken.-->
+	<div data-role="header" data-theme="e">
+		<h1>Environment Tracker</h1>
+	</div><!-- Einde van de hoofding. -->
+
+	<!-- Begin van de inhoud van de tweede pagina. -->
+	<div data-role="content">
+		
+		<!-- De knop continue met check als icon aan de linkerkant opent de camera applicatie -->
+		<a id="buttonTakeAPicture" href="#analysepicture" data-role="button">Take A Picture</a>
+		
+	</div><!-- Einde van de inhoud. -->
+	
+	<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
+		ook een navigatie gebruiken. -->
+	<div data-role="footer" data-theme="e">
+		<p align="center">Step 2/3</p>
+	</div><!-- Einde van de voettekst. -->
+	
+</div><!-- Einde van de tweede pagina -->
+
+<!-- Het begin van de analysepagina. Deze pagina krijgt id analysepicture. -->
+<div data-role="page" id="analysepicture" data-theme="e">
+	
+	<!-- Begin van de hoofding van de analysepagina. -->
+	<div data-role="header" data-theme="e">
+		<h1>Environment Tracker</h1>
+	</div><!-- Einde van de hoofding. -->
+	
+	<!-- Begin van de inhoud van de analysepagina. -->
+	<div data-role="content">
+	<canvas id="MyCanvas"> Browser does not support Canvas</canvas>
+		
+	<a id="buttonAnalyse" href="#stepthree" data-role="button">Analyse</a>
+		
+	</div><!-- Einde van de inhoud. -->	
+	
+	<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
+		ook een navigatie gebruiken.-->
+	<div data-role="footer" data-theme="e">
+		<p align="center">Picture Analyse</p>
+	</div><!-- Einde van de voettekst.-->
+	
+</div><!-- Einde van de derde pagina -->
+
+<!-- Het begin van de vierde pagina. Deze pagina krijgt id stepfour. De gebruiker neemt 5 seconden
+		geluid op. -->
+		
+<div data-role="page" id="stepthree" data-theme="e">
+
+	<!-- Begin van de hoofding van de derde pagina. -->
+	<div data-role="header" data-theme="e">
+		<h1>Environment Tracker</h1>
+	</div><!-- Einde van de hoofding. -->
+
+	<!-- Begin van de inhoud van de derde pagina. -->
+	<div data-role="content">
+		<p>Record 5 sec of the noise of your environment.</p>
+		
+		<!-- De knop om het opnemen van het geluid te starten en daarna de homepage te openen. -->
+		<a id="buttonStart" href="#homepage" data-role="button" data-icon="check" data-iconpos="left">Start Recording</a>		
+		
+	</div><!-- Einde van de inhoud. -->
+	
+	<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
+		ook een navigatie gebruiken. -->
+	<div data-role="footer" data-theme="e">
+		<p align="center"> Step 3/3</p>
+	</div><!-- Einde van de voettekst. -->
+	
+</div><!-- Einde van de derde pagina -->
+	
+<!-- Het script nodig om de database te gebruiken -->
+<script type="text/javascript" src="database.js"  ></script>
+
+<!-- Het script voor de smiley-->
+<script type="text/javascript" src="moodSlider.js"> </script>
+
+<!-- Het script om door middel van phonegap de camera aan te spreken-->
+<script type="text/javascript" src="camera.js"></script>	
+
+<!-- Het script om geluid op te nemen -->
+<script type="text/javascript" src="recording.js"></script>
+
+<script type="text/javascript" src="coloranalysis.js"></script>
 
 </body>
 </html>

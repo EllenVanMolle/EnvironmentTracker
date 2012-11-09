@@ -1,3 +1,7 @@
+/**
+ * Recording of sound
+ */
+
 // Het linken van de knop Start met de methode recordNoise.
 $('#buttonStart').click(recordNoise)
 
@@ -7,7 +11,7 @@ $('#buttonStart').click(recordNoise)
  */
 function recordNoise() {
 	//Start het opnemen van het geluid. Je mag maximum 1 clip opnemen van maximum 5 sec.
-	var options = {limit:1,duration:5};
+	var options = {limit:1, duration:5};
 	navigator.device.capture.captureAudio(captureSuccess, captureError, options);
 }
 
@@ -19,6 +23,8 @@ var captureSuccess = function(mediaFiles) {
         path = mediaFiles[i].fullPath;
         // do something interesting with the file
         alert(path);
+        var text = document.getElementById("homepageText");
+        text.innerHTML = "Thank you!";
     }
 };
 
