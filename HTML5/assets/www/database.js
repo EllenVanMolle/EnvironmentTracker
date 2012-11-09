@@ -5,6 +5,7 @@
 $(function(){ initDatabase();
 
  	// Button and link actions
+ 	//test
 	$('#buttonMood').click(function(){ saveMood(); });
 
  	
