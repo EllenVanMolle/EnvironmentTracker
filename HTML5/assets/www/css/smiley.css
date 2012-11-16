@@ -1,6 +1,12 @@
+/*
+ * document smiley.css
+ * opmaak voor een smiley op de stepone pagina.
+ */
+
 body { padding: 30px; }
-    
-    #face { 
+ 
+ /* alle div met id= face geven een gele cirkel weer. **/   
+   #face { 
     	width: 150px; 
     	height: 150px; 
     	position: relative;
@@ -8,7 +14,8 @@ body { padding: 30px; }
       	border-radius: 100px; 
       	margin: 20px auto; 
       	background-color: rgb(249,236,43);}
-    
+      	
+  /* alle div met id= eye-box1 en eye-box2 geven een witte eivorm weer. **/  
     #eye-box1, #eye-box2 {
       	position: absolute;
       	width:30px;
@@ -16,13 +23,14 @@ body { padding: 30px; }
       	top: 30px;
       	border-radius: 63px 63px 63px 63px / 107px 107px 72px 72px;
       	background-color: white; }
-      
+   
     #eye-box1 {
       	left: 42px; }
       
     #eye-box2 {
       	left: 77px; }
-     
+      	
+  /* alle div met id= eyeL en eyeR geven een zwarte cirkel weer.  **/   
     #eyeL, #eyeR {
     	position: absolute;
     	width: 10px;
@@ -36,7 +44,8 @@ body { padding: 30px; }
     
    	#eyeR {
     	left: 82px;}
-     
+   
+   /* alle div met id=mouth-box geven een gele rechthoek weer.  **/    
     #mouth-box {
       	width: 100px; 
       	height: 50px; 
@@ -44,7 +53,8 @@ body { padding: 30px; }
       	top: 80px; 
       	overflow: hidden; 
       	position: relative;}
-    
+   
+   /* alle div met id=mouth geven een zwarte cirkel weer.  **/   
     #mouth { 
     	width: 100px; 
     	height: 100px; 
@@ -54,7 +64,8 @@ body { padding: 30px; }
       	position: absolute; 
       	top: 0; 
       	left: 0; }
-    
+   
+   /* default klasse van mouth die een rechte zwart lijn geeft. **/  
    	#mouth.straight {
       	height: 0px !important;
       	top: 25px !important;
