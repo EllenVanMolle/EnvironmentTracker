@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PhotoViewController : UIViewController
+@interface PhotoViewController : UIViewController <UIImagePickerControllerDelegate>{
+    
+}
+
+-(IBAction)takeAPicture;
+
 
 @end

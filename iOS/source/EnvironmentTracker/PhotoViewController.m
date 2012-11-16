@@ -8,137 +8,51 @@
 
 #import "PhotoViewController.h"
 
-@interface PhotoViewController ()
-
-@end
-
 @implementation PhotoViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+-(void) viewDidLoad {
+    [super viewDidLoad];
+    [self.navigationItem setHidesBackButton:TRUE];
+    
+    //UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector()];
+    //[self.navigationItem setLeftBarButtonItem:leftBarButton];
+    //[leftBarButton release];
 }
 
-- (void)viewDidLoad
-{
-    /*
-    self.overlayViewController =
-    [[[OverlayViewController alloc] initWithNibName:@"OverlayViewController" bundle:nil] autorelease];
-    
-    // as a delegate we will be notified when pictures are taken and when to dismiss the image picker
-    self.overlayViewController.delegate = self;
-    
-    self.capturedImages = [NSMutableArray array];
-    
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+-(IBAction)takeAPicture
     {
-        // camera is not on this device, don't show the camera button
-        NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:self.myToolbar.items.count];
-        [toolbarItems addObjectsFromArray:self.myToolbar.items];
-        [toolbarItems removeObjectAtIndex:2];
-        [self.myToolbar setItems:toolbarItems animated:NO];
-    }
-     */
-}
-
-/*
-- (void)viewDidUnload
-{
-    self.imageView = nil;
-    self.myToolbar = nil;
-    
-    self.overlayViewController = nil;
-    self.capturedImages = nil;
-}
-
-- (void)dealloc
-{
-	[_imageView release];
-	[_myToolbar release];
-    
-    [_overlayViewController release];
-	[_capturedImages release];
-    
-    [super dealloc];
-}
-
-
-
-#pragma mark -
-#pragma mark Toolbar Actions
-
-- (void)showImagePicker:(UIImagePickerControllerSourceType)sourceType
-{
-    if (self.imageView.isAnimating)
-        [self.imageView stopAnimating];
-	
-    if (self.capturedImages.count > 0)
-        [self.capturedImages removeAllObjects];
-    
-    if ([UIImagePickerController isSourceTypeAvailable:sourceType])
-    {
-        [self.overlayViewController setupImagePicker:sourceType];
-        [self presentModalViewController:self.overlayViewController.imagePickerController animated:YES];
-    }
-}
-
-- (IBAction)photoLibraryAction:(id)sender
-{
-	[self showImagePicker:UIImagePickerControllerSourceTypePhotoLibrary];
-}
-
-- (IBAction)cameraAction:(id)sender
-{
-    [self showImagePicker:UIImagePickerControllerSourceTypeCamera];
-}
-
-
-#pragma mark -
-#pragma mark OverlayViewControllerDelegate
-
-// as a delegate we are being told a picture was taken
-- (void)didTakePicture:(UIImage *)picture
-{
-    [self.capturedImages addObject:picture];
-}
-
-// as a delegate we are told to finished with the camera
-- (void)didFinishWithCamera
-{
-    [self dismissModalViewControllerAnimated:YES];
-    
-    if ([self.capturedImages count] > 0)
-    {
-        if ([self.capturedImages count] == 1)
+        //NSLog(@"Methode takeAPicture");
+        UIImagePickerController *  picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        // Controleer of de device de benodigde resources heeft 
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
         {
-            // we took a single shot
-            [self.imageView setImage:[self.capturedImages objectAtIndex:0]];
+            // We willen de camera openen.
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            
+            //Then present modal view controller
+//            [self presentModalViewController:picker animated:YES];
+            [self presentViewController:picker animated:YES completion:nil];
         }
         else
         {
-            // we took multiple shots, use the list of images for animation
-            self.imageView.animationImages = self.capturedImages;
-            
-            if (self.capturedImages.count > 0)
-                // we are done with the image list until next time
-                [self.capturedImages removeAllObjects];
-            
-            self.imageView.animationDuration = 5.0;    // show each captured photo for 5 seconds
-            self.imageView.animationRepeatCount = 0;   // animate forever (show all photos)
-            [self.imageView startAnimating];
+            NSLog(@"Geen camera");
         }
     }
-}
-*/
 
-- (void)didReceiveMemoryWarning
+#pragma mark imagePickerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	// Dismiss imagePickerViewController
+	//[picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+	// Dismiss the image selection and close the program
+	//[picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+	
 }
 
 @end
