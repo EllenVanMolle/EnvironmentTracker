@@ -17,66 +17,86 @@
 <!-- Het script nodig om phonegap/Cordova te gebruiken. -->
 <script type="text/javascript" src="cordova-2.1.0.js"></script>
 
+<!-- De stylingpagina die de smiley op de stepone pagina beschrijft -->
 <link rel="stylesheet" href="css/smiley.css" type="text/css"/>
-	
+
+<!-- De stylingpagina die de rest van de aangepaste layout beschrijft -->
+<link rel="stylesheet" href="css/EnvTracker.css" type="text/css"/>
+    
 </head>
 
 <body>
+
+
+
+<!-------------------------------------------------------------------------------------------------------------------------------	
+-----------------------------------------------------STARTPAGNA------------------------------------------------------------------>
 	
-<!-- Het begin van de startpagina. Deze pagina krijgt id homepage. De gebruiker krijgt een
-		aantal opties te zien. -->
+<!-- Begin van de startpagina. Deze pagina krijgt id homepage. De gebruiker krijgt een
+		aantal opties te zien; Settings, View results, launch -->
 <div data-role="page" id="homepage" data-theme="e">
 
 	<!-- Begin van de hoofding van de startpagina. -->
-	<div data-role="header" data-theme="e">
+	<div data-role="header" data-theme="a">
 		<h1>Environment Tracker</h1>
 	</div><!-- Einde van de hoofding. -->
 	
 	<!-- Begin van de inhoud van de startpagina. -->
 	<div data-role="content">	
-		<p id="homepageText">Welcome!</p>
+		<!-- De klasse instruction geeft bepaalde layoutkenmerken aan de tekst mee (grote, vetgedrukt).
+			Deze worden beschreven in de stylepagina EnvTracker.css-->
+		<p id="homepageText" align="center" class="instruction">Welcome!</p>
 		
 		<!-- De knop settings is een link naar de settingspagina. -->
-		<a href="#settings" data-role="button">Settings</a>
+		<a href="#settings" data-role="button" data-transition="flow" data-icon="gear" onclick="getSet()">Settings</a>
 		
 		<!-- De knop view results is een link naar de resultatenpagina -->
-		<a href="#results" data-role="button">View results</a>
+		<a href="#results" data-role="button" data-transition="flow" data-icon="star">View results</a>
 		
 		<!-- De knop Launch is een link naar stepone. -->
-		<a href="#stepone" data-role="button">Launch</a>
+		<a href="#stepone" data-role="button" data-transition="slidefade" data-icon="check">Launch</a>
 		
-		<!-- De knop Close. Om de app te sluiten. Werkt nog niet. -->
-		<a data-role="button" onclick="CloseWindow" data-icon="delete">Close</a>
-			<script type="text/javascript">
-				function CloseWindow() {
-					var wind = window.open('','_self');
-					wind.close();
-				}
-			</script>
 	</div><!-- Einde van de inhoud. -->
 	
-	<!-- Een voettekst. We kunnen hiervoor misschien
-		ook een navigatie gebruiken. -->
-	<div data-role="footer" data-theme="e">
-		<p align="center">Homepage</p>
-	</div><!-- Einde van de voettekst. -->
-	
 </div><!-- Einde van de startpagina -->
+
+
+
+
+
+<!-------------------------------------------------------------------------------------------------------------------------------	
+-----------------------------------------------------DATA COLLECTIE-------------------------------------------------------------->
+
 
 <!-- De eerste pagina, nadat je de pop-up of alert hebt gekregen. Deze pagina krijgt id stepone. 
 	De gebruiker moet zijn mood ingeven.-->
 <div data-role="page" id="stepone" data-theme="e">
 
-	<!-- Begin van de hoofding van de eerste pagina. -->
-	<div data-role="header" data-theme="e">
-		<h1>Environment Tracker</h1>
-	</div><!-- Einde van de hoofding van de eerste pagina. -->
-
-	<!-- Begin van de inhoud van de eerste pagina. -->
+	<!-- Begin van de hoofding van de stepone pagina, met een navigatiebar die de gebruiker toelaat om naar stap twee te gaan  -->
+	<div data-role="header" data-theme="a" data-position="fixed">
+		<!-- Begin van de navigatiebar met Step One, Step Two, Step Three -->
+		<div data-role="navbar">
+			<ul>
+				<!-- Het class attribuut zorgt ervoor dat Step One geselecteerd is.-->
+				<li><a class="ui-btn-active">Step One</a></li>
+				<!-- Als de gebruiker op Step Two in de header klikt, gaat hij naar stap 2.-->
+				<li><a href="#steptwo" data-transition="slidefade">Step Two</a></li>
+				<!-- Als de gebruiker op Step Three in de header klikt, krijgt hij een popup
+					om te zeggen dat dit niet toegelaten is zolang hij stap 2 niet heeft uitgevoerd.-->
+				<li><a href="stepthree" data-transition="slidefade" class="ui-disabled" id="tab1">Step Three</a></li>
+			</ul>
+		</div> <!-- Einde van de navigatiebar -->
+	</div><!-- Einde van de hoofding van de stepone pagina. -->
+	
+	<!-- Begin van de inhoud van de stepone pagina. -->
 	<div data-role="content">	
-		<p>How do you feel?</p>
+		<p align="center" class="instruction">How do you feel?</p>
 		
-		<!-- Er wordt een smiley weergegeven die blijer wordt naarmate de slider een hogere waarde heeft -->
+		<!-- Geeft mood in woorden weer-->
+  		<p id="moodText" align="center" class="instruction">Fine</p>
+		
+		<!-- Er wordt een smiley weergegeven die blijer wordt naarmate de slider een hogere waarde heeft.
+			De id wordt gelinkt met layout kenmerken in de stylingpagina smiley.css -->
 		<div id="face">
 			<div id="eye-box1"></div>
 			<div id="eye-box2"></div>
@@ -85,107 +105,313 @@
     		<div id="mouth-box">
     			<div id="mouth" class="straight"></div>
     		</div>
-   		</div>
+  		</div><!-- Einde van de smiley.-->
+  		
      
-    	<!-- De slider voor het weergeven van de mood. Het label wordt gelinkt met deze slider
-				via het attribuut for. De beginwaarde is 5, hij gaat van 1 tot 10. -->
-		<div>
-			<label for="moodSlider">Your mood:</label>	
-			<input type="range" id="moodSlider" title="moodSlider" min="1" max="10" value="5" step="1" onchange="sliderChange();"/>
-		</div>
-		
-		<!-- De knop continue met als icon check aan de linkerkant is een link naar de volgende stap. -->
-		<a id="buttonMood" href="#steptwo" data-role="button" data-icon="check" data-iconpos="left">Continue</a>
-	</div><!-- Einde van de inhoud van de eerste pagina. -->
+    	<!-- De slider voor het weergeven van de mood. De beginwaarde is 5, hij gaat van 1 tot 10. Als de waarde van de slider
+			wordt gewijzigd, wordt de actie sliderChange() uitgevoerd om de smiley aan te passen -->	
+		<input type="range" id="moodSlider" title="moodSlider" min="1" max="10" value="5" step="1" onchange="sliderChange()" data-highlight="true"/>
+			
+			
+		<!-- De knop Next met als icon een pijltje naar rechts aan de linkerkant, is een link naar de volgende stap.-->
+		<a href="#steptwo" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="slidefade">Continue</a>
 	
-	<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
-			ook een navigatie gebruiken. -->
-	<div data-role="footer" data-theme="e">
-		<p align="center">Step 1/3</p>
-	</div><!-- Het einde van de voettekst. -->
-
-</div><!-- Het einde van de eerste pagina -->
+	</div><!-- Einde van de inhoud van de stepone pagina. -->
+	
+	<!-- Een voettekst met een home knop die als erop geklikt wordt terug naar de homepage gaat. -->	
+	<div data-role="footer" class="ui-bar" data-theme="a" data-position="fixed">
+		<div class="ui-grid-b">
+			<div class="ui-block-a"><a href="#dialogHome" data-rel="dialog" data-inline="true" data-role="button" data-icon="home" data-theme="b">Home</a></div>
+			<div class="ui-block-b"></div> 
+			<div class="ui-block-c">
+				<a id="saveButton1" class="hidden" data-inline="true" href="#homepage" onclick="geolocation()" data-role="button" data-icon="check" data-theme="b">Save</a>
+			</div>
+		</div>
+		<!-- toevoegen van functie om alles terug naar default te zetten -->
+	</div><!-- Einde van de voettekst van de stepone pagina-->
+	
+</div><!-- Einde van de stepone pagina -->
 
 <!-- Het begin van de tweede pagina. Deze pagina krijgt id steptwo. -->
 <div data-role="page" id="steptwo" data-theme="e">
 
-	<!-- Begin van de hoofding van de tweede pagina. Hier moet de gebruiker een foto trekken.-->
-	<div data-role="header" data-theme="e">
-		<h1>Environment Tracker</h1>
+	<!-- Begin van de hoofding van de step two pagina. Hier moet de gebruiker een foto trekken.-->
+	<div data-role="header" data-theme="a" data-position="fixed">
+		<!-- Begin van de navigatiebar met Step One, Step Two, Step Three -->
+		<div data-role="navbar">
+			<ul>
+				<!-- Als de gebruiker op Step One in de header klikt, keert hij terug naar stap 1-->
+				<li><a href="#stepone" data-transition="slidefade">Step One</a></li>
+				<li><a class="ui-btn-active">Step Two</a></li>
+				<!-- Als de gebruiker op Step Three in de header klikt, krijgt hij een popup
+					om te zeggen dat dit niet toegelaten is zolang hij geen foto heeft genomen.-->
+				<li><a href="#stepthree" data-transition="slidefade" class="ui-disabled" id="tab2">Step Three</a></li>
+			</ul>
+		</div> <!-- Einde van de navigatiebar-->
 	</div><!-- Einde van de hoofding. -->
 
 	<!-- Begin van de inhoud van de tweede pagina. -->
-	<div data-role="content">
+	<div data-role="content" data-theme="e">
+		<p align="center" class="instruction">Time to take a Picture!</p>
 		
-		<!-- De knop continue met check als icon aan de linkerkant opent de camera applicatie -->
-		<a id="buttonTakeAPicture" href="#analysepicture" data-role="button">Take A Picture</a>
-		
+		<!-- De knop continue met pijltje als icon aan de rechterkant opent de camera applicatie om een foto te nemen.
+			Als dit succesvol verloopt wordt de foto geanalyseerd en de stepthree pagina geopend. -->
+		<a data-role="button" href="#stepthree" data-icon="arrow-r" data-iconpos="right" onclick="takeAPicture()" data-transition="slidefade" >Take a Picture</a>
+
 	</div><!-- Einde van de inhoud. -->
 	
-	<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
-		ook een navigatie gebruiken. -->
-	<div data-role="footer" data-theme="e">
-		<p align="center">Step 2/3</p>
-	</div><!-- Einde van de voettekst. -->
+	<!-- Een voettekst met een home knop die als erop geklikt wordt terug naar de homepage gaat. -->	
+	<div data-role="footer" class="ui-bar" data-theme="a" data-position="fixed" data-id="Footer">
+		<div class="ui-grid-b">
+			<div class="ui-block-a"><a href="#dialogHome" data-rel="dialog" data-inline="true" data-role="button" data-icon="home" data-theme="b">Home</a></div>
+			<div class="ui-block-b"></div> 
+			<div class="ui-block-c">
+				<a id="saveButton2" class="hidden" data-inline="true" href="#homepage" data-role="button" onclick="geolocation()"  data-icon="check" data-theme="b">Save</a>
+			</div>
+		</div>
+	</div><!-- Einde van de voettekst van de steptwo pagina-->
 	
 </div><!-- Einde van de tweede pagina -->
 
 <!-- Het begin van de analysepagina. Deze pagina krijgt id analysepicture. -->
 <div data-role="page" id="analysepicture" data-theme="e">
 	
-	<!-- Begin van de hoofding van de analysepagina. -->
-	<div data-role="header" data-theme="e">
-		<h1>Environment Tracker</h1>
-	</div><!-- Einde van de hoofding. -->
-	
-	<!-- Begin van de inhoud van de analysepagina. -->
 	<div data-role="content">
-	<canvas id="MyCanvas"> Browser does not support Canvas</canvas>
-		
-	<a id="buttonAnalyse" href="#stepthree" data-role="button">Analyse</a>
-		
-	</div><!-- Einde van de inhoud. -->	
+	<canvas id="MyCanvas"></canvas>
+	</div>
 	
-	<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
-		ook een navigatie gebruiken.-->
-	<div data-role="footer" data-theme="e">
-		<p align="center">Picture Analyse</p>
-	</div><!-- Einde van de voettekst.-->
-	
-</div><!-- Einde van de derde pagina -->
+</div><!-- Einde van de analyse pagina -->
 
-<!-- Het begin van de vierde pagina. Deze pagina krijgt id stepfour. De gebruiker neemt 5 seconden
-		geluid op. -->
-		
+<!-- Het begin van de derde pagina. Deze pagina krijgt id stepthree. 
+	De gebruiker neemt 5 secondengeluid op. -->		
 <div data-role="page" id="stepthree" data-theme="e">
 
 	<!-- Begin van de hoofding van de derde pagina. -->
-	<div data-role="header" data-theme="e">
-		<h1>Environment Tracker</h1>
+	<div data-role="header" data-theme="a" data-position="fixed">
+		<!-- Begin van de navigatiebar met Step One, Step Two, Step Three -->
+		<div data-role="navbar">
+			<ul>
+				<!-- Als de gebruiker op Step One in de header klikt, keert hij terug naar stap 1-->
+				<li><a href="#stepone" data-transition="slidefade">Step One</a></li>
+				<!-- Als de gebruiker op Step Two in de header klikt, keert hij terug naar stap 2-->
+				<li><a href="#steptwo" data-transition="slidefade">Step Two</a></li>
+				<li><a class="ui-btn-active">Step Three</a></li>
+			</ul>
+		</div> <!-- Einde van de navigatiebar-->
 	</div><!-- Einde van de hoofding. -->
-
+	
 	<!-- Begin van de inhoud van de derde pagina. -->
 	<div data-role="content">
-		<p>Record 5 sec of the noise of your environment.</p>
+		<p align="center" class="instruction">Record 5 sec of the noise in your environment.</p>
 		
-		<!-- De knop om het opnemen van het geluid te starten en daarna de homepage te openen. -->
-		<a id="buttonStart" href="#homepage" data-role="button" data-icon="check" data-iconpos="left">Start Recording</a>		
+		<!-- De knop om het opnemen van het geluid te starten, de opgevraagde data op te slaan en daarna de homepage te openen. -->
+		<a data-role="button" data-icon="arrow-r" data-iconpos="right" onclick="recordNoise()" data-transistion="slidefade">Start Recording</a>		
 		
 	</div><!-- Einde van de inhoud. -->
 	
-	<!-- Een voettekst waarin het aantal stappen wordt weergegeven. We kunnen hiervoor misschien
-		ook een navigatie gebruiken. -->
-	<div data-role="footer" data-theme="e">
-		<p align="center"> Step 3/3</p>
+	<!-- Een voettekst met een home knop die als erop geklikt wordt terug naar de homepage gaat. -->	
+	<div data-role="footer" class="ui-bar" data-theme="a" data-position="fixed" data-id="Footer">
+		<div class="ui-grid-b">
+			<div class="ui-block-a"><a href="#dialogHome" data-rel="dialog" data-role="button" data-inline="true" data-icon="home" data-theme="b">Home</a></div>
+			<div class="ui-block-b"></div> 
+			<div class="ui-block-c">
+				<a id="saveButton3" class="hidden" href="#homepage" onclick="geolocation()"  data-inline="true" data-role="button" data-icon="check" data-theme="b">Save</a>
+			</div>
+		</div>
 	</div><!-- Einde van de voettekst. -->
 	
-</div><!-- Einde van de derde pagina -->
+</div><!-- Einde van de stepthree pagina -->
+
+
+
+<!-------------------------------------------------------------------------------------------------------------------------------	
+-----------------------------------------------------GO HOME DIALOG-------------------------------------------------------------->
+
+<!-- Begin van het dialoog venster dat verschijnt als er op de homeknop in de footer wordt geklikt -->
+
+<div data-role="dialog" id="dialogHome">
+	<div data-role="header" data-theme="e">
+		<h1>Dialog</h1>
+	</div>
+
+	<div data-role="content" data-theme="e">	
+		<p>Are you sure you want to stop collecting data?
+			The data you've collected so far will be lost.</p>
+		<a href="#homepage" data-role="button" data-inline="true" data-transition="pop" data-theme="b" onclick="goHome()">Yes</a>       
+		<a href="#" data-rel="back" data-role="button" data-inline="true" data-theme="a">No</a>    
+	</div>
+</div>
+
+
+<!-------------------------------------------------------------------------------------------------------------------------------	
+-----------------------------------------------------SETTINGS-------------------------------------------------------------------->
+
+<!-- Het begin van de settingspagina. Deze pagina heeft de id settings en 
+	wordt geopend als men in de homepage op de settingsbutton klikt-->
+<div data-role="page" id="settings" data-theme="e">
+
+	<!-- Begin van de hoofding van de settingspagina. -->
+	<div data-role="header" data-theme="a">
+		<h1>Settings</h1>
+	</div><!-- Einde van de hoofding. -->
+
+	<!-- Begin van de inhoud van de settingspagina. -->
+	<div data-role="content" id="content">
+		
+		<!-- Begin van de accordeon-->
+		<div data-role="collapsible-set" data-theme="e" data-content-theme="c">
+			
+			
+			<!-- Begin Eerste uitklapbare -->
+			<div data-role="collapsible" id="accordeon">
+				<!-- Titel -->
+				<h2>Notification settings</h2>
+				<!-- Lijst -->
+				<ul data-role="listview">
+					<li>
+						<div data-role="fieldcontain">
+	 						<label for= "Notifications" >Notifications: </legend>
+							<select name="Notifications" id="Notifications" data-role="slider" data-theme="a">
+								<option value="true">Yes</option>
+								<option value="false">No</option>
+							</select> 
+						</div>
+					</li>
+					<li>
+						<div data-role="fieldcontain">
+							
+		    					<fieldset data-role="controlgroup" data-type="horizontal">
+		    					<legend>Days on which you want to receive them:</legend>
+		    				
+		    				<input type="checkbox" name="All" id="All"/>
+							<label for="All">Every Day</label>
+
+							<input type="checkbox" name="Monday" id="Monday"/>
+							<label for="Monday">Mon</label>
+
+							<input type="checkbox" name="Tuesday" id="Tuesday"/>
+							<label for="Tuesday">Tue</label> 
+							
+							<input type="checkbox" name="Wednesday" id="Wednesday"/>
+							<label for="Wednesday">Wed</label>
+							
+							<input type="checkbox" name="Thursday" id="Thursday"/>
+							<label for="Thursday">Thur</label> 
+							
+							<input type="checkbox" name="Friday" id="Friday"/>
+							<label for="Friday">Fri</label> 
+							
+							<input type="checkbox" name="Saturday" id="Saturday"/>
+							<label for="Saturday">Sat</label> 
+							
+							<input type="checkbox" name="Sunday" id="Sunday"/>
+							<label for="Sunday">Sun</label>   
+		    					</fieldset>
+						</div>
+					</li>
+					<li>
+						<div data-role="fieldcontain">
+							<legend> Moment after or before which you want to receive notifications</legend>
+		    				<label for="startHour">after: hours</label>
+		    				<input type="number" name="startHour" id="startHour" value="8" min="0" max="24"/>
+		    				<label for="startMinute">minutes: </label>
+		    				<input type="number" name="startMinute" id="startMinute" value="0" min="0" max="60"/>
+		    				
+							
+							<label for="stopHour">before: hours </label> 
+		    				<input type="number" name="stopHour" id="stopHour" value="20" min="0" max="24"/>
+		    				<label for="stopMinute">minutes: </label>
+		    				<input type="number" name="stopMinute" id="stopMinute" value="0" min="0" max="60"/>
+		    				
+		    			</div>
+		    		</li>
+					<li>
+						<div data-role="fieldcontain">
+							<label for="interval">Interval between two notifications: </label>
+							<input type="number" name="interval" id="interval" min="0" value="120"/>
+						</div>					
+					</li>	
+				</ul> <!-- Einde lijst -->
+			</div> <!-- Einde uitklapbare -->
+			
+			<!-- Begin tweede uitklapbare -->
+			<div data-role="collapsible">
+				<!-- Titel -->
+				<h2>Alarm settings</h2>
+				<!-- Lijst -->
+				<ul data-role="listview">
+					<li>
+						<div data-role="fieldcontain">
+							<fieldset data-role="controlgroup" data-type="horizontal">
+	 						<label for="Beep">Beep when receiving notification: </label>
+							<select name="Beep" id="Beep" data-role="slider" data-theme="a">
+								<option value="false">No</option>
+								<option value="true">Yes</option>
+							</select>
+						
+							<label for="Vibrate">Vibrate when receiving notification: </label>
+							<select name="Vibrate" id="Vibrate" data-role="slider" data-theme="a">
+								<option value="false">No</option>
+								<option value="true">Yes</option>
+							</select>  
+							</fieldset>
+						</div>
+					</li>
+					<li>
+						<div data-role="fieldcontain">
+	 						<label for="nrBeeps">Number of Beeps: </label>
+							<input type="number" name="nrBeeps" id="nrBeeps" min="0" max="99" value="0">
+
+							<label for="minVibration">Amount of min the device should vibrate: </label>
+							<input type="number" name="minVibration" id="minVibration" min="0" max="99" value="0"/>
+						</div>
+					</li>
+				</ul><!-- Einde lijst -->
+			</div><!-- Einde tweede uitkapbare -->
+			
+			<!-- Begin derde uitklapbare -->
+			<div data-role="collapsible">
+				<!-- Titel -->
+				<h2>GPS settings</h2>
+				<!-- Lijst -->
+				<ul data-role="listview">
+					<li>
+						<div data-role="fieldcontain">
+	 						<label for="GPS">GPS Tracking: </label>
+							<select name="GPS" id="GPS" data-role="slider" data-theme="a">
+								<option value="true">Yes</option>
+								<option value="false">No</option>
+							</select> 
+						</div>
+					</li>
+				</ul><!-- Einde lijst -->
+			</div><!-- Einde derde uitklapbare -->
+			
+		</div><!-- Eind van de accordeon-->
+		
+		<div>
+			<a data-role="button" data-inline="true" href="#homepage" onclick="updateSettings()" data-transition="pop" data-theme="b">Save</a>
+			<a data-role="button" data-inline="true" href="#homepage" data-transition="pop" data-theme="a">Cancel </a>
+		</div>
+		
+	</div><!-- Einde van de inhoud. -->
+	
+</div><!-- Einde van de settingspagina -->
 	
 <!-- Het script nodig om de database te gebruiken -->
 <script type="text/javascript" src="database.js"  ></script>
 
+<!-- Het script voor het verwerken van settings -->
+<script type="text/javascript" src="settings.js" ></script>
+
 <!-- Het script voor de smiley-->
 <script type="text/javascript" src="moodSlider.js"> </script>
+
+<!-- Het script voor het uitvoeren van de foto analyse -->
+<script type="text/javascript" src="coloranalysis.js"></script>
+
+<!-- Het script voor het bepalen van de locatie door middel van geolocatie -->
+<script type="text/javascript" src="geolocation.js"></script>
 
 <!-- Het script om door middel van phonegap de camera aan te spreken-->
 <script type="text/javascript" src="camera.js"></script>	
@@ -193,7 +419,9 @@
 <!-- Het script om geluid op te nemen -->
 <script type="text/javascript" src="recording.js"></script>
 
-<script type="text/javascript" src="coloranalysis.js"></script>
+
+
+
 
 </body>
 </html>

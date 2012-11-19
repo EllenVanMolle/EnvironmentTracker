@@ -1,57 +1,44 @@
 
-$('#buttonAnalyse').click(draw);
 
-function draw(){ 
-		alert("open canvas");
-        var canvas = document.getElementById('MyCanvas');
-        
-        if (canvas.getContext){
-  			var ctx = canvas.getContext('2d');
+function pictureAnalysis(){ 
+	var canvas = document.getElementById('MyCanvas');
+    
+    if (canvas.getContext){
+  		var ctx = canvas.getContext('2d');
   			
-  			var img = new Image();   // Create new img element
-			img.onload = function(){
+  		var img = new Image();   // Create new img element
+		img.onload = function(){
 				
-				var maxWidth = window.innerWidth;
-				var maxHeight = window.innerHeight;
-				var imgWidth = img.width;
-				var imgHeight = img.height;
-				var ratio = 1;
+			var maxWidth = window.innerWidth;
+			var maxHeight = window.innerHeight
+			var imgWidth = img.width;
+			var imgHeight = img.height;
+			var ratio = 1;
 				
-				if(imgWidth > maxWidth)
-            	ratio = maxWidth / imgWidth;
-        		else if(imgHeight > maxHeight)
-            	ratio = maxHeight / imgHeight;
+			if(imgWidth > maxWidth)
+           	ratio = maxWidth / imgWidth;
+        	else if(imgHeight > maxHeight)
+           	ratio = maxHeight / imgHeight;
             	
-            	var Width = imgWidth*ratio;
-            	var Height = imgHeight*ratio;
+           	var Width = imgWidth*ratio;
+           	var Height = imgHeight*ratio;
             	
-				canvas.width = Width;
-  				canvas.height= Height;
+			canvas.width = Width;
+			canvas.height= Height;
   				
-  				alert("canvas width: " + Width + " canvas height: " + Height);
+  			ctx.drawImage(img,0,0); // execute drawImage statements here
   				
-  				ctx.drawImage(img,0,0); // execute drawImage statements here
-  				
-  				var imageData = ctx.getImageData(0, 0, Width, Height);
-				alert('width: ' + imageData.width + ' height: ' + imageData.height);
-				
-				var AnalysisData = pixalAnalysis (imageData.data, Width, Height);
-				
-				alert("here we are: " + AnalysisData[0] + ", " + AnalysisData[1]);
-				
-				insertPictureData(AnalysisData);
-			};
-			
-			img.src = 'images/Autumn_Leaves.jpg'; 
+  			var imageData = ctx.getImageData(0, 0, Width, Height);	
+
+			pixalAnalysis (imageData.data, Width, Height);
+		};
+		img.src = 'images/Autumn_Leaves.jpg'; 
       		
-		}
-		else {alert("no canvas")
+	}
+	else {alert("no canvas")
  		 // canvas-unsupported code here
-		}
-	
+	}	
 }
-
-
 
 function pixalAnalysis(Data, Width, Height){
 	
@@ -59,64 +46,53 @@ function pixalAnalysis(Data, Width, Height){
 	var totalS = 0;
 	var totalB = 0;
 					
-				// loop through each row
-				for (var j = 0; j < Height; j++)
-   		 			{
-   					//loop through each column
-     				for (var i = 0; i < Width; i++)
-     			 
-      				{ 	var index=(j * Width + i) * 4;
-      					var red = Data[index];	// red
-      					//alert ("red: " + red);
-        				var green = Data[++index];	// green
-        				//alert ("green: " + green);
-       					var blue = Data[++index];  //blue
-       					//alert ("blue: " + blue);
-       					         				
-         				var hsv = rgb2hsv (red, green, blue);
+		// loop through each row
+		for (var j = 0; j < Height; j++)
+		{
+   			//loop through each column
+     		for (var i = 0; i < Width; i++)
+     		{ 	
+     			var index=(j * Width + i) * 4;
+      			var red = Data[index];	// red
+      			var green = Data[++index];	// green
+        		var blue = Data[++index];  //blue
+       			
+       			var hsv = rgb2hsv (red, green, blue);
          				
-         				if (hsv[0] <= 90)
-         					nrPix[0] = nrPix[0] + 1;
-         				else if (hsv[0] <= 180)
-         					nrPix[1] = nrPix[1] + 1;
-         				else if (hsv[0] <= 270)
-         					nrPix[2] = nrPix[2] + 1;
-         				else if (hsv[0] <= 360)
-         					nrPix[3] = nrPix[3] + 1;
-         				else {alert('hue is incorrect')};
+         		if (hsv[0] <= 90)
+         		nrPix[0] = nrPix[0] + 1;
+         		else if (hsv[0] <= 180)
+         		nrPix[1] = nrPix[1] + 1;
+         		else if (hsv[0] <= 270)
+         		nrPix[2] = nrPix[2] + 1;
+         		else if (hsv[0] <= 360)
+         		nrPix[3] = nrPix[3] + 1;
+         		else {alert('hue is incorrect')};
          				
-         				totalS = totalS + hsv[1];
+         		totalS = totalS + hsv[1];
          				
-         				totalB = totalB + hsv[2];  
-         			}
-         	   	}
-         	
-         	      	
-         	alert("Hue lijst:" + nrPix[0] + ', ' + nrPix[1] + ', ' +  nrPix[2] + ', ' + nrPix[3] );
-         	
-         	var totalPix = Width * Height;
-         	var percentPix =[0, 0, 0, 0];
-         	var MaxPix = Math.max.apply(null, nrPix);
-         	alert("MaxPix: " + MaxPix);
-         	var HueClass = 0;
-         	
-         	for (var n=0; n < 4; n++ )
-         	
-         	{	if (nrPix[n] == MaxPix)
-         			{HueClass = (n+1);
-         			alert ("class: " + HueClass)};
-         		percentPix[n] = (nrPix[n]/totalPix)*100;
-         		alert ("percentpix " + n + ": " + percentPix[n] + "%")
+         		totalB = totalB + hsv[2];  
          	}
+        }
          	
-         	var Saturation = (totalS / totalPix)*100;
-         	alert("Saturation: " + Saturation)
+        var totalPix = Width * Height;
+        var percentPix =[0, 0, 0, 0];
+        var MaxPix = Math.max.apply(null, nrPix);
+        
+        var HueClass = 0;
          	
-         	var Brightness = (totalB / totalPix)*100;
-         	alert("Brightness: " + Brightness);
+        for (var n=0; n < 4; n++ )
+        {	
+        	if (nrPix[n] == MaxPix)
+         	{HueClass = (n+1);}
+         	percentPix[n] = (nrPix[n]/totalPix)*100;
+        }
          	
-         	return [HueClass, percentPix, Saturation, Brightness];
+        var Saturation = (totalS / totalPix)*100;
+        var Brightness = (totalB / totalPix)*100;
+        pixData = [HueClass, percentPix[0], percentPix[1], percentPix[2], percentPix[3], Saturation, Brightness];
 }
+
 
 function rgb2hsv (r,g,b) {
  var computedH = 0;

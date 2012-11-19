@@ -2,14 +2,29 @@
  * Recording of sound
  */
 
-// Het linken van de knop Start met de methode recordNoise.
-$('#buttonStart').click(recordNoise)
 
 /*
  * Deze functie neemt het geluid op, analyseert het en verwijdert het. (Enkel het opnemen van het geluid en 
  * het opslaan gebeurt nu.
  */
 function recordNoise() {
+	
+	// Aanpassen van de layout aan het feit dat datacollectie na deze stap voltooid is.
+	var saveB1 = document.getElementById("saveButton1");
+	var saveB2 = document.getElementById("saveButton2");
+	var saveB3 = document.getElementById("saveButton3");
+	var tab1 = document.getElementById("tab1");
+	var tab2 = document.getElementById("tab2");
+	
+	// Toon de save buttons op elke pagina stepone, steptwo, stepthree
+	saveB1.className = saveB1.className.replace("hidden", "" );
+	saveB2.className = saveB2.className.replace("hidden", "" );
+	saveB3.className = saveB3.className.replace("hidden", "" );
+	
+	// Enable de step three navigatie op stepone en steptwo
+	tab1.className = tab1.className.replace("ui-disabled", "");
+	tab2.className = tab2.className.replace("ui-disabled", "");
+	
 	//Start het opnemen van het geluid. Je mag maximum 1 clip opnemen van maximum 5 sec.
 	var options = {limit:1, duration:5};
 	navigator.device.capture.captureAudio(captureSuccess, captureError, options);
@@ -21,10 +36,8 @@ function recordNoise() {
 var captureSuccess = function(mediaFiles) {
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
         path = mediaFiles[i].fullPath;
-        // do something interesting with the file
-        alert(path);
-        var text = document.getElementById("homepageText");
-        text.innerHTML = "Thank you!";
+        console.log(path); // voorlopig log het pad
+   
     }
 };
 
