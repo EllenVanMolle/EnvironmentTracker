@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+       
+      <item android:id="@+id/menu_home"
+        android:title="@string/menu_home"
+        android:showAsAction="always"/>
+      
+      <item android:id="@+id/menu_stop"
+        android:title="@string/menu_stop"
+        android:showAsAction="always"/>
+      
+      
+    
+</menu>
