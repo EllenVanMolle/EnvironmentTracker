@@ -19,14 +19,15 @@
 
 @synthesize labelIdentifier = _labelIdentifier;
 @synthesize labelDate = _labelDate;
-@synthesize database = _database;
-@synthesize context = _context;
+//@synthesize database = _database;
+//@synthesize context = _context;
 @synthesize center = _center;
+@synthesize model = _model;
 
 -(void) databaseNotReady {
     [self.center removeObserver:self
                            name:UIDocumentStateChangedNotification
-                         object:self.database];
+                         object:self.model.database];
     [self performSegueWithIdentifier:@"segueDatabaseReady" sender:self];
 }
 
@@ -34,15 +35,13 @@
 {
     [super viewDidAppear:animated];
     
-    if (self.database.documentState != UIDocumentStateNormal) {
+    if (![self.model isDatabaseReady]) {
         self.center = [NSNotificationCenter defaultCenter];
         [self.center addObserver:self
                         selector:@selector(databaseNotReady)
                             name:UIDocumentStateChangedNotification
-                          object:self.database];
+                          object:self.model.database];
         [self performSegueWithIdentifier:@"segueDatabaseNotReady" sender:self];
-    } else {
-        self.context = self.database.managedObjectContext;
     }
 }
 
@@ -74,7 +73,7 @@
     //request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
 
     NSError *error;
-    NSArray *observations = [self.context executeFetchRequest:request error:&error];
+    NSArray *observations = [self.model.context executeFetchRequest:request error:&error];
     Observation *lastObservation = [observations lastObject];
     NSDate *date = lastObservation.date;
     // format it

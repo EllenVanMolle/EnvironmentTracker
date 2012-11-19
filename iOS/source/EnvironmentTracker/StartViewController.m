@@ -17,58 +17,11 @@
 @synthesize recordButton = _recordButton;
 @synthesize viewResultsButton = _viewResultsButton;
 @synthesize settingsButton = _settingsButton;
-@synthesize database = _database;
-@synthesize context = _context;
+//@synthesize database = _database;
+//@synthesize context = _context;
 @synthesize model = _model;
 
--(void)databaseIsReady {
-    NSLog(@"Database is ready");
-    if (self.database.documentState == UIDocumentStateNormal){
-        self.context = self.database.managedObjectContext;
-        NSLog(@"Context is succesvol gedefinieerd");
-    } else {
-        NSLog(@"Database not ready");
-    }
-}
 
-- (void) useDocument {
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[self.database.fileURL path]]) {
-        // Het bestaat nog niet op de schijf, dus moeten ze het aanmaken.
-        NSLog(@"De database bestaat nog niet.");
-        [self.database saveToURL:self.database.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {
-            if (success) {
-                NSLog(@"De database is succesvol aangemaakt.");
-                [self databaseIsReady];
-            }
-            if (!success) NSLog(@"De database is niet opgeslagen.");
-        }];
-    } else if (self.database.documentState == UIDocumentStateClosed) {
-        // Het bestaat op de schijf maar het moet nog geopend worden.
-        NSLog(@"De database moet nog geopend worden.");
-        [self.database openWithCompletionHandler:^(BOOL success) {
-            if (success) {
-                NSLog(@"De database is succesvol geopend.");
-                [self databaseIsReady];
-            }
-            if (!success) {
-                NSLog(@"De database kan niet geopend worden.");
-            }
-        }];
-    } else if (self.database.documentState == UIDocumentStateNormal) {
-        // De database is klaar om te gebruiken.
-        NSLog(@"De database is klaar om te gebruiken.");
-        if (!self.context) {
-            [self databaseIsReady];
-        }
-    }
-}
-
-- (void) setDatabase:(UIManagedDocument *)database {
-    if (_database != database) {
-        _database = database;
-        [self useDocument];
-    }
-}
 
 /* Deze methode wordt aangeroepen als de view wordt geinitialiseerd.*/
 -(void) viewDidLoad {
@@ -80,14 +33,12 @@
     //[leftBarButton release];
     
     // Het initialiseren en alloceren van het model als het nog niet bestaat.
-    
+    if (!self.model) {
+        self.model = [[EnvironmentTrackerModel alloc] init];
+    }
     
     // Het openen van de database als deze nog niet geopend is.
-    if (!self.database) {
-        NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-        url = [url URLByAppendingPathComponent:@"EnvironmentDatabase"];
-        self.database = [[UIManagedDocument alloc] initWithFileURL:url]; // setter wordt hoger overschreven
-    }
+    [self.model openDatabase];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -95,10 +46,10 @@
         ViewController *newController = segue.destinationViewController;
         // send messages to newController to prepare it to appear on screen
         // the segue will do the work of putting the new controller on screen
-        newController.database = self.database;
+        newController.model = self.model;
     } else if ([segue.identifier isEqualToString:@"viewResults"]) {
         ResultsViewController *newController = segue.destinationViewController;
-        newController.database = self.database;
+        newController.model = self.model;
     }
 }
 

@@ -13,15 +13,11 @@
 @synthesize moodSlider = _moodSlider;
 @synthesize continueFromMood = _continueFromMood;
 @synthesize labelMood = _labelMood;
-@synthesize database = _database;
+@synthesize model = _model;
+//@synthesize database = _database;
 //@synthesize context = _context;
 
 // Private methods
-
-- (EnvironmentTrackerModel *) model {
-    if (!model) model = [[EnvironmentTrackerModel alloc] init];
-    return model;
-}
 
 // Public methods
 
@@ -44,10 +40,9 @@
 }
 
 -(IBAction)changeLabel:(UISlider *)sender {
-    //NSLog(@"Slider bewogen");
-    if ([sender value] < 3.0) {
+    if ([sender value] < 4.0) {
         [_labelMood setText:@"Ongelukkig"];
-    } else if ([sender value] < 7.0) {
+    } else if ([sender value] < 8.0) {
         [_labelMood setText:@"Neutraal"];
     } else {
         [_labelMood setText:@"Gelukkig"];
@@ -74,35 +69,8 @@
     return 1;
 }
 
--(void) addObservationToDatabase {
-    NSManagedObjectContext *context = self.database.managedObjectContext;
-    
-    Observation *observation =
-    [NSEntityDescription insertNewObjectForEntityForName:@"Observation"
-                                  inManagedObjectContext:context];
-    observation.observationID = [NSNumber numberWithInt:[self makeIdentifier]];
-    observation.mood = [NSNumber numberWithInt:[self mood]];
-    observation.lengteligging = [NSNumber numberWithInt:[self determineLocationLengteLigging]];
-    observation.breedteligging = [NSNumber numberWithInt:[self determineLocationBreedteLigging]];
-    observation.date = [self date];
-    
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center removeObserver:self
-                      name:UIDocumentStateChangedNotification
-                    object:self.database];
-    
-}
-
--(IBAction)saveMood {
-    if (self.database.documentState == UIDocumentStateNormal) {
-        [self addObservationToDatabase];
-    } else {
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self
-                   selector:@selector(addObservationToDatabase)
-                       name:UIDocumentStateChangedNotification
-                     object:self.database];
-    }
+-(void) saveMood {
+    [self.model saveObservationWithID:[self makeIdentifier] WithMood:[self mood] WithDate:[self date] WithBreedteligging:[self determineLocationBreedteLigging] WithLengteligging:[self determineLocationLengteLigging]];
 }
 
 @end

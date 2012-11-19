@@ -16,7 +16,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *moodSlider;
 @property (weak, nonatomic) IBOutlet UIButton *continueFromMood;
 @property (nonatomic) IBOutlet UILabel *labelMood;
-@property (nonatomic) UIManagedDocument *database;
+@property (nonatomic) EnvironmentTrackerModel *model;
+//@property (nonatomic) UIManagedDocument *database;
 //@property (nonatomic) NSManagedObjectContext *context;
 
 -(IBAction)saveMood;

@@ -7,14 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EnvironmentTrackerModel.h"
 
 @interface ResultsViewController : UIViewController
 
 @property (nonatomic) IBOutlet UILabel *labelIdentifier;
 @property (nonatomic) IBOutlet UILabel *labelDate;
-@property (nonatomic) UIManagedDocument *database;
-@property (nonatomic) NSManagedObjectContext *context;
+//@property (nonatomic) UIManagedDocument *database;
+//@property (nonatomic) NSManagedObjectContext *context;
 @property (nonatomic) NSNotificationCenter *center;
+@property (nonatomic) EnvironmentTrackerModel *model;
+
 
 -(IBAction)viewResults;
 

@@ -10,38 +10,68 @@
 #import "Observation.h"
 
 
-@implementation EnvironmentTrackerModel
-
-//private methods
-
--(void) saveNewObservationWithID:(int) identifier
-                        withMood:(int) mood
-                        withDate:(NSDate*) date
-              withBreedteligging:(int) breedteligging
-               withLengteLigging:(int) lengteligging
-                     withContext:(NSManagedObjectContext *)context {
+@implementation EnvironmentTrackerModel {
     
 }
 
-/*
--(void)openDatabase {
-    
-    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-    url = [url URLByAppendingPathComponent:@"EnvironmentDatabase"];
+@synthesize database = _database;
+@synthesize context = _context;
 
-    self.database = [[UIManagedDocument alloc] initWithFileURL:url];
-    if ([[NSFileManager defaultManager] fileExistsAtPath: [url absoluteString]]) {
-        [self.database openWithCompletionHandler:^(BOOL success) {
-            if (success) [self databaseIsReady];
-            if (!success) NSLog(@"couldn’t open document at %@", url);
-        }];
+-(void)databaseIsReady {
+    NSLog(@"Database is ready");
+    if (self.database.documentState == UIDocumentStateNormal){
+        self.context = self.database.managedObjectContext;
+        NSLog(@"Context is succesvol gedefinieerd");
     } else {
-        [self.database saveToURL:self.database.fileURL
-                forSaveOperation:UIDocumentSaveForCreating
-               completionHandler:^(BOOL success) {
-                   if (success) [self databaseIsReady];
-                   if (!success) NSLog(@"couldn’t create document at %@", url);
+        NSLog(@"Database not ready");
+    }
+}
+
+- (void) useDocument {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[self.database.fileURL path]]) {
+        // Het bestaat nog niet op de schijf, dus moeten ze het aanmaken.
+        NSLog(@"De database bestaat nog niet.");
+        [self.database saveToURL:self.database.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {
+            if (success) {
+                NSLog(@"De database is succesvol aangemaakt.");
+                [self databaseIsReady];
+            }
+            if (!success) NSLog(@"De database is niet opgeslagen.");
         }];
+    } else if (self.database.documentState == UIDocumentStateClosed) {
+        // Het bestaat op de schijf maar het moet nog geopend worden.
+        NSLog(@"De database moet nog geopend worden.");
+        [self.database openWithCompletionHandler:^(BOOL success) {
+            if (success) {
+                NSLog(@"De database is succesvol geopend.");
+                [self databaseIsReady];
+            }
+            if (!success) {
+                NSLog(@"De database kan niet geopend worden.");
+            }
+        }];
+    } else if (self.database.documentState == UIDocumentStateNormal) {
+        // De database is klaar om te gebruiken.
+        NSLog(@"De database is klaar om te gebruiken.");
+        if (!self.context) {
+            [self databaseIsReady];
+        }
+    }
+}
+
+- (void) setDatabase:(UIManagedDocument *)database {
+    if (_database != database) {
+        _database = database;
+        [self useDocument];
+    }
+}
+
+
+-(void)openDatabase {
+    if (!self.database) {
+        NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+        url = [url URLByAppendingPathComponent:@"EnvironmentDatabase"];
+        self.database = [[UIManagedDocument alloc] initWithFileURL:url]; // setter wordt hoger overschreven
     }
 }
 
@@ -59,25 +89,54 @@
         if (!success) NSLog(@"failed to close document %@", self.database.localizedName);
     }];
 }
-*/
+
+-(void) addObservationToDatabase {
+    NSManagedObjectContext *context = self.database.managedObjectContext;
+    
+    Observation *observation =
+    [NSEntityDescription insertNewObjectForEntityForName:@"Observation"
+                                  inManagedObjectContext:context];
+    observation.observationID = identifier;
+    observation.mood = mood;
+    observation.lengteligging = lengteligging;
+    observation.breedteligging = breedteligging;
+    observation.date = date;
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self
+                      name:UIDocumentStateChangedNotification
+                    object:self.database];
+    
+}
+
 // Public methods
 
-/*-(void) makeNewObservationWithID:(int) identifier
-                       withMood:(int) mood
-                       withDate:(NSDate*) date
-             withBreedteligging:(int) breedteligging
-              withLengteLigging:(int) lengteligging
+-(IBAction)saveObservationWithID:(int) newIdentifier
+                        WithMood:(int) newMood
+                        WithDate:(NSDate *) newDate
+              WithBreedteligging:(int) newBreedteligging
+               WithLengteligging:(int) newLengteligging
 {
-    Observation *observation =
-        [NSEntityDescription insertNewObjectForEntityForName:@"Observation"
-                                      inManagedObjectContext:context];
+    identifier = [NSNumber numberWithInt:newIdentifier];
+    mood = [NSNumber numberWithInt:newMood];
+    breedteligging = [NSNumber numberWithInt:newBreedteligging];
+    lengteligging = [NSNumber numberWithInt:newLengteligging];
+    date = newDate;
     
-    observation.observationID = [NSNumber numberWithInt:identifier];
-    observation.mood = [NSNumber numberWithInt:mood];
-    observation.lengteligging = [NSNumber numberWithInt:lengteligging];
-    observation.breedteligging = [NSNumber numberWithInt:breedteligging];
-    observation.date = date;
-}*/
+    if (self.database.documentState == UIDocumentStateNormal) {
+        [self addObservationToDatabase];
+    } else {
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self
+                   selector:@selector(addObservationToDatabase)
+                       name:UIDocumentStateChangedNotification
+                     object:self.database];
+    }
+}
+
+-(BOOL) isDatabaseReady {
+    return self.database.documentState == UIDocumentStateNormal;
+}
 
 @end
 

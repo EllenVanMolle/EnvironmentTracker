@@ -9,13 +9,24 @@
 #import <Foundation/Foundation.h>
 #import "Observation.h"
 
-@interface EnvironmentTrackerModel : NSObject
+@interface EnvironmentTrackerModel : NSObject {
+    NSNumber *identifier;
+    NSNumber *mood;
+    NSNumber *breedteligging;
+    NSNumber *lengteligging;
+    NSDate *date;
+}
 
--(void) addNewObservationWithID:(int) identifier
-                       withMood:(int) mood
-                       withDate:(NSDate*) date
-             withBreedteligging:(int) breedteligging
-              withLengteLigging:(int) lengteligging
-                    withContext:(NSManagedObjectContext *) context;
+@property (nonatomic) UIManagedDocument *database;
+@property (nonatomic) NSManagedObjectContext *context;
+
+
+-(void)openDatabase;
+-(IBAction)saveObservationWithID:(int) newIdentifier
+                        WithMood:(int) newMood
+                        WithDate:(NSDate *) newDate
+              WithBreedteligging:(int) newBreedteligging
+               WithLengteligging:(int) newLengteligging;
+-(BOOL) isDatabaseReady;
 
 @end
