@@ -24,7 +24,7 @@ function onDeviceReady() {
  */	
 var database;
 
-var pixData = [0, 0, 0, 0, 0, 0, 0];
+var pixData = [0, 0, 0];
 
 var Database = function() {
 	var myDb = false;
@@ -67,8 +67,7 @@ Database.prototype.initDatabase = function() {
 
 
 /* 
- * Functie die de nodige tabellen in de database creëert door sqlstatements uit te voeren.
- * Tabel1: environmentData; Tabel2: pictureData; Tabel3: audioData
+ * Functie die de environmentData tabel in de database creëert door sqlstatements uit te voeren.
  */
 Database.prototype.createTables = function(){
 	try {// SQL statements voor de creatie van de tabellen
@@ -78,34 +77,16 @@ Database.prototype.createTables = function(){
         	+ 'added_on DATETIME,'
         	+ 'moodrate INTEGER,'
         	+ 'posLatitude DOUBLE,'
-        	+ 'posLongitude DOUBLE)';
-        
-        var sqlTabel2 = 'CREATE TABLE IF NOT EXISTS pictureData ('
-        	+ 'obsID INTEGER PRIMARY KEY,'
+        	+ 'posLongitude DOUBLE,'
         	+ 'hue_cat INTEGER,'
-        	+ 'per_vigorous REAL,'
-        	+ 'per_nature REAL,'
-        	+ 'per_ocean REAL,'
-        	+ 'per_flower REAL,'
         	+ 'per_saturation REAL,' 
-        	+ 'per_brightness REAL,'
-        	+ 'FOREIGN KEY (obsID) REFERENCES environmentData(ID))';
-        
-        var sqlTabel3 = 'CREATE TABLE IF NOT EXISTS audioData ('
-        	+ 'obsID INTEGER PRIMARY KEY,'
-        	+ 'FOREIGN KEY (obsID) REFERENCES environmentData(ID))'; 
+        	+ 'per_brightness REAL)';
         
 		this.myDb.transaction(
 			function (transaction) {
 			
-			//uitvoeren van sqlTabel1 statement om tabel1 te creëeren: environmentData
+			//uitvoeren van sqlTabel1 statement om tabel te creëeren: environmentData
         	transaction.executeSql(sqlTabel1, [], this.nullDataHandler, this.errorHandler);
-        	
-        	//uitvoeren van sqlTabel2 statement om tabel2 te creëeren: pictureData
-        	transaction.executeSql(sqlTabel2, [], this.nullDataHandler, this.errorHandler);
-
-			//uitvoeren van sqlTabel3 statement om tabel3 te creëeren: autioData
-        	transaction.executeSql(sqlTabel3, [], this.nullDataHandler, this.errorHandler);
     		
 			}
 		);
@@ -121,7 +102,7 @@ Database.prototype.createTables = function(){
  */
 Database.prototype.createSetTable = function(){
 	try {// SQL statements voor de creatie van de tabellen
- 		var sqlTabel4 = 'CREATE TABLE IF NOT EXISTS settingsData ('
+ 		var sqlTabel2 = 'CREATE TABLE IF NOT EXISTS settingsData ('
         	+ 'ID INTEGER PRIMARY KEY,'
         	+ 'notification BOOLEAN,'
         	+ 'monday BOOLEAN,'
@@ -144,9 +125,9 @@ Database.prototype.createSetTable = function(){
 
 	this.myDb.transaction(
 			function (transaction) {
-			transaction.executeSql('DROP TABLE settingsData', [], this.nullDataHandler, this.errorHandler);
+			//transaction.executeSql('DROP TABLE settingsData', [], this.nullDataHandler, this.errorHandler);
 			//uitvoeren van sqlTabel4 statement om tabel4 te creëeren: settingsData
-        	transaction.executeSql(sqlTabel4, [], 
+        	transaction.executeSql(sqlTabel2, [], 
         		function (transaction, resultSet){
         			database.getRowsSetData(); // Count the number of rows in the settingsData tabel 
         	}, this.errorHandler);
@@ -163,29 +144,28 @@ Database.prototype.createSetTable = function(){
 
 
 /*
- * Functie die aangeroepen wordt door geolocation om de locatie en moodrate op te slaan.
+ * Functie die aangeroepen wordt door geolocation om de locatie, moodrate, foto gegevens en audiogegevens op te slaan.
  */
 function saveLocation (latitude, longitude){
 	var moodrate = $('#moodSlider').val();
-	var on_date= new Date();
+	var on_date = new Date();
 	database.saveEnvData(moodrate, on_date, latitude, longitude);
 }
 
 
 /* 
- * Functie die de moodrate en locatie (latitude, longitude) opslaat in de environmentData tabel.
+ * Functie die de moodrate, locatie (latitude, longitude), foto gegevens opslaat in de environmentData tabel.
  */
 Database.prototype.saveEnvData = function(moodrate, on_date, latitude, longitude){
 	try{ // SQL statement voor het opslaan van EnvData
 		var sqlInsertEnvData = 'INSERT INTO environmentData (moodrate, added_on, posLatitude, '
-			+ 'posLongitude) VALUES (?, ?, ?, ?)';
+			+ 'posLongitude, hue_cat, per_saturation, per_brightness) VALUES (?, ?, ?, ?, ?, ?, ?)';
 	
 		this.myDb.transaction(
 			function(transaction){
 			//uitvoeren van sqlInsertEnvData om de moodrate, breedteligging en lengteligging op te slaan in de environmentData tabel.	
-			transaction.executeSql(sqlInsertEnvData, [moodrate, on_date, latitude, longitude], 
+			transaction.executeSql(sqlInsertEnvData, [moodrate, on_date, latitude, longitude, pixData[0], pixData[1], pixData[2]], 
 				function (transaction, resultSet){
-					database.getRowsEnvData(); // Als dit statement is uitgevoerd, tel het aantal rijen in de environment tabel.
 					goHome(); 
 				}, this.errorHandler);
 			}
@@ -193,75 +173,6 @@ Database.prototype.saveEnvData = function(moodrate, on_date, latitude, longitude
 	} catch(e) {
 		alert("Error Processing SQL: "+ e.message +".");
 		return;
-	};
-}
-
-/* 
- * Functie die telt hoeveel records er in de environmentData tabel zijn en
- * op die manier weten we wat de laatste record ID is.
- */
-Database.prototype.getRowsEnvData = function(){
-	try{// SQL statement die het aantal record telt in de settingsData tabel.
-		var sqlCount = 'SELECT Count(*) FROM environmentData';
-		this.myDb.transaction(
-			function(transaction){
-		 	// Het uitvoeren van sqlCount om te weten of reeds set preferenties door de gebruiker werden opgeslagen. 
-			transaction.executeSql(sqlCount, [], 
-				function (transaction, resultSet){
-					var nrRows = resultSet.rows.item(0)["Count(*)"]; // het aantal rijen in de environmentData tabel is gelijk aan het laatste ingegeven id.
-					database.savePicData(nrRows, pixData[0], pixData[1], pixData[2], pixData[3], pixData[4], pixData[5], pixData[6]);
-					//voer de functie uit die de fotogegevens aan de tabel toevoegt, met hetzelfde id als de laatste rij in environmentData tabel.
-					database.saveAudioData(nrRows);
-					//voer de functie uit die de audiogegevens aan de tabel toevoegt, met hetzelfde id als de laatste rij in environmentData tabel.
-					
-					}
-				, this.errorHandler);
-			}
-		)
-	} catch(e) {
-		alert("Error Processing SQL: "+ e.message +".");
-	}
-}
-
-/* 
- * Functie die de gegevens uit de foto analyse opslaat in de pictureData tabel.
- */
-Database.prototype.savePicData = function(obsId, HueClass, vigorous, nature, ocean, flower, saturation, brightness)
-{
-	try{// SQL statement voor het opslaan van PicData
-		var sqlInsertPicData = 'INSERT INTO pictureData (obsID, hue_cat, per_vigorous, '
-			+'per_nature, per_ocean, per_flower, per_saturation, per_brightness) '
-			+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-		this.myDb.transaction(
-			function(transaction){
-			//uitvoeren van sqlInsertPicData om de Hue, Saturation, Brightness op te slaan in de pictureData tabel.	
-			transaction.executeSql(sqlInsertPicData, 
-			[obsId, HueClass, vigorous, nature, ocean, flower,
-			saturation, brightness], this.nullDataHandler, this.errorHandler);
-			}
-		);
-	} catch(e){
-		alert("Error Processing SQL: "+ e.message +".");
-	};
-}
-
-/* 
- * Functie die de gegevens uit de audio analyse opslaat in de audioData tabel.
- */
-Database.prototype.saveAudioData = function(obsId)
-{
-	try{// SQL statement voor het opslaan van AudioData
-		var sqlInsertAudioData = 'INSERT INTO audioData (obsID) '
-			+ 'VALUES (?)';
-		this.myDb.transaction(
-			function(transaction){
-			//uitvoeren van sqlInsertAudioData om de audiodata in de audioData tabel op te slaan.	
-			transaction.executeSql(sqlInsertAudioData, 
-			[obsId], this.nullDataHandler, this.errorHandler);
-			}
-		);
-	} catch(e){
-		alert("Error Processing SQL: "+ e.message +".");
 	};
 }
 
@@ -330,7 +241,7 @@ Database.prototype.saveDefaultSettings = function(setData){
 	try{// SQL statement die de default settings opslaat in de settingsData tabel
 		var sqlInsertDefaultSet = 'INSERT INTO settingsData (ID, notification, monday, tuesday, wednesday, thursday, '
         	+ 'friday, saturday, sunday, startHour, startMinute, stopHour, stopMinute, interval, beep, nr_beep, vibrate, min_vibrate, '
-        	+ 'GPS) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        	+ 'GPS) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
      
 		this.myDb.transaction(
 		function(transaction){
@@ -431,7 +342,205 @@ Database.prototype.updateSetData = function(setData){
 }
 
 
+/****************************** RESULTS ******************************************/
 
+function getData(){
+	database.getResults();
+	
+  var currentPosition = 0;
+  var width = window.innerWidth
+  var slideWidth = (width - 20);
+  var slides = $('.slide');
+  var numberOfSlides = slides.length;
+
+  // Remove scrollbar in JS
+  $('#slidesContainer').css('overflow', 'hidden');
+
+  // Wrap all .slides with #slideInner div
+  slides
+  .wrapAll('<div id="slideInner"></div>')
+  // Float left to display horizontally, readjust .slides width
+  .css({
+    'float' : 'left',
+    'width' : slideWidth
+  });
+
+  // Set #slideInner width equal to total width of all slides
+  $('#slideInner').css('width', slideWidth * numberOfSlides);
+
+  // Insert left and right arrow controls in the DOM
+  $('#slideshow')
+    .prepend('<span class="control" id="leftControl">Move left</span>')
+    .append('<span class="control" id="rightControl">Move right</span>');
+
+  // Hide left arrow control on first load
+  manageControls(currentPosition);
+
+  // Create event listeners for .controls clicks
+  $('.control')
+    .bind('click', function(){
+    // Determine new position
+      currentPosition = ($(this).attr('id')=='rightControl')
+    ? currentPosition+1 : currentPosition-1;
+
+      // Hide / show controls
+      manageControls(currentPosition);
+      // Move slideInner using margin-left
+      $('#slideInner').animate({
+        'marginLeft' : slideWidth*(-currentPosition)
+      });
+    });
+
+  // manageControls: Hides and shows controls depending on currentPosition
+  function manageControls(position){
+    // Hide left arrow if position is first slide
+    if(position==0){ $('#leftControl').hide() }
+    else{ $('#leftControl').show() }
+    // Hide right arrow if position is last slide
+    if(position==numberOfSlides-1){ $('#rightControl').hide() }
+    else{ $('#rightControl').show() }
+    }
+ 
+}
+
+Database.prototype.getResults = function(){
+		
+		try{// SQL statement die het aantal record telt in de settingsData tabel.
+			var sqlgetEnvData = 'SELECT * FROM environmentData';
+			this.myDb.transaction(
+				function(transaction){
+	 				// Het uitvoeren van sqlCount om te weten hoeveel records er zijn. 
+					transaction.executeSql(sqlgetEnvData, [], dataSelectHandler, this.errorHandler);
+				}
+			)
+		} catch(e) {
+			alert("Error Processing SQL: "+ e.message +".");
+		}
+
+}
+
+function dataSelectHandler(transaction, results) {
+ 
+ 	var NrHue = [0, 0, 0, 0];
+	var Mood = [0, 0, 0, 0];
+	
+	var UnhappyHue = [0, 0 , 0, 0];
+	var NrUnhappy = 0;
+	
+	var FineHue = [0, 0 , 0, 0];
+	var NrFine = 0;
+	
+	var HappyHue = [0, 0 , 0, 0];
+	var NrHappy = 0;
+	
+	var MoodWd = [0, 0, 0, 0, 0, 0, 0];
+	var HueWd1 = [0, 0, 0, 0, 0, 0, 0];
+	var HueWd2 = [0, 0, 0, 0, 0, 0, 0];
+	var HueWd3 = [0, 0, 0, 0, 0, 0, 0];
+	var HueWd4 = [0, 0, 0, 0, 0, 0, 0];
+	var NrWd = [0, 0, 0, 0, 0, 0, 0];
+	
+	var HueData = [0, 0, 0, 0];
+	var UnhappyData = [0, 0, 0, 0];
+	var FineData = [0, 0, 0, 0];
+	var HappyData = [0, 0, 0, 0];
+	var WdMoodData = [0, 0, 0, 0, 0, 0, 0];
+	
+	// Handle the results
+    for (var i=0; i<results.rows.length; i++) {
+ 
+    	var row = results.rows.item(i);
+    	var hue_cat = row['hue_cat'];
+    	var mood = parseInt(row['moodrate']);
+    	var d = new Date(row['added_on']);
+    	var weekday = d.getDay();
+    	
+    	if (hue_cat == 1) // vigorous categorie
+    	{ 	NrHue[0] = NrHue[0] + 1;
+    		Mood[0] = Mood[0] + mood;}
+    	else if (hue_cat == 2) // nature categorie
+    	{ 	NrHue[1] = NrHue[1] + 1;
+    		Mood[1] = Mood[1] + mood;}
+    	else if (hue_cat == 3) // ocean categorie
+    	{ 	NrHue[2] = NrHue[2] + 1;
+    		Mood[2] = Mood[2] + mood;}
+    	else if (hue_cat == 4) // flower categorie
+    	{ 	NrHue[3] = NrHue[3] + 1;
+    		Mood[3] = Mood[3] + mood;};
+    	
+    	if (mood <= 3) // Unhappy categorie
+    	{ 	NrUnhappy = NrUnhappy + 1;
+    		if (hue_cat == 1) // vigorous categorie
+    		{ 	UnhappyHue[0] = UnhappyHue[0] + 1;}
+    		else if (hue_cat == 2) // nature categorie
+    		{ 	UnhappyHue[1] = UnhappyHue[1] + 1;}
+    		else if (hue_cat == 3) // ocean categorie
+    		{ 	UnhappyHue[2] = UnhappyHue[2] + 1;}
+    		else if (hue_cat == 4) // flower categorie
+    		{ 	UnhappyHue[3] = UnhappyHue[3] + 1;}
+    	}
+    	
+    	else if (mood >= 8) // Happy categorie
+    	{ 	NrHappy = NrHappy + 1;
+    		if (hue_cat == 1) // vigorous categorie
+    		{ 	HappyHue[0] = HappyHue[0] + 1;}
+    		else if (hue_cat == 2) // nature categorie
+    		{ 	HappyHue[1] = HappyHue[1] + 1;}
+    		else if (hue_cat == 3) // ocean categorie
+    		{ 	HappyHue[2] = HappyHue[2] + 1;}
+    		else if (hue_cat == 4) // flower categorie
+    		{ 	HappyHue[3] = HappyHue[3] + 1;}
+    	}
+    	
+    	else // Fine categorie
+    	{ 	NrFine = NrFine + 1;
+    		if (hue_cat == 1) // vigorous categorie
+    		{ 	FineHue[0] = FineHue[0] + 1;}
+    		else if (hue_cat == 2) // nature categorie
+    		{ 	FineHue[1] = FineHue[1] + 1;}
+    		else if (hue_cat == 3) // ocean categorie
+    		{ 	FineHue[2] = FineHue[2] + 1;}
+    		else if (hue_cat == 4) // flower categorie
+    		{ 	FineHue[3] = FineHue[3] + 1;}
+    	};
+    
+    	
+    	NrWd[weekday] = NrWd[weekday] + 1;
+    	MoodWd[weekday] = MoodWd[weekday] + mood;
+    	if (hue_cat == 1) // vigorous categorie
+    	{ 	HueWd1[weekday] = HueWd1[weekday] + 1;}
+   		else if (hue_cat == 2) // nature categorie
+   		{ 	HueWd2[weekday] = HueWd2[weekday] + 1;}
+   		else if (hue_cat == 3) // ocean categorie
+   		{ 	HueWd3[weekday] = HueWd3[weekday] + 1;}
+   		else if (hue_cat == 4) // flower categorie
+    	{ 	HueWd4[weekday] = HueWd4[weekday] + 1;}
+    
+   }
+   
+   for (var i=0; i<4; i++){
+   		if (Mood[i] != 0)
+   		{HueData[i] = Mood[i]/ NrHue[i]};
+   		
+   		if (NrUnhappy != 0)
+   		{UnhappyData[i] = UnhappyHue[i]/ NrUnhappy};
+   		
+   		if (NrFine != 0)
+   		{FineData[i] = FineHue[i]/ NrFine};
+   		
+   		if (NrHappy != 0)
+   		{HappyData[i] = HappyHue[i]/ NrHappy}
+   }
+   	
+   	for(var i=0; i<7; i++){	
+   		if(NrWd[i] != 0)
+   		{	WdMoodData[i] = MoodWd[i]/ NrWd[i]; }
+   		
+   	}
+   
+   openChart(HueData, UnhappyData, FineData, HappyData, WdMoodData);
+}
+	
 
 /****************************** HANDLERS ******************************************/
 

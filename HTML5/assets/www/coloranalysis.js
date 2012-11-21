@@ -10,7 +10,7 @@ function pictureAnalysis(){
 		img.onload = function(){
 				
 			var maxWidth = window.innerWidth;
-			var maxHeight = window.innerHeight
+			var maxHeight = window.innerHeight;
 			var imgWidth = img.width;
 			var imgHeight = img.height;
 			var ratio = 1;
@@ -76,7 +76,6 @@ function pixalAnalysis(Data, Width, Height){
         }
          	
         var totalPix = Width * Height;
-        var percentPix =[0, 0, 0, 0];
         var MaxPix = Math.max.apply(null, nrPix);
         
         var HueClass = 0;
@@ -85,12 +84,12 @@ function pixalAnalysis(Data, Width, Height){
         {	
         	if (nrPix[n] == MaxPix)
          	{HueClass = (n+1);}
-         	percentPix[n] = (nrPix[n]/totalPix)*100;
+  
         }
          	
         var Saturation = (totalS / totalPix)*100;
         var Brightness = (totalB / totalPix)*100;
-        pixData = [HueClass, percentPix[0], percentPix[1], percentPix[2], percentPix[3], Saturation, Brightness];
+        pixData = [HueClass, Saturation, Brightness];
 }
 
 
