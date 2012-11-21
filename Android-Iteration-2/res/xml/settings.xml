@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory
+        android:title="@string/pref_cat_a">
+    
+    <!-- When checked user wants notifications -->
+    <CheckBoxPreference
+        android:key="pref_Notification"
+        android:title="@string/pref_notification"
+        android:summaryOn="@string/on"
+        android:summaryOff="@string/off"
+        android:defaultValue="false"/>  
+        
+    </PreferenceCategory>
+          
+    <PreferenceCategory
+    	android:title="@string/pref_cat_b">
+    
+        <!-- the user can set the minutes between two notifications -->
+        <com.example.android.IntEditTextPreference
+            android:key="pref_NotInterval"
+            android:title="@string/pref_not_interval"
+            android:summary="@string/pref_not_interval_summ"
+            android:dependency="pref_Notification"
+            android:maxLength="6"
+            android:numeric="integer"/>
+        
+        <!-- the user can set the time before which he doesn't want to receive notifications -->
+        <com.example.android.TimePreference
+            android:key="pref_StartNotTime"
+  			android:title="@string/pref_start_not_time"
+ 			android:summary="@string/pref_start_not_time_summ"
+  			android:dialogLayout="@layout/time_preference"
+  			android:dependency="pref_Notification"/>
+        
+       <!-- the user can set the time after which he doesn't want to receive notifications -->
+        <com.example.android.TimePreference
+            android:key="pref_StopNotTime"
+  			android:title="@string/pref_stop_not_time"
+ 			android:summary="@string/pref_stop_not_time_summ"
+  			android:dialogLayout="@layout/time_preference"
+  			android:dependency="pref_Notification"/>
+
+     
+     </PreferenceCategory>
+    <!--  
+    <PreferenceCategory 
+        android:title="@string/pref_cat_c">
+        
+        <RingtonePreference
+            android:key="pref_Ringtone"
+            android:title="@string/pref_ringtone"
+            android:ringtoneType="notification"
+            android:showDefault="true"
+            android:showSilent="true"/> 
+        
+    </PreferenceCategory>-->
+        
+
+</PreferenceScreen>

@@ -1,0 +1,30 @@
+<!-- Layout of the Camera Activity -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- Text displaid when the Activity is created -->
+    <TextView
+        android:id="@+id/PictureInstruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="@string/picture_instruction"
+        tools:context=".camera" />
+
+    <!-- When clicking on this button the user will open a camera -->
+    <Button
+        android:id="@+id/PictureButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/go_button"
+        android:onClick="startCamera" />
+
+</RelativeLayout>
