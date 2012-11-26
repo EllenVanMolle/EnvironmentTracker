@@ -29,7 +29,7 @@ public class Audio extends OptionMenu {
 	
 	private String FileName;
 	
-	public static final int RecordedTime = 5000; // Number of minutes of recording
+	public static final int RecordedTime = 5000; // Number of milliseconds of recording
 	
 	
 	public Audio(){
