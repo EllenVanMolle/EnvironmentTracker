@@ -9,20 +9,17 @@
  */
 function takeAPicture() {
 	navigator.camera.getPicture(onSuccess, onFail, { quality: 50, 
-	    destinationType: Camera.DestinationType.DATA_URL });
+		 destinationType: Camera.DestinationType.FILE_URI});
 }
 
 /*
  * Deze functie wordt aangesproken als het nemen van de foto succesvol is.
  */
-function onSuccess(imageData) {
-	//var image = document.getElementById('myImage');
-	/*alert('image received');
-	/*image.src = "data:image/jpeg;base64," + imageData;
-	/*image.src = imageURI// ;
-    localStorage.setItem("placeImage", image.src);
-    alert(localStorage.getItem("placeImage"));*/
-   	pictureAnalysis(); // analyseer de foto
+function onSuccess(imageURI) {
+	// sla de foto locaal op
+	localStorage.setItem("placeImage", imageURI);
+	// analyseer de foto
+	colorAnalysis();
    }
 
 /*
@@ -30,6 +27,6 @@ function onSuccess(imageData) {
  * De gebruiker krijgt dan een foutmelding.
  */
 function onFail(message) {
-    alert('Failed because: ' + message);  
+	// log de reden waarom het nemen van de foto gefaald heeft.
+    console.log('Failed because: ' + message);  
 }
- 

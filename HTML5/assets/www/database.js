@@ -13,14 +13,14 @@ document.addEventListener("deviceready", onDeviceReady, false);
  * tabellen creëert indien deze nog niet bestaan.
  */
 function onDeviceReady() {
-	database= new Database();
-	database.initDatabase();
-	database.createTables();
-	database.createSetTable();
+	database = new Database();
+	database.initDatabase();// initialiseer de database
+	database.createTable(); // creëer de environmenttabel
+	database.createSettingsTable();// creëer de settingstabel
 }
 
 /*
- * variabelen
+ * algemene variabelen
  */	
 var database;
 
@@ -69,8 +69,8 @@ Database.prototype.initDatabase = function() {
 /* 
  * Functie die de environmentData tabel in de database creëert door sqlstatements uit te voeren.
  */
-Database.prototype.createTables = function(){
-	try {// SQL statements voor de creatie van de tabellen
+Database.prototype.createTable = function(){
+	try {// SQL statements voor de creatie van de environmenttabel: environmentData
 		
 		var sqlTabel1 ='CREATE TABLE IF NOT EXISTS environmentData ('
         	+ 'ID INTEGER PRIMARY KEY ASC,'
@@ -97,40 +97,20 @@ Database.prototype.createTables = function(){
 }
 
 /*
- * Functie die nog een vierde tabelsettingsData creëert en igv
- * succes het aantal rijen in de tabel telt.
+ * Functie die nog een tabel settingsData creëert.
  */
-Database.prototype.createSetTable = function(){
+Database.prototype.createSettingsTable = function(){
 	try {// SQL statements voor de creatie van de tabellen
  		var sqlTabel2 = 'CREATE TABLE IF NOT EXISTS settingsData ('
         	+ 'ID INTEGER PRIMARY KEY,'
         	+ 'notification BOOLEAN,'
-        	+ 'monday BOOLEAN,'
-        	+ 'tuesday BOOLEAN,'
-        	+ 'wednesday BOOLEAN,'
-        	+ 'thursday BOOLEAN,'
-        	+ 'friday BOOLEAN,'
-        	+ 'saturday BOOLEAN,'
-        	+ 'sunday BOOLEAN,'
-        	+ 'startHour INTEGER,'
-        	+ 'startMinute INTEGER,'
-        	+ 'stopHour INTEGER,'
-        	+ 'stopMinute INTEGER,'
-        	+ 'interval INTEGER,'
-        	+ 'beep	BOOLEAN,'
-        	+ 'nr_beep INTEGER,'
-        	+ 'vibrate BOOLEAN,'
-        	+ 'min_vibrate INTEGER,'
         	+ 'GPS BOOLEAN)';
 
 	this.myDb.transaction(
 			function (transaction) {
-			//transaction.executeSql('DROP TABLE settingsData', [], this.nullDataHandler, this.errorHandler);
-			//uitvoeren van sqlTabel4 statement om tabel4 te creëeren: settingsData
-        	transaction.executeSql(sqlTabel2, [], 
-        		function (transaction, resultSet){
-        			database.getRowsSetData(); // Count the number of rows in the settingsData tabel 
-        	}, this.errorHandler);
+			transaction.executeSql('DROP TABLE settingsData', [], this.nullDataHandler, this.errorHandler);
+			//uitvoeren van sqlTabel2 statement om tabel4 te creëeren: settingsData
+        	transaction.executeSql(sqlTabel2, [], this.nullDataHandler, this.errorHandler);
         	}
 		);
 		
@@ -139,17 +119,26 @@ Database.prototype.createSetTable = function(){
 	}
 }
 
+
 /****************************** OPSLAG DataCollectie ******************************************/
 
 
-
 /*
- * Functie die aangeroepen wordt door geolocation om de locatie, moodrate, foto gegevens en audiogegevens op te slaan.
+ * Functie die aangeroepen wordt door geolocation om moodrate en datum te bepalen en vervolgens de observatie data op te slaan.
  */
-function saveLocation (latitude, longitude){
+function saveObservation (latitude, longitude){
+	// bepaald de waarde van het html item met id moodSlider, maw bepaald de mood
 	var moodrate = $('#moodSlider').val();
+	
+	// reset de waarde van de moodslider naar de default waarde 5
+	resetMoodSlider();
+	
+	// bepaal huidige datum en tijd
 	var on_date = new Date();
+	
+	// sla de data op in de database
 	database.saveEnvData(moodrate, on_date, latitude, longitude);
+	
 }
 
 
@@ -176,13 +165,23 @@ Database.prototype.saveEnvData = function(moodrate, on_date, latitude, longitude
 	};
 }
 
+/****************************** resetfunctions ******************************************/
+
 /*
- * Functie die wordt aangeroepen als de gebruiker op de home of save button klikt om de 
- * moodrate en de layout van de save button en stepthree navigatie terug naar hun oorspronkelijke toestand brengt.
+ * Functie die aangeroepen wordt door de goHome methode en door de saveObservation methode om de waarde van de moodSlider 
+ * terug op 5 te zetten.
  */
-function goHome(){
+function resetMoodSlider(){
 	$("#moodSlider").val(5).slider("refresh"); // moodSlider waarde wordt op 5 gezet
-	
+}
+
+
+/*
+ * Functie die wordt aangeroepen door de geolocation methode en door de goHome methode om 
+ * de layout van de save button en stepthree navigatie terug naar hun oorspronkelijke toestand brengt.
+ */
+function resetLayout(){
+	// link de variabelen met de gepaste html items
 	var saveB1 = document.getElementById("saveButton1");
 	var saveB2 = document.getElementById("saveButton2");
 	var saveB3 = document.getElementById("saveButton3");
@@ -200,6 +199,14 @@ function goHome(){
 	tab2.className = tab2.className.replace("", "ui-disabled");
 }
 
+/*
+ * Functie die wordt aangeroepen als de gebruiker op de home button klikt om de 
+ * moodrate en de layout van de save button en stepthree navigatie terug naar hun oorspronkelijke toestand brengt.
+ */
+function goHome(){
+	 resetMoodSlider();
+	 resetLayout();
+}
 
 
 
@@ -343,69 +350,22 @@ Database.prototype.updateSetData = function(setData){
 
 
 /****************************** RESULTS ******************************************/
-
+/*
+ * Functie die wordt aangesproken door te klikken op de view results button in de homepage.
+ * De functie haalt alle observaties uit de database en berekent een aantal waarden die dan door de graph.js
+ * gebruikt worden om in de resultpagina's een aantal samenvattende grafieken weer te geven.
+ */
 function getData(){
+	// haal alle observaties uit de database.
 	database.getResults();
-	
-  var currentPosition = 0;
-  var width = window.innerWidth
-  var slideWidth = (width - 20);
-  var slides = $('.slide');
-  var numberOfSlides = slides.length;
-
-  // Remove scrollbar in JS
-  $('#slidesContainer').css('overflow', 'hidden');
-
-  // Wrap all .slides with #slideInner div
-  slides
-  .wrapAll('<div id="slideInner"></div>')
-  // Float left to display horizontally, readjust .slides width
-  .css({
-    'float' : 'left',
-    'width' : slideWidth
-  });
-
-  // Set #slideInner width equal to total width of all slides
-  $('#slideInner').css('width', slideWidth * numberOfSlides);
-
-  // Insert left and right arrow controls in the DOM
-  $('#slideshow')
-    .prepend('<span class="control" id="leftControl">Move left</span>')
-    .append('<span class="control" id="rightControl">Move right</span>');
-
-  // Hide left arrow control on first load
-  manageControls(currentPosition);
-
-  // Create event listeners for .controls clicks
-  $('.control')
-    .bind('click', function(){
-    // Determine new position
-      currentPosition = ($(this).attr('id')=='rightControl')
-    ? currentPosition+1 : currentPosition-1;
-
-      // Hide / show controls
-      manageControls(currentPosition);
-      // Move slideInner using margin-left
-      $('#slideInner').animate({
-        'marginLeft' : slideWidth*(-currentPosition)
-      });
-    });
-
-  // manageControls: Hides and shows controls depending on currentPosition
-  function manageControls(position){
-    // Hide left arrow if position is first slide
-    if(position==0){ $('#leftControl').hide() }
-    else{ $('#leftControl').show() }
-    // Hide right arrow if position is last slide
-    if(position==numberOfSlides-1){ $('#rightControl').hide() }
-    else{ $('#rightControl').show() }
-    }
- 
 }
 
+/*
+ * Functie die alle observaties uit de database haalt.
+ */
 Database.prototype.getResults = function(){
 		
-		try{// SQL statement die het aantal record telt in de settingsData tabel.
+		try{// SQL statement dat alle observaties uit de environmentData tabel haalt
 			var sqlgetEnvData = 'SELECT * FROM environmentData';
 			this.myDb.transaction(
 				function(transaction){
@@ -416,134 +376,230 @@ Database.prototype.getResults = function(){
 		} catch(e) {
 			alert("Error Processing SQL: "+ e.message +".");
 		}
-
 }
 
+/*
+ * Functie die de resultaten van de uitvoering van het sql statement uit de getResults methode verwerkt.
+ */
 function dataSelectHandler(transaction, results) {
- 
+ 	
+ 	// variabele voor het aantal observaties
+ 	var AantalObs = results.rows.length;
+ 	
+ 	// variabelen voor het berekenen van de gemiddelde gemoedstoestand per hue categorie
  	var NrHue = [0, 0, 0, 0];
-	var Mood = [0, 0, 0, 0];
+	var hueMood = [0, 0, 0, 0];
 	
+	// variabelen voor het berekenen van % per hue_cat als gebruiker ongelukkig is	
 	var UnhappyHue = [0, 0 , 0, 0];
 	var NrUnhappy = 0;
 	
+	// variabelen voor het berekenen van % per hue_cat als gebruiker oke is
 	var FineHue = [0, 0 , 0, 0];
 	var NrFine = 0;
 	
+	// variabelen voor het berekenen van % per hue_cat als gebruiker gelukkig is
 	var HappyHue = [0, 0 , 0, 0];
 	var NrHappy = 0;
 	
+	// variabelen voor het berekenen van de gemiddelde gemoedstoestand per dag van de week
 	var MoodWd = [0, 0, 0, 0, 0, 0, 0];
-	var HueWd1 = [0, 0, 0, 0, 0, 0, 0];
-	var HueWd2 = [0, 0, 0, 0, 0, 0, 0];
-	var HueWd3 = [0, 0, 0, 0, 0, 0, 0];
-	var HueWd4 = [0, 0, 0, 0, 0, 0, 0];
 	var NrWd = [0, 0, 0, 0, 0, 0, 0];
 	
-	var HueData = [0, 0, 0, 0];
-	var UnhappyData = [0, 0, 0, 0];
-	var FineData = [0, 0, 0, 0];
-	var HappyData = [0, 0, 0, 0];
-	var WdMoodData = [0, 0, 0, 0, 0, 0, 0];
+	// variabelen voor het berekenen van de saturation per gemoedstoestand
+	var satNr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	// variabelen voor het berekenen van de brightness per gemoedstoestand
+	var brightNr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	// variabele die het aantal meting per gemoedstoestand weergeeft.
+	var NrM = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 	
-	// Handle the results
-    for (var i=0; i<results.rows.length; i++) {
+	// variabelen voor het berekenen van de gemiddelde gemoedstoestand en meest voorkomende hue categorie
+	var avgMood = 0;
+	var mostHueCat = 0;
+	
+	// variabelen voor het berekenene van de gemiddelde gemoedstoestand op de laatste location
+	var lastLocation = [Math.round(results.rows.item(AantalObs-1)['posLatitude']*1000), Math.round(results.rows.item(AantalObs-1)['posLongitude']*1000)];
+	var lastLocationAantal = 0;
+	var lastLocationMood = 0;
+	
+	// verwerking van de resultaten
+	// we overlopen alle rijen in het resultaat, dus in de gevalle alle rijen uit de tabel
+    for (var i=0; i< AantalObs; i++) {
  
+    	// Elke rij in tabel is een observatie. Hier definieren we een variabele row gelijk aan observatie i
     	var row = results.rows.item(i);
+    	
+    	// De hue van observatie i
     	var hue_cat = row['hue_cat'];
+    	// De mood van observatie i (moet nog omgezet worden naar een integer)
     	var mood = parseInt(row['moodrate']);
+    	// een datum variabele voor de added_on van de observatie i
     	var d = new Date(row['added_on']);
+    	// De dag waarop een observatie i werd toegevoegd (ma=0, di=1, woe=2, do=3, vrij=4, zat=5, zon=6)
     	var weekday = d.getDay();
+    	// De saturatie van observatie i
+    	var sat = row['per_saturation'];
+    	// De brightness van observatie i
+    	var bright = row['per_brightness'];
+    	// De locatie van observatie i
+    	var location = [Math.round(row['posLatitude'] *1000), Math.round(row['posLongitude'] *1000)]; // afgerond op drie cijfers na de komma
     	
-    	if (hue_cat == 1) // vigorous categorie
-    	{ 	NrHue[0] = NrHue[0] + 1;
-    		Mood[0] = Mood[0] + mood;}
-    	else if (hue_cat == 2) // nature categorie
-    	{ 	NrHue[1] = NrHue[1] + 1;
-    		Mood[1] = Mood[1] + mood;}
-    	else if (hue_cat == 3) // ocean categorie
-    	{ 	NrHue[2] = NrHue[2] + 1;
-    		Mood[2] = Mood[2] + mood;}
-    	else if (hue_cat == 4) // flower categorie
-    	{ 	NrHue[3] = NrHue[3] + 1;
-    		Mood[3] = Mood[3] + mood;};
-    	
+    // berekenen van de gemiddelde gemoedstoestand per hue categorie
+       	if (hue_cat == 1) 
+    	{ 	//als i tot de vigorous categorie
+    		NrHue[0] += 1;
+    		hueMood[0] += mood;}
+    	else if (hue_cat == 2)
+    	{ 	//als i tot de nature categorie
+    		NrHue[1] += 1;
+    		hueMood[1] += mood;}
+    	else if (hue_cat == 3) 
+    	{ 	//als i tot de ocean categorie
+    		NrHue[2] += 1;
+    		hueMood[2] += mood;}
+    	else if (hue_cat == 4)
+    	{ 	//als i tot de flower categorie
+    		NrHue[3] += 1;
+    		hueMood[3] += mood;};
+    		
+     // berekenen van % per hue_cat als gebruiker ongelukkig is	
     	if (mood <= 3) // Unhappy categorie
     	{ 	NrUnhappy = NrUnhappy + 1;
     		if (hue_cat == 1) // vigorous categorie
-    		{ 	UnhappyHue[0] = UnhappyHue[0] + 1;}
+    		{ 	UnhappyHue[0] += 1;}
     		else if (hue_cat == 2) // nature categorie
-    		{ 	UnhappyHue[1] = UnhappyHue[1] + 1;}
+    		{ 	UnhappyHue[1] += 1;}
     		else if (hue_cat == 3) // ocean categorie
-    		{ 	UnhappyHue[2] = UnhappyHue[2] + 1;}
+    		{ 	UnhappyHue[2] += 1;}
     		else if (hue_cat == 4) // flower categorie
-    		{ 	UnhappyHue[3] = UnhappyHue[3] + 1;}
+    		{ 	UnhappyHue[3] += 1;}
     	}
     	
+    	// berekenen van % per hue_cat als gebruiker gelukkig is	
     	else if (mood >= 8) // Happy categorie
     	{ 	NrHappy = NrHappy + 1;
     		if (hue_cat == 1) // vigorous categorie
-    		{ 	HappyHue[0] = HappyHue[0] + 1;}
+    		{ 	HappyHue[0] += 1;}
     		else if (hue_cat == 2) // nature categorie
-    		{ 	HappyHue[1] = HappyHue[1] + 1;}
+    		{ 	HappyHue[1] += 1;}
     		else if (hue_cat == 3) // ocean categorie
-    		{ 	HappyHue[2] = HappyHue[2] + 1;}
+    		{ 	HappyHue[2] += 1;}
     		else if (hue_cat == 4) // flower categorie
-    		{ 	HappyHue[3] = HappyHue[3] + 1;}
+    		{ 	HappyHue[3] += 1;}
     	}
     	
+    	// berekenen van % per hue_cat als gebruiker oke is	
     	else // Fine categorie
     	{ 	NrFine = NrFine + 1;
     		if (hue_cat == 1) // vigorous categorie
-    		{ 	FineHue[0] = FineHue[0] + 1;}
+    		{ 	FineHue[0] += 1;}
     		else if (hue_cat == 2) // nature categorie
-    		{ 	FineHue[1] = FineHue[1] + 1;}
+    		{ 	FineHue[1] += 1;}
     		else if (hue_cat == 3) // ocean categorie
-    		{ 	FineHue[2] = FineHue[2] + 1;}
+    		{ 	FineHue[2] += 1;}
     		else if (hue_cat == 4) // flower categorie
-    		{ 	FineHue[3] = FineHue[3] + 1;}
+    		{ 	FineHue[3]+= 1;}
     	};
     
+    // berekenen van gemiddelde gemoedstoestand op een bepaalde dag van de week
+    	// weekday waarde van 0-6 afh van de dag.
+    	NrWd[weekday] += 1;
+    	MoodWd[weekday] += mood;
     	
-    	NrWd[weekday] = NrWd[weekday] + 1;
-    	MoodWd[weekday] = MoodWd[weekday] + mood;
-    	if (hue_cat == 1) // vigorous categorie
-    	{ 	HueWd1[weekday] = HueWd1[weekday] + 1;}
-   		else if (hue_cat == 2) // nature categorie
-   		{ 	HueWd2[weekday] = HueWd2[weekday] + 1;}
-   		else if (hue_cat == 3) // ocean categorie
-   		{ 	HueWd3[weekday] = HueWd3[weekday] + 1;}
-   		else if (hue_cat == 4) // flower categorie
-    	{ 	HueWd4[weekday] = HueWd4[weekday] + 1;}
+    // berekenen van de gemiddelde saturation per gemoedstoestand (1-10)
+    	satNr[mood-1] += sat;
+    // berekenen van de gemiddelde brightness per gemoedstoestand (1-10)
+    	brightNr[mood-1] += bright ;
+   	// aantal metingen per gemoedstoestand
+    	NrM [mood-1] += 1;
     
-   }
+    // vergelijken locatie observatie i met laatste locatie
+    if (lastLocation == location) {
+    	lastLocationAantal += 1;
+    	lastLocationMood += mood;
+    }
+    
+    
+   }; // einde forlus
    
+   // voor elke hue categorie
    for (var i=0; i<4; i++){
-   		if (Mood[i] != 0)
-   		{HueData[i] = Mood[i]/ NrHue[i]};
+   	
+   		if (hueMood[i] != 0)
+   		// gemiddelde gemoedstoestand
+   		{	avgMood += hueMood[i]; // totale gemoed
+   			hueMood[i] /= NrHue[i];
+   			hueMood[i] = Math.round(hueMood[i])// afronden
+   		};
    		
    		if (NrUnhappy != 0)
-   		{UnhappyData[i] = UnhappyHue[i]/ NrUnhappy};
+   		// % wanneer gebruiker ongelukkig is
+   		{	UnhappyHue[i] /= NrUnhappy;
+   			UnhappyHue[i] = (Math.round(UnhappyHue[i]*100)) /100 // afronden tot op twee cijfers na de komma
+   		};
    		
    		if (NrFine != 0)
-   		{FineData[i] = FineHue[i]/ NrFine};
+   		// % wanneer gebruiker oke is
+   		{	FineHue[i] /= NrFine;
+   			FineHue[i] = (Math.round(FineHue[i]*100)) /100 // afronden tot op twee cijfers na de komma
+   		};
    		
    		if (NrHappy != 0)
-   		{HappyData[i] = HappyHue[i]/ NrHappy}
-   }
+   		// % wanneer gebruiker ok is
+   		{	HappyHue[i] /= NrHappy;
+   			HappyHue[i] = (Math.round(HappyHue[i]*100)) /100// afronden tot op twee cijfers na de komma
+   		}
+   		
+   };
    	
+   	// voor elke dag van de week
    	for(var i=0; i<7; i++){	
    		if(NrWd[i] != 0)
-   		{	WdMoodData[i] = MoodWd[i]/ NrWd[i]; }
+   		{	//gemiddeld gemoedstoestand
+   			MoodWd[i] /= NrWd[i];
+   			MoodWd[i] = Math.round(MoodWd[i])// afronden
+   		}
    		
-   	}
+   	};
+   	
+   	// voor elke gemoedstoestand tussen 1-10
+   	for (var i=0; i<10; i++){
+   		if(NrM[i] != 0)
+   		{ 	// gemiddelde saturation
+   			satNr[i] /= NrM[i];
+   			satNr[i] = Math.round(satNr[i]); // afronden
+   			
+   			// gemiddelde brightness
+   			brightNr[i] /= NrM[i];
+   			brightNr[i] = Math.round(brightNr[i]); // afronden
+   			
+   		}
+   	};
+   	
+   	// gemiddelde mood op de laatste locatie
+   	lastLocationMood /= lastLocationAantal;
+   	
+   	// gemiddelde gemoedstoestand
+   	avgMood /= (NrHue[0]+ NrHue[1]+ NrHue[2] + NrHue[3]);
+   	
+   	// bepaal het hoogste aantal observaties voor een hue category
+    var MaxNrObs = Math.max.apply(null, NrHue);
+       
+   	// loop door alle klassen (0-3)	
+    for (var n=0; n < 4; n++ )
+    {	
+       if (NrHue[n] == MaxNrObs) // vergelijk het aantal observaties in elke klasse met de maximumwaarde
+       {// als het maximum gelijk is aan het aantal pixels in die klasse, stel hueclass gelijk aan die categorie
+         	mostHueCat = (n+1);
+        }
+    }
+   	
    
-   openChart(HueData, UnhappyData, FineData, HappyData, WdMoodData);
+   openChart(hueMood, UnhappyHue, FineHue, HappyHue, MoodWd, satNr, brightNr, avgMood, mostHueCat, lastLocationMood, lastLocationAantal, lastLocation);
 }
 	
 
 /****************************** HANDLERS ******************************************/
-
 
 
 /* 
@@ -572,44 +628,6 @@ Database.prototype.nullDataHandler = function(transaction, resultSet) {
 
 
 /*
-function dropTables(){
-	TrackerDb.transaction(
-	    function (transaction) {
-	    	transaction.executeSql("DROP TABLE EnvironmentData;", [], nullDataHandler, errorHandler);
-	    }
-	);
-	console.log("Table 'EnvironmentData' has been dropped.");
-	location.reload();
-}
-	    	
-	    	 
-
-
-
-/*
-function selectAll(){ 
-	TrackerDb.transaction(
-	    function (transaction) {
-	        transaction.executeSql("SELECT * FROM EnvironmentData;", [], dataSelectHandler, errorHandler);    
-	    }
-	);	
-}
-
-/*
-function dataSelectHandler(transaction, results){
-
-	// Handle the results
-    for (var i=0; i<results.rows.length; i++) {
-        
-    	var row = results.rows.item(i);
-    	
-        var newFeature = new Object();
-    	
-    	newFeature.moodrate  = row['moodrate'];
-    }
-
-}
-*/
 
 
 /***

@@ -1,6 +1,8 @@
 /*
  * document smiley.css
  * opmaak voor een smiley op de stepone pagina.
+ * opmaak voor de tekst die instructies geeft aan de gebruikers
+ * opmaak van savebutton in de voettekst
  */
 
 body { padding: 30px; }
@@ -71,3 +73,24 @@ body { padding: 30px; }
       	top: 25px !important;
       	border-width: 1px; 
       	bottom: auto !important;}
+
+/* opmaak van de instructies in de datacollectiepagina's **/
+.instruction{
+	font-family:"Comic Sans MS";
+	font-size: 24px;
+	font-weight: bold;
+	
+}
+
+/* opmaak van de savebutton in de footer van de datacollectiepagina's **/
+.hidden{
+	visibility: hidden;
+}
+
+#colorbox { 
+    	width: 150px; 
+    	height: 75px; 
+      	top: 10px; 
+      	position: relative;
+      	border: 3px solid black; 
+      	background-color: white;}

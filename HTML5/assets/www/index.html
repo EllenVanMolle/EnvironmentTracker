@@ -11,8 +11,13 @@
 
 <!-- De nodige referenties zodanig dat Jquery Mobile kan gebruikt worden.-->
 <link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" />
+
 <script src="js/jquery-1.8.2.min.js"></script>
 <script src="js/jquery.mobile-1.2.0.min.js"></script>
+
+<!-- Overbodig?-->
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/jquery.fitvids.js"></script>
 
 <!-- De nodige referenties zodanig dat HighCharts kan gebruikt worden.-->
 <script src="js/highcharts.js" type="text/javascript"></script>
@@ -21,23 +26,19 @@
 <!-- Het script nodig om phonegap/Cordova te gebruiken. -->
 <script type="text/javascript" src="cordova-2.1.0.js"></script>
 
-<!-- De stylingpagina die de smiley op de stepone pagina beschrijft -->
+<!-- De stylingpagina die de smiley op de stepone pagina beschrijft en andere aangepaste layout-->
 <link rel="stylesheet" href="css/smiley.css" type="text/css"/>
-
-<!-- De stylingpagina die de rest van de aangepaste layout beschrijft -->
-<link rel="stylesheet" href="css/EnvTracker.css" type="text/css"/>
-    
+ 
 </head>
 
+
 <body>
-
-
 
 <!-------------------------------------------------------------------------------------------------------------------------------	
 -----------------------------------------------------STARTPAGNA------------------------------------------------------------------>
 	
 <!-- Begin van de startpagina. Deze pagina krijgt id homepage. De gebruiker krijgt een
-		aantal opties te zien; Settings, View results, launch -->
+		aantal opties te zien; Settings, View results, Record-->
 <div data-role="page" id="homepage" data-theme="e">
 
 	<!-- Begin van de hoofding van de startpagina. -->
@@ -48,17 +49,20 @@
 	<!-- Begin van de inhoud van de startpagina. -->
 	<div data-role="content">	
 		<!-- De klasse instruction geeft bepaalde layoutkenmerken aan de tekst mee (grote, vetgedrukt).
-			Deze worden beschreven in de stylepagina EnvTracker.css-->
+			Deze worden beschreven in de stylepagina smiley.css-->
 		<p id="homepageText" align="center" class="instruction">Welcome!</p>
 		
-		<!-- De knop settings is een link naar de settingspagina. -->
-		<a href="#settings" data-role="button" data-transition="flow" data-icon="gear" onclick="getSet()">Settings</a>
+		<!-- De knop settings is een link naar de settingspagina. Een speciale pagina-overgang is gedefinieerd, nl. Flow.
+			Als op de knop geklikt wordt, wordt de settingdata uit de database gehaald -->
+		<a href="#settings" data-role="button" data-transition="flow" onclick="getSet()">Settings</a>
 		
-		<!-- De knop view results is een link naar de resultatenpagina -->
-		<a href="#results" data-role="button" data-transition="flow" data-icon="star" onclick="getData()">View results</a>
+		<!-- De knop view results is een link naar de resultatenpagina. Een speciale pagina-overgang is gedefinieerd, nl. Flow.
+			Als op de knop geklikt wordt, wordt de obeservatiedata uit de database gehaald. -->
+		<a href="#colorResults" data-role="button" data-transition="flow" onclick="getData()">View results</a>
 		
-		<!-- De knop Launch is een link naar stepone. -->
-		<a href="#stepone" data-role="button" data-transition="slidefade" data-icon="check">Launch</a>
+		<!-- De knop Record is een link naar stepone. Een speciale pagina-overgang is gedefinieerd, nl. Slidefade.
+			Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
+		<a href="#stepone" data-role="button" data-transition="slidefade" >Record</a>
 		
 	</div><!-- Einde van de inhoud. -->
 	
@@ -66,118 +70,146 @@
 
 
 
-
-
 <!-------------------------------------------------------------------------------------------------------------------------------	
 -----------------------------------------------------DATA COLLECTIE-------------------------------------------------------------->
 
 
-<!-- De eerste pagina, nadat je de pop-up of alert hebt gekregen. Deze pagina krijgt id stepone. 
-	De gebruiker moet zijn mood ingeven.-->
+<!-- De eerste pagina van de datacollectiefase. Deze pagina krijgt id stepone. 
+	De gebruiker moet hier zijn mood ingeven.-->
 <div data-role="page" id="stepone" data-theme="e">
 
-	<!-- Begin van de hoofding van de stepone pagina, met een navigatiebar die de gebruiker toelaat om naar stap twee te gaan  -->
+	<!-- Begin van de hoofding van de stepone pagina. De header is ongeveer hetzelfde voor elke pagina in de datacolletiefase.  -->
 	<div data-role="header" data-theme="a" data-position="fixed">
-		<!-- Begin van de navigatiebar met Step One, Step Two, Step Three -->
+		<!-- Begin van de navigatiebar met Step 1, Step 2, Step 3 -->
 		<div data-role="navbar">
 			<ul>
-				<!-- Het class attribuut zorgt ervoor dat Step One geselecteerd is.-->
-				<li><a class="ui-btn-active">Step One</a></li>
-				<!-- Als de gebruiker op Step Two in de header klikt, gaat hij naar stap 2.-->
-				<li><a href="#steptwo" data-transition="slidefade">Step Two</a></li>
-				<!-- Als de gebruiker op Step Three in de header klikt, krijgt hij een popup
-					om te zeggen dat dit niet toegelaten is zolang hij stap 2 niet heeft uitgevoerd.-->
-				<li><a href="stepthree" data-transition="slidefade" class="ui-disabled" id="tab1">Step Three</a></li>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Step 1 geselecteerd is.-->
+				<li><a class="ui-btn-active">Step 1</a></li>
+				<!-- Deze tab is een link naar de steptwo pagina. Een speciale pagina-overgang is gedefinieerd, nl. slidefade.-->
+				<li><a href="#steptwo" data-transition="slidefade">Step 2</a></li>
+				<!-- Het class attribuut zorgt ervoor dat Step 3 uitgeschakeld is en niet door de gebruiker kan worden aangeklikt.
+					als deze tab enabled is, is het een link naar de stepthree pagina. Een speciale pagina-overgang is gedefinieerd, nl. slidefade.-->
+				<li><a href="stepthree" data-transition="slidefade" class="ui-disabled" id="tab1">Step 3</a></li>
 			</ul>
 		</div> <!-- Einde van de navigatiebar -->
 	</div><!-- Einde van de hoofding van de stepone pagina. -->
 	
 	<!-- Begin van de inhoud van de stepone pagina. -->
 	<div data-role="content">	
+		<!-- De klasse instruction geeft bepaalde layoutkenmerken aan de tekst mee (grote, vetgedrukt).
+			Deze worden beschreven in de stylepagina smiley.css-->
 		<p align="center" class="instruction">How do you feel?</p>
 		
-		<!-- Geeft mood in woorden weer-->
+		<!-- Geeft mood in woorden weer; Unhappy, Fine, Happy-->
   		<p id="moodText" align="center" class="instruction">Fine</p>
 		
 		<!-- Er wordt een smiley weergegeven die blijer wordt naarmate de slider een hogere waarde heeft.
 			De id wordt gelinkt met layout kenmerken in de stylingpagina smiley.css -->
-		<div id="face">
-			<div id="eye-box1"></div>
+		<div id="face"> <!-- Een gele cirkel voor het gezicht -->
+			<div id="eye-box1"></div> <!-- Een witte ovaal voor de ogen -->
 			<div id="eye-box2"></div>
-			<div id="eyeL"></div>
+			<div id="eyeL"></div> <!-- Een zwarte cirkel voor de pupillen -->
 			<div id="eyeR"></div>
-    		<div id="mouth-box">
-    			<div id="mouth" class="straight"></div>
+    		<div id="mouth-box"> 
+    			<div id="mouth" class="straight"></div> <!-- De mond is bij openen van de pagina neutraal -->
     		</div>
   		</div><!-- Einde van de smiley.-->
   		
-     
     	<!-- De slider voor het weergeven van de mood. De beginwaarde is 5, hij gaat van 1 tot 10. Als de waarde van de slider
 			wordt gewijzigd, wordt de actie sliderChange() uitgevoerd om de smiley aan te passen -->	
 		<input type="range" id="moodSlider" title="moodSlider" min="1" max="10" value="5" step="1" onchange="sliderChange()" data-highlight="true"/>
-			
-			
-		<!-- De knop Next met als icon een pijltje naar rechts aan de linkerkant, is een link naar de volgende stap.-->
-		<a href="#steptwo" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="slidefade">Continue</a>
+					
+		<!-- De knop Record is een link naar stepone. Een speciale pagina-overgang is gedefinieerd, nl. Slidefade.
+			Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
+		<a href="#steptwo" data-role="button" data-transition="slidefade">Continue</a>
 	
 	</div><!-- Einde van de inhoud van de stepone pagina. -->
 	
-	<!-- Een voettekst met een home knop die als erop geklikt wordt terug naar de homepage gaat. -->	
+	<!-- Een voettekst met een "home" knop. Deze is hetzelfde voor elke pagina in de datacollectiefase. -->	
 	<div data-role="footer" class="ui-bar" data-theme="a" data-position="fixed">
+		<!-- Begin roosterstructuur (grid) in de voettekst met drie even grote blokjes om de layout op te maken -->
 		<div class="ui-grid-b">
-			<div class="ui-block-a"><a href="#dialogHome" data-rel="dialog" data-inline="true" data-role="button" data-icon="home" data-theme="b">Home</a></div>
-			<div class="ui-block-b"></div> 
+			<!-- Begin eerste blokje in de roosterstructuur -->
+			<div class="ui-block-a">
+				<!-- De knop Home is een link naar een dialoogvenster, dat de gebruiker verwittigt dat alle data van deze observatie verloren zal gaan.
+					 De knop is net zo groot als nodig om de tekst te omvatten. Een speciale pagina-overgang is gedefinieerd, nl. slidedown. 
+					 Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
+				<a href="#dialogCancel" data-rel="dialog" data-inline="true" data-role="button" data-theme="b" data-transition="slidedown">Home</a>
+			</div> <!-- Einde eerste blokje -->
+			<!-- Begin tweede blokje in de roosterstructuur. Dit blokje is leeg -->
+			<div class="ui-block-b"></div> <!-- Einde tweede blokje -->
+			<!-- Begin derde blokje in de roosterstructuur -->
 			<div class="ui-block-c">
-				<a id="saveButton1" class="hidden" data-inline="true" href="#homepage" onclick="geolocation()" data-role="button" data-icon="check" data-theme="b">Save</a>
-			</div>
-		</div>
-		<!-- toevoegen van functie om alles terug naar default te zetten -->
+				<!-- De knop Save is een link naar de homepage. De knop is net zo groot als nodig om de tekst te omvatten. 
+					Een speciale pagina-overgang is gedefinieerd, nl. slidefade. Als de gebruiker op deze knop drukt wordt de geolocatie methode aangeroepen en 
+					wordt uiteindelijk alle data van deze observatie opgeslagen. De klasse hidden definieert de layout van de knop (knop is verborgen voor de gebruiker).
+					Na het voltooien van de step 3 wordt de knop zichtbaar gemaakt. De klasse wordt gedefinieerd in smiley.css-->
+				<a id="saveButton1" class="hidden" data-inline="true" href="#homepage" onclick="geolocation()" data-role="button" data-theme="b" data-transition="slidefade">Save</a>
+			</div> <!-- Einde derde blokje -->
+		</div> <!-- Einde van de vakjesstructuur (grid)-->
 	</div><!-- Einde van de voettekst van de stepone pagina-->
 	
 </div><!-- Einde van de stepone pagina -->
 
-<!-- Het begin van de tweede pagina. Deze pagina krijgt id steptwo. -->
+<!-- Het begin van de tweede pagina. Deze pagina krijgt id steptwo. Hier moet de gebruiker een foto trekken.-->
 <div data-role="page" id="steptwo" data-theme="e">
 
-	<!-- Begin van de hoofding van de step two pagina. Hier moet de gebruiker een foto trekken.-->
+	<!-- Begin van de hoofding van de step two pagina. De header is ongeveer hetzelfde voor elke pagina in de datacolletiefase.-->
 	<div data-role="header" data-theme="a" data-position="fixed">
-		<!-- Begin van de navigatiebar met Step One, Step Two, Step Three -->
+		<!-- Begin van de navigatiebar met Step 1, Step 2, Step 3 -->
 		<div data-role="navbar">
 			<ul>
-				<!-- Als de gebruiker op Step One in de header klikt, keert hij terug naar stap 1-->
-				<li><a href="#stepone" data-transition="slidefade">Step One</a></li>
-				<li><a class="ui-btn-active">Step Two</a></li>
-				<!-- Als de gebruiker op Step Three in de header klikt, krijgt hij een popup
-					om te zeggen dat dit niet toegelaten is zolang hij geen foto heeft genomen.-->
-				<li><a href="#stepthree" data-transition="slidefade" class="ui-disabled" id="tab2">Step Three</a></li>
+				<!-- Deze tab is een link naar de stepone pagina. Een speciale pagina-overgang is gedefinieerd, nl. slidefade.-->
+				<li><a href="#stepone" data-transition="slidefade">Step 1</a></li>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Step 2 geselecteerd is.-->
+				<li><a class="ui-btn-active">Step 2</a></li>
+				<!-- Het class attribuut zorgt ervoor dat Step 3 uitgeschakeld is en niet door de gebruiker kan worden aangeklikt.
+					als deze tab enabled is, is het een link naar de stepthree pagina. Een speciale pagina-overgang is gedefinieerd, nl. slidefade.-->
+				<li><a href="#stepthree" data-transition="slidefade" class="ui-disabled" id="tab2">Step 3</a></li>
 			</ul>
 		</div> <!-- Einde van de navigatiebar-->
 	</div><!-- Einde van de hoofding. -->
 
 	<!-- Begin van de inhoud van de tweede pagina. -->
 	<div data-role="content" data-theme="e">
+		<!-- De klasse instruction geeft bepaalde layoutkenmerken aan de tekst mee (grote, vetgedrukt).
+			Deze worden beschreven in de stylepagina smiley.css-->
 		<p align="center" class="instruction">Time to take a Picture!</p>
 		
-		<!-- De knop continue met pijltje als icon aan de rechterkant opent de camera applicatie om een foto te nemen.
-			Als dit succesvol verloopt wordt de foto geanalyseerd en de stepthree pagina geopend. -->
-		<a data-role="button" href="#stepthree" data-icon="arrow-r" data-iconpos="right" onclick="takeAPicture()" data-transition="slidefade" >Take a Picture</a>
+		<!-- De knop continue is een link naar de stepthree. Een speciale pagina-overgang is gedefinieerd, nl. slidefade. 
+			Als de gebruiker op deze knop drukt wordt de takeAPicture methode aangeroepen en wordt de camera gelanceerd.
+			De gebruiker neemt een foto en als dit succesvol is wordt deze geanalyseerd. -->
+		<a data-role="button" href="#stepthree" onclick="takeAPicture()" data-transition="slidefade" >Take a Picture</a>
 
 	</div><!-- Einde van de inhoud. -->
 	
-	<!-- Een voettekst met een home knop die als erop geklikt wordt terug naar de homepage gaat. -->	
-	<div data-role="footer" class="ui-bar" data-theme="a" data-position="fixed" data-id="Footer">
+	<!-- Een voettekst met een "home" knop. Deze is hetzelfde voor elke pagina in de datacollectiefase. -->	
+	<div data-role="footer" class="ui-bar" data-theme="a" data-position="fixed">
+		<!-- Begin roosterstructuur (grid) in de voettekst met drie even grote blokjes om de layout op te maken -->
 		<div class="ui-grid-b">
-			<div class="ui-block-a"><a href="#dialogHome" data-rel="dialog" data-inline="true" data-role="button" data-icon="home" data-theme="b">Home</a></div>
-			<div class="ui-block-b"></div> 
+			<!-- Begin eerste blokje in de roosterstructuur -->
+			<div class="ui-block-a">
+				<!-- De knop Home is een link naar een dialoogvenster, dat de gebruiker verwittigt dat alle data van deze observatie verloren zal gaan.
+					 De knop is net zo groot als nodig om de tekst te omvatten. Een speciale pagina-overgang is gedefinieerd, nl. slidedown. 
+					 Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
+				<a href="#dialogCancel" data-rel="dialog" data-inline="true" data-role="button" data-theme="b" data-transition="slidedown">Home</a>
+			</div><!-- Einde eerste blokje -->
+			<!-- Begin tweede blokje in de roosterstructuur. Dit blokje is leeg -->
+			<div class="ui-block-b"></div> <!-- Einde tweede blokje -->
+			<!-- Begin derde blokje in de roosterstructuur -->
 			<div class="ui-block-c">
-				<a id="saveButton2" class="hidden" data-inline="true" href="#homepage" data-role="button" onclick="geolocation()"  data-icon="check" data-theme="b">Save</a>
-			</div>
-		</div>
+				<!-- De knop Save is een link naar de homepage. De knop is net zo groot als nodig om de tekst te omvatten. 
+					Een speciale pagina-overgang is gedefinieerd, nl. slidefade. Als de gebruiker op deze knop drukt wordt de geolocatie methode aangeroepen en 
+					wordt uiteindelijk alle data van deze observatie opgeslagen. De klasse hidden definieert de layout van de knop (knop is verborgen voor de gebruiker).
+					Na het voltooien van de step 3 wordt de knop zichtbaar gemaakt. De klasse wordt gedefinieerd in smiley.css-->
+				<a id="saveButton2" class="hidden" data-inline="true" href="#homepage" data-role="button" onclick="geolocation()" data-theme="b" data-transition="slidedown">Save</a>
+			</div> <!-- Einde derde blokje -->
+		</div> <!-- Einde van de vakjesstructuur (grid)-->
 	</div><!-- Einde van de voettekst van de steptwo pagina-->
 	
 </div><!-- Einde van de tweede pagina -->
 
-<!-- Het begin van de analysepagina. Deze pagina krijgt id analysepicture. -->
+<!-- Dit is waarschijnlijk overbodig! Het begin van de analysepagina. Deze pagina krijgt id analysepicture. -->
 <div data-role="page" id="analysepicture" data-theme="e">
 	
 	<div data-role="content">
@@ -186,66 +218,95 @@
 	
 </div><!-- Einde van de analyse pagina -->
 
-<!-- Het begin van de derde pagina. Deze pagina krijgt id stepthree. 
-	De gebruiker neemt 5 secondengeluid op. -->		
+<!-- Het begin van de derde pagina. Deze pagina krijgt id stepthree. De gebruiker neemt 5 secondengeluid op. -->		
 <div data-role="page" id="stepthree" data-theme="e">
 
-	<!-- Begin van de hoofding van de derde pagina. -->
+	<!-- Begin van de hoofding van de derde pagina. De header is ongeveer hetzelfde voor elke pagina in de datacolletiefase.-->
 	<div data-role="header" data-theme="a" data-position="fixed">
-		<!-- Begin van de navigatiebar met Step One, Step Two, Step Three -->
+		<!-- Begin van de navigatiebar met Step 1, Step 2, Step 3 -->
 		<div data-role="navbar">
 			<ul>
-				<!-- Als de gebruiker op Step One in de header klikt, keert hij terug naar stap 1-->
-				<li><a href="#stepone" data-transition="slidefade">Step One</a></li>
-				<!-- Als de gebruiker op Step Two in de header klikt, keert hij terug naar stap 2-->
-				<li><a href="#steptwo" data-transition="slidefade">Step Two</a></li>
-				<li><a class="ui-btn-active">Step Three</a></li>
+				<!-- Deze tab is een link naar de stepone pagina. Een speciale pagina-overgang is gedefinieerd, nl. slidefade.-->
+				<li><a href="#stepone" data-transition="slidefade">Step 1</a></li>
+				<!-- Deze tab is een link naar de steptwo pagina. Een speciale pagina-overgang is gedefinieerd, nl. slidefade.-->
+				<li><a href="#steptwo" data-transition="slidefade">Step 2</a></li>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Step 3 geselecteerd is.-->
+				<li><a class="ui-btn-active">Step 3</a></li>
 			</ul>
 		</div> <!-- Einde van de navigatiebar-->
 	</div><!-- Einde van de hoofding. -->
 	
 	<!-- Begin van de inhoud van de derde pagina. -->
 	<div data-role="content">
+		<!-- De klasse instruction geeft bepaalde layoutkenmerken aan de tekst mee (grote, vetgedrukt).
+			Deze worden beschreven in de stylepagina smiley.css-->
 		<p align="center" class="instruction">Record 5 sec of the noise in your environment.</p>
 		
-		<!-- De knop om het opnemen van het geluid te starten, de opgevraagde data op te slaan en daarna de homepage te openen. -->
-		<a data-role="button" data-icon="arrow-r" data-iconpos="right" onclick="recordNoise()" data-transistion="slidefade">Start Recording</a>		
+		<!-- De knop start recording is geen link. Een speciale pagina-overgang is gedefinieerd, nl. slidefade. 
+			Als de gebruiker op deze knop drukt wordt de recordNoise methode aangeroepen en wordt de sound recorder gelanceerd.
+			De gebruiker neemt een geluidsfragment op en als dit succesvol wordt de stepthree pagina opnieuw geopend.
+			De step 3 tab en de save button in alle drie de datacollectie pagina's wordt respectievelijk enabled of zichtbaar gemaakt.
+			Dit laat de gebruiker toe om eventueel nog wijziging aan te brengen in de data. -->
+		<a data-role="button" onclick="recordNoise()" data-transistion="slidefade">Start Recording</a>		
 		
 	</div><!-- Einde van de inhoud. -->
 	
-	<!-- Een voettekst met een home knop die als erop geklikt wordt terug naar de homepage gaat. -->	
-	<div data-role="footer" class="ui-bar" data-theme="a" data-position="fixed" data-id="Footer">
+	<!-- Een voettekst met een "home" knop. Deze is hetzelfde voor elke pagina in de datacollectiefase. -->		
+	<div data-role="footer" class="ui-bar" data-theme="a" data-position="fixed">
+		<!-- Begin roosterstructuur (grid) in de voettekst met drie even grote blokjes om de layout op te maken -->
 		<div class="ui-grid-b">
-			<div class="ui-block-a"><a href="#dialogHome" data-rel="dialog" data-role="button" data-inline="true" data-icon="home" data-theme="b">Home</a></div>
-			<div class="ui-block-b"></div> 
+			<!-- Begin eerste blokje in de roosterstructuur -->
+			<div class="ui-block-a">
+				<!-- De knop Home is een link naar een dialoogvenster, dat de gebruiker verwittigt dat alle data van deze observatie verloren zal gaan.
+					 De knop is net zo groot als nodig om de tekst te omvatten. Een speciale pagina-overgang is gedefinieerd, nl. slidedown. 
+					 Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
+				<a href="#dialogCancel" data-rel="dialog" data-role="button" data-inline="true" data-theme="b" data-transition="slidedown">Home</a>
+			</div><!-- Einde eerste blokje -->
+			<!-- Begin tweede blokje in de roosterstructuur. Dit blokje is leeg -->
+			<div class="ui-block-b"></div> <!-- Einde tweede blokje -->
+			<!-- Begin derde blokje in de roosterstructuur -->
 			<div class="ui-block-c">
-				<a id="saveButton3" class="hidden" href="#homepage" onclick="geolocation()"  data-inline="true" data-role="button" data-icon="check" data-theme="b">Save</a>
-			</div>
-		</div>
-	</div><!-- Einde van de voettekst. -->
+				<!-- De knop Save is een link naar de homepage. De knop is net zo groot als nodig om de tekst te omvatten. 
+					Een speciale pagina-overgang is gedefinieerd, nl. slidefade. Als de gebruiker op deze knop drukt wordt de geolocatie methode aangeroepen en 
+					wordt uiteindelijk alle data van deze observatie opgeslagen. De klasse hidden definieert de layout van de knop (knop is verborgen voor de gebruiker).
+					Na het voltooien van de step 3 wordt de knop zichtbaar gemaakt. De klasse wordt gedefinieerd in smiley.css-->
+				<a id="saveButton3" class="hidden" href="#homepage" onclick="geolocation()"  data-inline="true" data-role="button" data-theme="b" data-transition="slidefade">Save</a>
+			</div> <!-- Einde derde blokje -->
+		</div> <!-- Einde van de vakjesstructuur (grid)-->
+	</div><!-- Einde van de voettekst van de stepthree pagina. -->
 	
 </div><!-- Einde van de stepthree pagina -->
 
 
 
 <!-------------------------------------------------------------------------------------------------------------------------------	
------------------------------------------------------GO HOME DIALOG-------------------------------------------------------------->
+-----------------------------------------------------CANCEL DIALOG-------------------------------------------------------------->
 
-<!-- Begin van het dialoog venster dat verschijnt als er op de homeknop in de footer wordt geklikt -->
-
-<div data-role="dialog" id="dialogHome">
+<!-- Begin van het dialoogvenster dat verschijnt als er op de "home"-knop in de footer van één van de datacollectiepagina's wordt geklikt.
+	Dit dialoogvenster krijgt de id dialogCancel -->
+<div data-role="dialog" id="dialogCancel">
+	
+	<!-- Begin van de header van het dialoogvenster-->
 	<div data-role="header" data-theme="e">
-		<h1>Dialog</h1>
-	</div>
-
-	<div data-role="content" data-theme="e">	
+		<h1>Cancel observation</h1>
+	</div><!-- Einde van de header van het dialoogvenster-->
+	
+	<!-- Begin van de inhoud van het dialoogvenster-->
+	<div data-role="content" data-theme="e">
+		<!--Tekst-->	
 		<p>Are you sure you want to stop collecting data?
 			The data you've collected so far will be lost.</p>
-		<a href="#homepage" data-role="button" data-inline="true" data-transition="pop" data-theme="b" onclick="goHome()">Yes</a>       
+		
+		<!-- De knop Yes is een link naar de homepage. De knop is net zo groot als nodig om de tekst te omvatten. Een speciale pagina-overgang is gedefinieerd, nl. pop.
+			Als de gebruiker op deze knop klikt wordt de goHome methode aangeroepen die ervoor zorgt data alle gewijzigde aspecten van de datacollectiepagina's terug op hun 
+			initiële waarden worden gezet.-->
+		<a href="#homepage" data-role="button" data-inline="true" data-transition="pop" data-theme="b" onclick="goHome()">Yes</a>
+		<!-- De knop No is geen link. De knop is net zo groot als nodig om de tekst te omvatten. Geen speciale pagina-overgang is gedefinieerd.
+			Als de gebruiker op deze knop klikt keert hij terug naar de datacollectiepagina waar hij was voor hij op homebutton in de voet klikte.-->       
 		<a href="#" data-rel="back" data-role="button" data-inline="true" data-theme="a">No</a>    
-	</div>
-</div>
-
+	</div> <!-- Einde van de content van het dialoogvenster-->
+	
+</div> <!-- Einde van het dailogCancel dialoogvenster-->
 
 
 
@@ -408,58 +469,369 @@
 
 
 <!-------------------------------------------------------------------------------------------------------------------------------	
------------------------------------------------------RESULTS-------------------------------------------------------------------->
+-----------------------------------------------------RESULTATEN-------------------------------------------------------------------->
 
-<div data-role="page" id="results" data-theme="e">
-	<!-- Begin van de hoofding van de stepone pagina, met een navigatiebar die de gebruiker toelaat om naar stap twee te gaan  -->
+<!-- Het begin van de resultatenpagina. Deze pagina krijg het id colorResults-->
+<div data-role="page" id="colorResults" data-theme="e">
+	
+	<!-- Begin van de hoofding  -->
 	<div data-role="header" data-theme="a" data-position="fixed">
-		<!-- Begin van de navigatiebar met Step One, Step Two, Step Three -->
+		<!-- Begin van de navigatiebar met Color, Saturation, Brightness, Time -->
 		<div data-role="navbar">
 			<ul>
-				<!-- Het class attribuut zorgt ervoor dat Step One geselecteerd is.-->
-				<li><a class="ui-btn-active">Tint</a></li>
-				<!-- Als de gebruiker op Step Two in de header klikt, gaat hij naar stap 2.-->
-				<li><a href="#results2" data-transition="slidefade">Saturation</a></li>
-				<!-- Als de gebruiker op Step Three in de header klikt, krijgt hij een popup
-					om te zeggen dat dit niet toegelaten is zolang hij stap 2 niet heeft uitgevoerd.-->
-				<li><a data-transition="slidefade">Brightness</a></li>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Color geselecteerd is.-->
+				<li><a class="ui-btn-active">Color</a></li>
+				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#timeResults" data-transition="turn">Time</a></li>
+				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#locationResults" data-transition="turn">Location</a></li>
 			</ul>
-		</div> <!-- Einde van de navigatiebar -->
-	</div><!-- Einde van de hoofding van de stepone pagina. -->
-	<div data-role="content" datatheme="e">
-		<!-- Slideshow HTML -->
-			<div id="slideshow">
-  				<div id="slidesContainer">
-					<div class="slide" id="graphHue"></div>
-					<div class="slide" id="graphUnhappy"></div>
-					<div class="slide" id="graphFine"></div>
-					<div class="slide" id="graphHappy"></div>
-				</div>
-			</div>
-	</div>
-</div>
+		</div><!-- Einde van de navigatiebar-->
+	</div><!-- Einde van de hoofding -->
+	
+	<!-- Begin van de inhoud van de colorResultspagina.-->
+	<div data-role="content" datatheme="e" >
+		
+		<!-- Het begin van een verzameling knoppen. Op die manier hangen de knoppen aan elkaar. -->
+		<div data-role="controlgroup">
+			<!-- De knop Averages is een link naar de averages pagina. Een speciale pagina-overgan is gedefinieerd, nl. turn.
+				Er wordt geen extra actie uitgevoerd als op de knop geklikt wordt. -->
+			<a href="#averages" data-role="button" data-transition="turn">Averages</a>
+			<!-- De knop Hue versus Mood is een link naar de hueGraphPage. Een speciale pagina-overgang is gedefinieerd, nl. turn. 
+				Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
+			<a href="#hueGraphPage" data-role="button" data-transition="turn">Hue versus Mood</a>
+			<!-- De knop Colors when Happy is een link naar de happyGraphPage. Een speciale pagina-overgang is gedefinieerd, nl. turn. 
+				Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
+			<a href="#happyGraphPage" data-role="button" data-transition="turn">Colors when Happy</a>
+			<!-- De knop Colors when Fine is een link naar de fineGraphPage. Een speciale pagina-overgang is gedefinieerd, nl. turn. 
+				Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
+			<a href="#fineGraphPage" data-role="button" data-transition="turn">Colors when Fine</a>
+			<!-- De knop Colors when Unhappy is een link naar de unhappyGraphPage. Een speciale pagina-overgang is gedefinieerd, nl. turn. 
+				Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
+			<a href="#unhappyGraphPage" data-role="button" data-transition="turn">Colors when Unhappy</a>
+		</div><!-- Het einde van een verzameling knoppen-->
+		<!-- De knop Saturation is een link naar de averages pagina. Een speciale pagina-overgan is gedefinieerd, nl. turn.
+			Er wordt geen extra actie uitgevoerd als op de knop geklikt wordt. -->
+		<a href="#saturationResults" data-role="button" data-transition="turn">Saturation</a>
+		<!-- De knop Averages is een link naar de averages pagina. Een speciale pagina-overgan is gedefinieerd, nl. turn.
+			Er wordt geen extra actie uitgevoerd als op de knop geklikt wordt. -->
+		<a href="#brightnessResults" data-role="button" data-transition="turn">Averages</a>
+		
+	</div><!-- Einde van de inhoud van de colorResultspagina-->
+		
+	<!-- Een voettekst met een home knop. Deze is hetzelfde voor elke resultatenpagina -->	
+	<div data-role="footer" class="ui-bar" data-theme="a" data-position="fixed">
+		<!-- De knop Home is een link naar de homepage.De knop is net zo groot als nodig om de tekst te omvatten. 
+		Een speciale pagina-overgang is gedefinieerd, nl. slidedown. Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
+		<a href="#homepage" data-role="button" data-inline="true" data-theme="b" data-transition="slidefade">Home</a>
+			
+	</div><!-- Einde van de voettekst. -->
+	
+</div><!-- Einde van de colorResults pagina-->
 
-<div data-role="page" id="results2" data-theme="e">
-	<!-- Begin van de hoofding van de stepone pagina, met een navigatiebar die de gebruiker toelaat om naar stap twee te gaan  -->
+<!------------------------------------------------ColorResultatengrafieken------------------------------------------------------------->
+
+<!-- Het begin van colorresutlatenpagina. Deze pagina krijg het id averages -->
+<div data-role="page" id="averages" data-theme="e">
+	
+	<!-- Begin van de hoofding  -->
 	<div data-role="header" data-theme="a" data-position="fixed">
-		<!-- Begin van de navigatiebar met Step One, Step Two, Step Three -->
+		<!-- Begin van de navigatiebar met Color, Saturation, Brightness, Time -->
 		<div data-role="navbar">
 			<ul>
-				<!-- Het class attribuut zorgt ervoor dat Step One geselecteerd is.-->
-				<li><a href="#results" data-transition="slidefade">Tint</a></li>
-				<!-- Als de gebruiker op Step Two in de header klikt, gaat hij naar stap 2.-->
-				<li><a  class="ui-btn-active">Saturation</a></li>
-				<!-- Als de gebruiker op Step Three in de header klikt, krijgt hij een popup
-					om te zeggen dat dit niet toegelaten is zolang hij stap 2 niet heeft uitgevoerd.-->
-				<li><a data-transition="slidefade">Brightness</a></li>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Color geselecteerd is.-->
+				<li><a href="#colorResults"class="ui-btn-active">Color</a></li>
+				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#timeResults" data-transition="turn">Time</a></li>
+				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#locationResults" data-transition="turn">Location</a></li>
 			</ul>
-		</div> <!-- Einde van de navigatiebar -->
-	</div><!-- Einde van de hoofding van de stepone pagina. -->
+		</div><!-- Einde van de navigatiebar-->
+	</div><!-- Einde van de hoofding -->
+	
+	<!-- Begin van de inhoud van de averages pagina-->
 	<div data-role="content" datatheme="e">
-		<div id="graphWd"></div>
-	</div>
+		
+		<!-- Tekst die gecentreerd wordt op het scherm. De klasse instruction geeft bepaalde layoutkenmerken 
+			aan de tekst mee (grote, vetgedrukt). Deze worden beschreven in de stylepagina smiley.css-->
+		<p align="center" class="instruction">On average you Feel:</p>
+		
+		<!-- Tekst: Geeft average mood in woorden weer; Unhappy, Fine, Happy-->
+  		<p id="averageMoodText" align="center" class="instruction">Average Mood</p>
+  		
+  		<!-- Tekst: Geeft average mood in number: 1-10-->
+  		<p id="averageMoodNumber" align="center" class="instruction">Number</p>
+		
+		<!-- Tekst die gecentreerd wordt op het scherm. De klasse instruction geeft bepaalde layoutkenmerken 
+			aan de tekst mee (grote, vetgedrukt). Deze worden beschreven in de stylepagina smiley.css-->
+		<p align="center" class="instruction">You are usually surround by this color:</p>
+		
+		<div id="colorbox"></div>	
+			
+	</div><!-- Einde van de inhoud van de averages pagina-->
+	
+</div><!-- Einde van de averages pagina-->
+
+<!-- Het begin van de eerste Color-resultatenpagina. Deze pagina krijg het id hueGraphPage -->
+<div data-role="page" id="hueGraphPage" data-theme="e">
+	
+	<!-- Begin van de hoofding  -->
+	<div data-role="header" data-theme="a" data-position="fixed">
+		<!-- Begin van de navigatiebar met Color, Saturation, Brightness, Time -->
+		<div data-role="navbar">
+			<ul>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Color geselecteerd is.-->
+				<li><a href="#colorResults" class="ui-btn-active">Color</a></li>
+				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#timeResults" data-transition="turn">Time</a></li>
+				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#locationResults" data-transition="turn">Location</a></li>
+			</ul>
+		</div><!-- Einde van de navigatiebar-->
+	</div><!-- Einde van de hoofding -->
+	
+	<!-- Begin van de inhoud van de hueGraphPage. -->
+	<div data-role="content" datatheme="e">
+		
+		<!--Container waarin de grafiek die de hue versus de mood plaats, wordt weergegeven-->
+		<div id="graphHue" ></div>
+		
+	</div><!-- Einde van de inhoud van de hueGraphPage. -->
+	
+</div><!-- Einde van de hueGraphPage pagina-->
+
+<!-- Het begin van de tweede Color-resultatenpagina. Deze pagina krijg het id happyGraphPage -->
+<div data-role="page" id="happyGraphPage" data-theme="e">
+	
+	<!-- Begin van de hoofding  -->
+	<div data-role="header" data-theme="a" data-position="fixed">
+		<!-- Begin van de navigatiebar met Color, Saturation, Brightness, Time -->
+		<div data-role="navbar">
+			<ul>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Color geselecteerd is.-->
+				<li><a href="#colorResults" class="ui-btn-active">Color</a></li>
+				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#timeResults" data-transition="turn">Time</a></li>
+				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#locationResults" data-transition="turn">Location</a></li>
+			</ul>
+		</div><!-- Einde van de navigatiebar-->
+	</div><!-- Einde van de hoofding -->
+	
+	<!-- Begin van de inhoud van de happyGraphPage. -->
+	<div data-role="content" datatheme="e">
+		
+		<!--Container waarin de grafiek die de colors weergeeft wanneer de gebruiker gelukkig is, wordt weergegeven-->
+		<div id="graphHappy" ></div>
+		
+	</div> <!-- Einde van de inhoud van de happyGraphPage -->
+
+</div><!-- Einde van de happyGraphPage pagina-->
+
+<!-- Het begin van de derde Color-resultatenpagina. Deze pagina krijg het id fineGraphPage -->
+<div data-role="page" id="fineGraphPage" data-theme="e">
+	
+	<!-- Begin van de hoofding  -->
+	<div data-role="header" data-theme="a" data-position="fixed">
+		<!-- Begin van de navigatiebar met Color, Saturation, Brightness, Time -->
+		<div data-role="navbar">
+			<ul>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Color geselecteerd is.-->
+				<li><a href="#colorResults" class="ui-btn-active">Color</a></li>
+				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#timeResults" data-transition="turn">Time</a></li>
+				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#locationResults" data-transition="turn">Location</a></li>
+			</ul>
+		</div><!-- Einde van de navigatiebar-->
+	</div><!-- Einde van de hoofding -->
+	
+	<!-- Begin van de inhoud van de fineGraphPage. -->
+	<div data-role="content" datatheme="e">
+		
+		<!--Container waarin de grafiek die de colors weergeeft wanneer de gebruiker oke is, wordt weergegeven-->
+		<div id="graphFine" ></div>
+		
+	</div><!-- Einde van de inhoud van de fineGraphPage-->
+	
+</div><!-- Einde van de fineGraphPage pagina-->
+
+<!-- Het begin van de vierde Color-resultatenpagina. Deze pagina krijg het id unhappyGraphPage -->
+<div data-role="page" id="fineGraphPage" data-theme="e">
+	
+	<!-- Begin van de hoofding  -->
+	<div data-role="header" data-theme="a" data-position="fixed">
+		<!-- Begin van de navigatiebar met Color, Saturation, Brightness, Time -->
+		<div data-role="navbar">
+			<ul>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Color geselecteerd is.-->
+				<li><a href="#colorResults" class="ui-btn-active">Color</a></li>
+				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#timeResults" data-transition="turn">Time</a></li>
+				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#locationResults" data-transition="turn">Location</a></li>
+			</ul>
+		</div><!-- Einde van de navigatiebar-->
+	</div><!-- Einde van de hoofding -->
+	
+	<!-- Begin van de inhoud van de unhappyGraphPage. -->
+	<div data-role="content" datatheme="e">
+		
+		<!--Container waarin de grafiek die colors weergeeft wanneer de gebruiker ongelukkig is, wordt weergegeven-->
+		<div id="graphUnhappy" ></div>
+
+	</div> <!-- Einde van de inhoud van de unhappyGraphPage-->
+
+</div> <!-- Einde van de unhappyGraphPage pagina-->
+
+
+<!-- Het begin van de resultatenpagina. Deze pagina krijg het id saturationResults-->
+<div data-role="page" id="saturationResults" data-theme="e">
+	
+	<!-- Begin van de hoofding  -->
+	<div data-role="header" data-theme="a" data-position="fixed">
+		<!-- Begin van de navigatiebar met Color, Saturation, Brightness, Time -->
+		<div data-role="navbar">
+			<ul>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Color geselecteerd is.-->
+				<li><a href="#colorResults" class="ui-btn-active">Color</a></li>
+				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#timeResults" data-transition="turn">Time</a></li>
+				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#locationResults" data-transition="turn">Location</a></li>
+			</ul>
+		</div><!-- Einde van de navigatiebar-->
+	</div><!-- Einde van de hoofding -->
+	
+	<!-- Begin van de inhoud van de saturationResultspagina-->
+	<div data-role="content" datatheme="e">
+		
+		<!--Container waarin de grafiek die saturation weergeeft tov de mood, wordt weergegeven-->
+		<div id="graphSat"></div>
+		
+	</div><!-- Einde van de inhoud van de saturationResultspagina-->
+			
+</div><!--Einde van de saturationResults pagina -->
+
+<!-- Het begin van de resultatenpagina. Deze pagina krijg het id brightnessResults-->
+<div data-role="page" id="brightnessResults" data-theme="e">
+	
+	<!-- Begin van de hoofding  -->
+	<div data-role="header" data-theme="a" data-position="fixed">
+		<!-- Begin van de navigatiebar met Color, Saturation, Brightness, Time -->
+		<div data-role="navbar">
+			<ul>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Color geselecteerd is.-->
+				<li><a href="#colorResults" class="ui-btn-active">Color</a></li>
+				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#timeResults" data-transition="turn">Time</a></li>
+				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#locationResults" data-transition="turn">Location</a></li>
+			</ul>
+		</div><!-- Einde van de navigatiebar-->
+	</div><!-- Einde van de hoofding -->
+	
+	<!-- Begin van de inhoud -->
+	<div data-role="content" datatheme="e">
+		
+		<!--Container waarin de grafiek die brightness weergeeft tov de mood, wordt weergegeven-->
+		<div id="graphBright"></div>
+		 
+	</div><!-- Einde van de inhoud van de brightnessResultspagina-->
+		
 </div>
 
+<!--------------------------- EINDE ColorResultatengrafieken-------------------------------------------------------------------------------->
+
+<!-- Het begin van de resultatenpagina. Deze pagina krijg het id timeResults-->
+<div data-role="page" id="timeResults" data-theme="e">
+	
+	<!-- Begin van de hoofding. De header is ongeveer hetzelfde voor elke pagina in de resultaten. -->
+	<div data-role="header" data-theme="a" data-position="fixed">
+		<!-- Begin van de navigatiebar met Color, Time, Location -->
+		<div data-role="navbar">
+			<ul>
+				<!-- Deze tab is een link naar de colorResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#colorResults" data-transition="turn">Color</a></li>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Time geselecteerd is.-->
+				<li><a class="ui-btn-active">Time</a></li>
+				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#locationResults" data-transition="turn">Location</a></li>
+			</ul>
+		</div><!-- Einde van de navigatiebar-->
+	</div><!-- Einde van de hoofding  -->
+	
+	<!-- Begin van de inhoud-->
+	<div data-role="content" datatheme="e" >
+		
+		<!--Container waarin de grafiek die voor elke dag van de week de gemiddelde gemoedstoestand weergeeft colors weergeeft, wordt weergegeven-->
+       <div id="graphWd"></div>
+		
+	</div><!-- Einde van de inhoud van de colorResultspagina-->
+		
+	<!-- Een voettekst met een home knop. Deze is hetzelfde voor elke resultatenpagina -->	
+	<div data-role="footer" class="ui-bar" data-theme="a" >
+		<!-- De knop Home is een link naar de homepage.De knop is net zo groot als nodig om de tekst te omvatten. 
+		Een speciale pagina-overgang is gedefinieerd, nl. slidedown. Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
+		<a href="#homepage" data-role="button" data-inline="true" data-theme="b" data-transition="slidefade">Home</a>
+			
+	</div><!-- Einde van de voettekst. -->
+</div>
+
+<!-- Het begin van de resultatenpagina. Deze pagina krijg het id timeResults-->
+<div data-role="page" id="locationResults" data-theme="e">
+	
+	<!-- Begin van de hoofding. De header is ongeveer hetzelfde voor elke pagina in de resultaten. -->
+	<div data-role="header" data-theme="a" data-position="fixed">
+		<!-- Begin van de navigatiebar met Color, Time, Location -->
+		<div data-role="navbar">
+			<ul>
+				<!-- Deze tab is een link naar de colorResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#colorResults" data-transition="turn">Color</a></li>
+				<!-- Deze tab is een link naar de timeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
+				<li><a href="#timeResults" data-transition="turn">Time</a></li>
+				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Location geselecteerd is.-->
+				<li><a class="ui-btn-active">Location</a></li>
+			</ul>
+		</div><!-- Einde van de navigatiebar-->
+	</div><!-- Einde van de hoofding  -->
+	
+	<!-- Begin van de inhoud-->
+	<div data-role="content" datatheme="e" >
+		
+		<!-- Tekst die gecentreerd wordt op het scherm. De klasse instruction geeft bepaalde layoutkenmerken 
+			aan de tekst mee (grote, vetgedrukt). Deze worden beschreven in de stylepagina smiley.css-->
+		<p align="center" class="instruction">The location of your last observation was:</p>
+		
+		<!-- Tekst: Geeft die laatste locatie van de gebruiker geeft -->
+  		<p id="locationText" align="center" class="instruction">Location</p>
+  		
+  		<!-- Tekst: Geeft die laatste locatie van de gebruiker geeft -->
+  		<p id="aantalText" align="center" class="instruction">aantal</p>
+  		
+  		<!-- Tekst die gecentreerd wordt op het scherm. De klasse instruction geeft bepaalde layoutkenmerken 
+			aan de tekst mee (grote, vetgedrukt). Deze worden beschreven in de stylepagina smiley.css-->
+		<p align="center" class="instruction">Your average mood on that location is:</p>
+		
+  		<!-- Tekst: Geeft average mood in woorden weer; Unhappy, Fine, Happy-->
+  		<p id="averageLocationMoodText" align="center" class="instruction">Average Location Mood</p>
+  		
+  		<!-- Tekst: Geeft average mood weer voor de laatste locatie: 1-10-->
+  		<p id="averageLocationMood" align="center" class="instruction">Number</p>	
+		
+	</div><!-- Einde van de inhoud van de colorResultspagina-->
+		
+	<!-- Een voettekst met een home knop. Deze is hetzelfde voor elke resultatenpagina -->	
+	<div data-role="footer" class="ui-bar" data-theme="a" data-position="fixed">
+		<!-- De knop Home is een link naar de homepage.De knop is net zo groot als nodig om de tekst te omvatten. 
+		Een speciale pagina-overgang is gedefinieerd, nl. slidedown. Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
+		<a href="#homepage" data-role="button" data-inline="true" data-theme="b" data-transition="slidefade">Home</a>
+			
+	</div><!-- Einde van de voettekst. -->
+</div>	
+
+<!-------------------------------------------------------------------------------------------------------------------------------	
+-----------------------------------------------------END-------------------------------------------------------------------->
 	
 <!-- Het script nodig om de database te gebruiken -->
 <script type="text/javascript" src="database.js"  ></script>
@@ -470,7 +842,7 @@
 <!-- Het script voor de smiley-->
 <script type="text/javascript" src="moodSlider.js"> </script>
 
-<!-- Het script voor het uitvoeren van de foto analyse -->
+<!-- Het script voor het uitvoeren van de fotoanalyse -->
 <script type="text/javascript" src="coloranalysis.js"></script>
 
 <!-- Het script voor het bepalen van de locatie door middel van geolocatie -->
@@ -483,9 +855,6 @@
 <script type="text/javascript" src="recording.js"></script>
 
 <script type="text/javascript" src="graph.js"></script>
-
-
-
 
 
 </body>
