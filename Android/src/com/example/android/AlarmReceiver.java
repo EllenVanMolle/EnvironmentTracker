@@ -42,9 +42,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 		if (CheckTime(context)){
 			//Send a notification
 			buildNotification(context); }
-		else
+		else {
 			//Do nothing
-		{/**Toast.makeText(context, "Bad Time", Toast.LENGTH_LONG).show();*/}
+			//Toast.makeText(context, "Bad Time", Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	/**Method to create a notification*/
@@ -52,13 +53,13 @@ public class AlarmReceiver extends BroadcastReceiver {
 		
 		//Create a NotificationManager to help you create a notification
 		NotificationManager notificationManager 
-		= (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+			= (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 	
-		//Intent to start a the MoodPage activity
+		//Intent to start the MoodPage activity
 		Intent intent = new Intent(context, MoodPage.class);
 		
 		PendingIntent pendingIntent 
-		= PendingIntent.getActivity(context, 0, intent, 0);
+			= PendingIntent.getActivity(context, 0, intent, 0);
 		
 		//Building a notification
 		Notification notification = new NotificationCompat.Builder(context)

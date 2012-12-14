@@ -11,11 +11,12 @@ import android.provider.MediaStore;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.View;
+import android.widget.Toast;
 
 public class Camera extends OptionMenu  {
 	
 	private static final int CAPTURE_IMAGE_ACTIVITY_RQ = 100;
-
+	
 	/**Method called when activity is created*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,18 +31,28 @@ public class Camera extends OptionMenu  {
             if (resultCode == RESULT_OK) {// Image captured and saved
             	
             	Bundle extras = data.getExtras();
+            	Bitmap photo = (Bitmap) extras.get("data");
+            	int mood = this.getIntent().getIntExtra("mood", -1);
             	
-            	Intent intentPhoto = new Intent(this,PhotoAnalysisService.class);
-            	intentPhoto.putExtra("Photo", extras);
-            	startService(intentPhoto);
+            	if (mood == -1) {
+            		Toast.makeText(this, R.string.alert_dialog_error_message_camera, Toast.LENGTH_LONG).show();
+            		mood = 5;
+            	}
+     
               
-                // Open new activity
+                // Open new activity and give the mood and the photo
                 Intent intent = new Intent(this, Audio.class);
+                intent.putExtra("Photo", photo);
+                intent.putExtra("mood", mood);
             	startActivity(intent);
             } 
-            else if (resultCode == RESULT_CANCELED) { // User cancelled the image capture
+            else if (resultCode == RESULT_CANCELED) { 
+            	// User cancelled the image capture
+            	Toast.makeText(this, R.string.alert_user_cancelled_camera, Toast.LENGTH_LONG).show();
             } 
-            else { // Image capture failed, advise user
+            else { 
+            	// Image capture failed, advise user
+            	Toast.makeText(this, R.string.alert_camera_failed, Toast.LENGTH_LONG).show();
             }
         } 
     }

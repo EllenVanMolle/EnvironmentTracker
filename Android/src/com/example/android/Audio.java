@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,19 +23,22 @@ public class Audio extends OptionMenu {
 	
 	private static final String LogTag = "AudioCapture";
 	
-	private MediaRecorder MyRecorder = null;
-	private TextView Instruction;
-	private TextView MyCounter;
-	private Button StartRec;
+	private MediaRecorder myRecorder;
+	private TextView instruction;
+	private TextView myCounter;
+	private Button startRec;
 	
-	private String FileName;
+	private String fileName;
+	
+	private Bitmap photo;
+	private int mood;
 	
 	public static final int RecordedTime = 5000; // Number of milliseconds of recording
 	
 	
 	public Audio(){
-		FileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        FileName += "/EnvironmentTracker.3gp";
+		fileName = Environment.getExternalStorageDirectory().getAbsolutePath();
+        fileName += "/EnvironmentTracker.3gp";
 	}
 	
 	/**Method called when activity is created
@@ -44,10 +48,15 @@ public class Audio extends OptionMenu {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio);
         
+		// Get the information about the previous two steps of recoding to pass it to the service in the end.
+        Bundle extras = getIntent().getExtras();
+		photo = (Bitmap) extras.get("Photo");
+		mood = extras.getInt("mood");
+        
         // find XML objects
-        MyCounter = (TextView)findViewById(R.id.Counter);
-        StartRec = (Button)findViewById(R.id.RecordButton);
-        Instruction = (TextView)findViewById(R.id.SoundInstruction);  
+        myCounter = (TextView)findViewById(R.id.Counter);
+        startRec = (Button)findViewById(R.id.RecordButton);
+        instruction = (TextView)findViewById(R.id.SoundInstruction);  
     }
     
     /**Method called when activity is paused
@@ -55,9 +64,9 @@ public class Audio extends OptionMenu {
     @Override
     public void onPause() {
         super.onPause();
-        if (MyRecorder != null) {
-            MyRecorder.release();
-            MyRecorder = null;
+        if (myRecorder != null) {
+            myRecorder.release();
+            myRecorder = null;
         }
     }
 
@@ -65,51 +74,63 @@ public class Audio extends OptionMenu {
     public void startRecording(View view) {
     	
     	//Setup of new MediaRecorder instance
-        MyRecorder = new MediaRecorder();
-        MyRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        MyRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        MyRecorder.setOutputFile(FileName);
+        myRecorder = new MediaRecorder();
+        myRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        myRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        myRecorder.setOutputFile(fileName);
    
-        MyRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        myRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
-            MyRecorder.prepare();
+            myRecorder.prepare();
         } catch (IOException e) {
             Log.e(LogTag, "prepare() failed");
         }
         
         //change the layout of the activity
-        Instruction.setVisibility(View.GONE);
-        StartRec.setVisibility(View.GONE);
-    	MyCounter.setVisibility(View.VISIBLE);
+        instruction.setVisibility(View.GONE);
+        startRec.setVisibility(View.GONE);
+    	myCounter.setVisibility(View.VISIBLE);
     	
     	//Count Down from 5 minutes to 0
     	new CountDownTimer(RecordedTime, 1000) {
     		
     		//Display every minute the time left to the end
             public void onTick(long millisUntilFinished) {
-                MyCounter.setText("" + millisUntilFinished / 1000);
+                myCounter.setText("" + millisUntilFinished / 1000);
             }
             
             //When finished stop the recorder
             public void onFinish() {
-                MyCounter.setText("Done!");
+                myCounter.setText("Done!");
                 stopRecording();
             }
          }.start();
         
         //Start Recording
-        MyRecorder.start();
-        
-        		
+        myRecorder.start();
     }
 
     /**Method called to stop recording 
      * and open the next activity HomePage*/
     private void stopRecording() {
-        MyRecorder.stop();
-        MyRecorder.release();
-        MyRecorder = null;
+        myRecorder.stop();
+        
+        int maxAmplitude = myRecorder.getMaxAmplitude();
+        Log.d("Amp", Integer.toString(maxAmplitude));
+        
+        myRecorder.reset();
+        
+        myRecorder.release();
+        myRecorder = null;
+        
+        // Opstarten van analyse en verwerking van de gegevens
+        
+        Intent intentPhoto = new Intent(this,PhotoAnalysisService.class);
+    	intentPhoto.putExtra("Photo", photo);
+    	intentPhoto.putExtra("mood", mood);
+    	intentPhoto.putExtra("Amplitude", maxAmplitude);
+    	startService(intentPhoto);
         
         Intent intent = new Intent(this, HomePage.class);     
         intent.putExtra("FromAudio", true); //Additional info send to HomePage activity

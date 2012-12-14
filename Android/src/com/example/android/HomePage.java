@@ -55,6 +55,10 @@ public class HomePage extends OptionMenu {
     	startActivity(intent);
     }
     
+    public void openResults (View view) {
+    	Intent intentResults = new Intent(this, ResultListActivity.class);
+    	startActivity(intentResults);
+    }
     
 }
 

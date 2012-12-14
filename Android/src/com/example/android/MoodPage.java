@@ -7,6 +7,7 @@
 package com.example.android;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -45,6 +46,8 @@ import android.content.Intent;
 	    	
 	    	//Open Next Camera Activity
 	    	Intent intent = new Intent(this, Camera.class);
+	    	intent.putExtra("mood", Bar.getProgress());
+	    	Log.d("MOOD from bar", Integer.toString(Bar.getProgress()));
 	    	startActivity(intent);	
 	    }
 

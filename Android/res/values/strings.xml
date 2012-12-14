@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Environment Tracker</string>
@@ -9,7 +10,7 @@
     <string name="welcome">Welcome!</string>
     <string name="settings">Settings</string>
     <string name="results">Results</string>
-    <string name="launch">Launch</string>
+    <string name="launch">Record</string>
 
     <!-- OptionMenu Menu -->
     <string name="title_activity_option_menu">OptionMenu</string>
@@ -27,8 +28,8 @@
     <string name="title_activity_camera">Camera</string>
     <string name="picture_instruction">Take a Picture</string>
     <string name="go_button">Go!</string>
-    
-     <!-- Audio Activity -->
+
+    <!-- Audio Activity -->
     <string name="title_activity_audio">Audio Recorder</string>
     <string name="sound_instruction">Record for 5 sec</string>
     <string name="record_button">Start Recording</string>
@@ -53,5 +54,14 @@
     <string name="pref_start_not_time_summ">Moment before which you do not want to receive notifications</string>
     <string name="pref_stop_not_time_summ">Moment after which you do not want to receive notifications</string>
     <string name="pref_not_interval_summ">Number of minutes between every notification</string>
-	
+    <string name="title_result_detail">Result Detail</string>
+    <string name="title_result_list">Results</string>
+    <string name="color_graph">Color</string>
+    <string name="saturation_graph">Saturation</string>
+    <string name="brightness_graph">Brightness</string>
+    <string name="time_graph">Time</string>
+    <string name="alert_dialog_error_message_camera">The mood was not captured correctly. Mood 5 is used. Go back if needed.</string>
+    <string name="alert_user_cancelled_camera">The camera is cancelled.</string>
+    <string name="alert_camera_failed">An error occurred, no picture is taken.</string>
+
 </resources>

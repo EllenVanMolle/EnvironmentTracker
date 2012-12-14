@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android"
     android:versionCode="1"
@@ -5,10 +6,11 @@
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.microphone" />
-
+    <uses-feature android:glEsVersion="0x00020000"></uses-feature>
+	
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -20,7 +22,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".HomePage"
+            android:name="com.example.android.HomePage"
             android:label="@string/title_activity_home_page" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".OptionMenu"
+            android:name="com.example.android.OptionMenu"
             android:label="@string/title_activity_option_menu" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsPage"
+            android:name="com.example.android.SettingsPage"
             android:label="@string/title_activity_settings_page" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,14 +49,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsFragment"
+            android:name="com.example.android.SettingsFragment"
             android:label="@string/title_settings_fragment" />
 
-        <receiver android:name=".AlarmReceiver" >
+        <receiver android:name="com.example.android.AlarmReceiver" >
         </receiver>
 
         <activity
-            android:name=".MoodPage"
+            android:name="com.example.android.MoodPage"
             android:label="@string/title_activity_mood_page" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,7 +65,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Camera"
+            android:name="com.example.android.Camera"
             android:label="@string/title_activity_camera" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,7 +74,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Audio"
+            android:name="com.example.android.Audio"
             android:label="@string/title_activity_audio" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -80,10 +82,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service 
-            android:enabled="true"
-         	android:name="com.example.android.PhotoAnalysisService">
-		</service>
+
+        <service
+            android:name="com.example.android.PhotoAnalysisService"
+            android:enabled="true" >
+        </service>
+
+        <activity
+            android:name="com.example.android.ResultListActivity"
+            android:label="@string/title_result_list" >
+        </activity>
+        <activity
+            android:name="com.example.android.ResultDetailActivity"
+            android:label="@string/title_result_detail"
+            android:parentActivityName=".ResultListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ResultListActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -30,9 +30,11 @@ public final class R {
         public static final int SoundInstruction=0x7f080000;
         public static final int Unhappy=0x7f08000d;
         public static final int Welcome=0x7f080005;
-        public static final int menu_home=0x7f080010;
-        public static final int menu_stop=0x7f080011;
-        public static final int prefTimePicker=0x7f08000f;
+        public static final int menu_home=0x7f080012;
+        public static final int menu_stop=0x7f080013;
+        public static final int prefTimePicker=0x7f080011;
+        public static final int result_detail_container=0x7f08000f;
+        public static final int result_list=0x7f080010;
     }
     public static final class layout {
         public static final int activity_audio=0x7f030000;
@@ -40,14 +42,39 @@ public final class R {
         public static final int activity_home_page=0x7f030002;
         public static final int activity_mood_page=0x7f030003;
         public static final int activity_option_menu=0x7f030004;
-        public static final int activity_settings_page=0x7f030005;
-        public static final int time_preference=0x7f030006;
+        public static final int activity_result_detail=0x7f030005;
+        /** 
+    Layout alias to replace the single-pane version of the layout with a
+    two-pane version on Large screens.
+
+    For more on layout aliases, see:
+    http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
+    
+
+    Layout alias to replace the single-pane version of the layout with a
+    two-pane version on Large screens.
+
+    For more on layout aliases, see:
+    http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
+    
+         */
+        public static final int activity_result_list=0x7f030006;
+        public static final int activity_result_twopane=0x7f030007;
+        public static final int activity_settings_page=0x7f030008;
+        public static final int fragment_result_detail=0x7f030009;
+        public static final int listview_results=0x7f03000a;
+        public static final int time_preference=0x7f03000b;
     }
     public static final class menu {
         public static final int activity_option_menu=0x7f070000;
     }
     public static final class string {
+        public static final int alert_camera_failed=0x7f05002d;
+        public static final int alert_dialog_error_message_camera=0x7f05002b;
+        public static final int alert_user_cancelled_camera=0x7f05002c;
         public static final int app_name=0x7f050000;
+        public static final int brightness_graph=0x7f050029;
+        public static final int color_graph=0x7f050027;
         public static final int go_button=0x7f050012;
         public static final int happy=0x7f05000d;
         public static final int hello_world=0x7f050001;
@@ -75,8 +102,10 @@ public final class R {
         public static final int question_mood=0x7f05000c;
         public static final int record_button=0x7f050015;
         public static final int results=0x7f050006;
+        public static final int saturation_graph=0x7f050028;
         public static final int settings=0x7f050005;
         public static final int sound_instruction=0x7f050014;
+        public static final int time_graph=0x7f05002a;
         /**  Audio Activity 
          */
         public static final int title_activity_audio=0x7f050013;
@@ -95,6 +124,8 @@ public final class R {
         /**  Settings Activity 
          */
         public static final int title_activity_settings_page=0x7f050016;
+        public static final int title_result_detail=0x7f050025;
+        public static final int title_result_list=0x7f050026;
         /**  SettingsFragment Activity 
          */
         public static final int title_settings_fragment=0x7f050017;
