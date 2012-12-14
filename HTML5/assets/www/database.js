@@ -17,6 +17,46 @@ function onDeviceReady() {
 	database.initDatabase();// initialiseer de database
 	database.createTable(); // creëer de environmenttabel
 	database.createSettingsTable();// creëer de settingstabel
+	
+	// registreer de eventlistener zodat je weet wanneer de gebruiker opde backbutton clickt (enkel android!)
+	document.addEventListener("backbutton", onBackKeyDown, false);
+}
+
+/*
+ * Functie die wordt aangeroepen als de backbutton wordt geklikt
+ */
+function onBackKeyDown() {
+	var activePage = window.location.href;
+	console.log ("actieve pagina: " + activePage);
+	if (activePage == "file:///android_asset/www/index.html#stepone"){
+		$("#backButtonDialog").click();
+   } else if (activePage == "file:///android_asset/www/index.html#steptwo"){
+   		$.mobile.changePage("#stepone", {reverse: true})
+   } else if (activePage == "file:///android_asset/www/index.html#stepthree"){
+   		$.mobile.changePage("#steptwo", {reverse: true})
+   } else if (activePage == "file:///android_asset/www/index.html#settings"){
+   		$.mobile.changePage("#homepage", {reverse: true})
+   } else if (activePage == "file:///android_asset/www/index.html#colorResults"){
+   		$.mobile.changePage("#homepage", {reverse: true})
+   } else if (activePage == "file:///android_asset/www/index.html#averages"){
+   		$.mobile.changePage("#colorResults", {reverse: true, transition: turn})
+   } else if (activePage == "file:///android_asset/www/index.html#hueGraphPage"){
+   		$.mobile.changePage("#colorResults", {reverse: true, transition: turn})
+   } else if (activePage == "file:///android_asset/www/index.html#happyGraphPage"){
+   		$.mobile.changePage("#colorResults", {reverse: true, transition: turn})
+   } else if (activePage == "file:///android_asset/www/index.html#fineGraphPage"){
+   		$.mobile.changePage("#colorResults", {reverse: true, transition: turn})
+   } else if (activePage == "file:///android_asset/www/index.html#unhappyGraphPage"){
+   		$.mobile.changePage("#colorResults", {reverse: true, transition: turn})
+   } else if (activePage == "file:///android_asset/www/index.html#saturationResults"){
+   		$.mobile.changePage("#colorResults", {reverse: true, transition: turn})
+   } else if (activePage == "file:///android_asset/www/index.html#brightnessResults"){
+   		$.mobile.changePage("#colorResults", {reverse: true, transition: turn})
+   } else if (activePage == "file:///android_asset/www/index.html#timeResults"){
+   		$.mobile.changePage("#homepage", {reverse: true})
+   } else if (activePage == "file:///android_asset/www/index.html#colorResults"){
+   		$.mobile.changePage("#homepage", {reverse: true})
+   }
 }
 
 /*
@@ -24,7 +64,7 @@ function onDeviceReady() {
  */	
 var database;
 
-var pixData = [0, 0, 0];
+var analysisIsFinished;
 
 var Database = function() {
 	var myDb = false;
@@ -104,13 +144,17 @@ Database.prototype.createSettingsTable = function(){
  		var sqlTabel2 = 'CREATE TABLE IF NOT EXISTS settingsData ('
         	+ 'ID INTEGER PRIMARY KEY,'
         	+ 'notification BOOLEAN,'
+        	+ 'interval INTEGER,'
         	+ 'GPS BOOLEAN)';
 
 	this.myDb.transaction(
 			function (transaction) {
-			transaction.executeSql('DROP TABLE settingsData', [], this.nullDataHandler, this.errorHandler);
+			//transaction.executeSql('DROP TABLE settingsData', [], this.nullDataHandler, this.errorHandler);
 			//uitvoeren van sqlTabel2 statement om tabel4 te creëeren: settingsData
-        	transaction.executeSql(sqlTabel2, [], this.nullDataHandler, this.errorHandler);
+        	transaction.executeSql(sqlTabel2, [], function (transaction, resultSet){
+        		// na het creëren van de tabel wordt een eerste record met de default settings opgeslagen
+        		saveDefaultSettings();
+        	}, this.errorHandler);
         	}
 		);
 		
@@ -122,30 +166,111 @@ Database.prototype.createSettingsTable = function(){
 
 /****************************** OPSLAG DataCollectie ******************************************/
 
+function getUserLocation(GPSsetting) {
+	console.log(GPSsetting);
+	
+if (GPSsetting){
+	console.log("user wants GPS location"); 
+	  	
+	if (navigator.geolocation) {// Het is mogelijk om geolocatie te doen.
+  		navigator.geolocation.getCurrentPosition(onSuccess, onError, 
+    	{enableHighAccuracy: false, timeout: timeoutVal, maximumAge: maxAgeVal}); // Voer geolocatie uit met weinig accuraatheid
+    	// note als enableHighAccuracy op true staat werkt de geolocatie niet op een android
+	}
+	else { // Het is niet mogelijk om aan geolocatie te doen omdat dit niet ondersteund wordt.
+  		console.log("Geolocation is not supported."); // Geef dit weer in de logs
+	}
+}	else 
+{	console.log ("User does not want GPSlocation");
+	var latitude = 0;
+	var longitude = 0;
+	getMoodRate(latitude, longitude);
+}
+
+/*
+ * Functie die aangeroepen wordt als het localiseren van de gebruiker succesvol was.
+ * De locatie wordt opgeslagen in de environmentData tabel van de TrackerDb.
+ */				
+function onSuccess (position) {
+	var latitude = position.coords.latitude; // breedteligging
+	var longitude = position.coords.longitude; // lengteligging
+	
+	getMoodRate(latitude, longitude);
+}
+
+/*
+ * Functie die aangeroepen wordt als het localiseren van de gebruiker faalt. De error wordt gelogd en 
+ * twee nullen worden opgeslagen in de environmentData tabel van de TrackerDb in de kolommen van lengte- en breedteligging.
+ */					
+function onError (error) {
+ 	var errors = { 
+		1: 'Permission denied',
+		2: 'Position unavailable',
+		3: 'Request timeout'
+	}; 
+	console.log("Error: " + errors[error.code]); //Geef error weer in de logs.
+		 				
+	var latitude = 0;
+	var longitude = 0;
+	getMoodRate(latitude, longitude);
+	
+}
+
+}
+
+function getMoodRate (latitude, longitude){
+	// bepaald de waarde van het html item met id moodSlider, maw bepaald de mood
+	var moodrate = parseInt($('#moodSlider').val(), 10);
+	
+	// reset de waarde van de moodslider naar de default waarde 5
+	resetMoodSlider();
+	console.log('values: ' + latitude + ' ' +longitude + ' '+moodrate);
+	saveObservation(latitude, longitude, moodrate) // Sla de gegevens op in de db
+}
 
 /*
  * Functie die aangeroepen wordt door geolocation om moodrate en datum te bepalen en vervolgens de observatie data op te slaan.
  */
-function saveObservation (latitude, longitude){
-	// bepaald de waarde van het html item met id moodSlider, maw bepaald de mood
-	var moodrate = $('#moodSlider').val();
-	
-	// reset de waarde van de moodslider naar de default waarde 5
-	resetMoodSlider();
-	
+function saveObservation (latitude, longitude, moodrate){
 	// bepaal huidige datum en tijd
 	var on_date = new Date();
 	
-	// sla de data op in de database
-	database.saveEnvData(moodrate, on_date, latitude, longitude);
+	console.log(analysisIsFinished);
+	
+	if (analysisIsFinished){
+		// sla de data op in de database
+		
+		console.log (moodrate,' en ', on_date,' en ', latitude, ' en ', longitude);
+		
+		// haal de waarden voor hueclass, saturation and brightness uit de HTML pagina
+		var hueClass = parseInt($("#HueClass").text(), 10) ;
+        var saturation = parseInt($("#Saturation").text(), 10);
+        var brightness = parseInt($("#Brightness").text(), 10);
+        
+        brightness += 1;
+        console.log(brightness);
+        
+		resetSpanElementen();
+		
+		console.log (moodrate+' en '+ on_date+' en '+ latitude+ ' en '+ longitude);
+		database.saveEnvData(moodrate, on_date, latitude, longitude, hueClass, saturation, brightness);
+	} else {
+		var myVar = setTimeout(function(){retrySaveObservation}, 3000);
+	}
+	
 	
 }
+
+function retrySaveObservation (latitude, longitude, moodrate)
+{	
+	saveObservation (latitude, longitude, moodrate);
+} 
 
 
 /* 
  * Functie die de moodrate, locatie (latitude, longitude), foto gegevens opslaat in de environmentData tabel.
  */
-Database.prototype.saveEnvData = function(moodrate, on_date, latitude, longitude){
+Database.prototype.saveEnvData = function(moodrate, on_date, latitude, longitude, hueClass, Saturation, Brightness){
 	try{ // SQL statement voor het opslaan van EnvData
 		var sqlInsertEnvData = 'INSERT INTO environmentData (moodrate, added_on, posLatitude, '
 			+ 'posLongitude, hue_cat, per_saturation, per_brightness) VALUES (?, ?, ?, ?, ?, ?, ?)';
@@ -153,10 +278,8 @@ Database.prototype.saveEnvData = function(moodrate, on_date, latitude, longitude
 		this.myDb.transaction(
 			function(transaction){
 			//uitvoeren van sqlInsertEnvData om de moodrate, breedteligging en lengteligging op te slaan in de environmentData tabel.	
-			transaction.executeSql(sqlInsertEnvData, [moodrate, on_date, latitude, longitude, pixData[0], pixData[1], pixData[2]], 
-				function (transaction, resultSet){
-					goHome(); 
-				}, this.errorHandler);
+			transaction.executeSql(sqlInsertEnvData, [moodrate, on_date, latitude, longitude, hueClass, Saturation, Brightness], 
+				this.nullDataHandler, this.errorHandler);
 			}
 		);
 	} catch(e) {
@@ -175,6 +298,19 @@ function resetMoodSlider(){
 	$("#moodSlider").val(5).slider("refresh"); // moodSlider waarde wordt op 5 gezet
 }
 
+/*
+ * Functie die aangeroepen wordt door de goHome methode en door de saveObservation methode om de waarde van de spanElementen 
+ * terug op 0 te zetten.
+ */
+function resetSpanElementen(){
+		var hueClass = $("#HueClass");
+        var saturation = $("#Saturation");
+        var brightness = $("#Brightness");
+        
+		hueClass.text (0); 
+        saturation.text (0);
+        brightness.text (0);
+}
 
 /*
  * Functie die wordt aangeroepen door de geolocation methode en door de goHome methode om 
@@ -205,6 +341,7 @@ function resetLayout(){
  */
 function goHome(){
 	 resetMoodSlider();
+	 resetSpanElementen();
 	 resetLayout();
 }
 
@@ -213,15 +350,19 @@ function goHome(){
 /****************************** OPSLAG settings *****************************************************/
 
 
-
-
-/* 
- * Functie die telt hoeveel rijen er in de settingsData tabel zijn. Op die manier kunnen we bepalen of er reeds
- * een set preferenties door de gebruiker werden vastgelegd. Als dit niet het geval is, 
- * voegen we een rij toe met de defaultwaardes.
+/*
+ * Bewaar de defaultdata in de tabel. Deze methode wordt aangeroepen na de creatie van de tabel en door de knop
+ * default settings.
  */
-Database.prototype.getRowsSetData = function(){
-	try{// SQL statement die het aantal record telt in de settingsData tabel.
+
+function saveDefaultSettings(){
+	
+	database.countNumberRows();
+}
+
+
+Database.prototype.countNumberRows = function () {
+	try {// SQL statement dat het aantal rijen telt in de settingsData tabel
 		var sqlCount = 'SELECT Count(*) FROM settingsData';
 		this.myDb.transaction(
 			function(transaction){
@@ -229,57 +370,135 @@ Database.prototype.getRowsSetData = function(){
 			transaction.executeSql(sqlCount, [], 
 				function (transaction, resultSet){
 					var nrRows = resultSet.rows.item(0)["Count(*)"];
-					if (nrRows == 0){ // tabel is leeg.
-						var settings = [1, false, true, true, true, true, true, true, true, 8, 0, 20, 0, 120, false, 0, false, 0, true];
-						database.saveDefaultSettings(settings);
+					//console.log(nrRows);
+					if (nrRows == 0){
+					 // tabel is leeg.
+					 var defaultSettingsData = [1, false, 120, true];
+					 database.saveDefaultSettings(defaultSettingsData);
 					}
-				}, this.errorHandler);
+        	 }, this.errorHandler);
 			}
 		)
 	} catch(e) {
 		alert("Error Processing SQL: "+ e.message +".");
-	}
+	}	
 }
+
+  	
 
 /* 
  * Functie die de default settings opslaat in de settingsData tabel.
  */
-Database.prototype.saveDefaultSettings = function(setData){
-	try{// SQL statement die de default settings opslaat in de settingsData tabel
-		var sqlInsertDefaultSet = 'INSERT INTO settingsData (ID, notification, monday, tuesday, wednesday, thursday, '
-        	+ 'friday, saturday, sunday, startHour, startMinute, stopHour, stopMinute, interval, beep, nr_beep, vibrate, min_vibrate, '
-        	+ 'GPS) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-     
+Database.prototype.saveDefaultSettings = function (SettingsData){
+	try {// SQL statement die de defaultwaardes van de settings opslaat in de settingsData tabel
+		var sqlSaveDefaultSettings = 'INSERT INTO settingsData (ID, notification, interval, GPS) VALUES (?, ?, ?, ?)';
+     	
 		this.myDb.transaction(
 		function(transaction){
-			// Het uitvoeren van sqlInsertDefaultSetData om de default settings in de settingsData tabel op te slaan.
-			transaction.executeSql(sqlInsertDefaultSet,
-        	[setData[0], setData[1], setData[2], setData[3],setData[4], setData[5], setData[6], setData[7], setData[8],setData[9], setData[10], setData[11], setData[12], setData[13], setData[14], setData[15], setData[16], setData[17], setData[18]],
+			// Het uitvoeren van sqlSaveDefaultSettings om de default settings in de settingsData tabel op te slaan.
+			transaction.executeSql(sqlSaveDefaultSettings,
+        	[SettingsData[0], SettingsData[1], SettingsData[2], SettingsData[3]],
         	 this.nullDataHandler, this.errorHandler);
 			}
 		)
 	} catch(e) {
 		alert("Error Processing SQL: "+ e.message +".");
-	}
+	}	
 }
 
-function getSet(){
+/*
+ * Functie die door de knop save in de settingspagina wordt aangeroepen en die de settings uit de html pagina gaat en
+ * vervolgens het record in de database update
+ */
+function saveSettings(){
+	var settingsData = [true, 120, true];
+	
+	// get value of notification checkbox
+	settingsData[0]= $('input[type="checkbox"]:first').is(':checked');
+	console.log($('input[type="checkbox"]:first').is(':checked'));
+	
+	// save the value of the number inputfield
+	settingsData[1]= $("input[type='number']").val();
+	
+	// get value of GPS checkbox
+	settingsData[2]=  $('input[type="checkbox"]:last').is(':checked');
+	
+	console.log (settingsData);
+	
+	// save everything in the database
+	database.saveSettings (settingsData);
+}
+
+/*
+ * Functie die de settings in de database update
+ */
+
+Database.prototype.saveSettings = function (SettingsData){
+	try {// SQL statement die de defaultwaardes van de settings opslaat in de settingsData tabel
+		var sqlSaveSettings = 'UPDATE settingsData SET notification = ?, interval = ?, GPS = ? WHERE ID = 1';
+     	
+		this.myDb.transaction(
+		function(transaction){
+			// Het uitvoeren van sqlSaveDefaultSettings om de default settings in de settingsData tabel op te slaan.
+			transaction.executeSql(sqlSaveSettings,
+        	[SettingsData[0], SettingsData[1], SettingsData[2]],
+        	 this.nullDataHandler, this.errorHandler);
+			}
+		)
+	} catch(e) {
+		alert("Error Processing SQL: "+ e.message +".");
+	}	
+}
+
+/*
+ * Funcite die wordt aangesproken bij het openen van de settings
+ */
+function getSettingsData(){
 	database.getSettings();
+	
+	// verander de tekst op de homepage naar Thank you!
+	var text = document.getElementById("homepageText");
+        text.innerHTML = "Welcome !";
 }
 
 /* 
- * Functie die de default settings opslaat in de settingsData tabel.
+ * Functie aangeroepen door geolocation methode om de GPS settings uit de settingsData tabel te halen
+ * en deze effectief te kunnen toepassen.
  */
-Database.prototype.getSettings = function(){
+Database.prototype.getGPSSettings = function(){
 	try{// SQL statement die de default settings opslaat in de settingsData tabel
-		var sqlgetSet = 'SELECT * FROM settingsData WHERE ID = ?' 
+		var sqlGetGPSSettings = 'SELECT (GPS) FROM settingsData WHERE ID = ?' 
      
 		this.myDb.transaction(
 		function(transaction){
 			// Het uitvoeren van sqlInsertDefaultSetData om de default settings in de settingsData tabel op te slaan.
-			transaction.executeSql(sqlgetSet, [1], function (transaction, resultSet){
+			transaction.executeSql(sqlGetGPSSettings, [1], function (transaction, resultSet){
 				var row = resultSet.rows.item(0);
-       			openSet([row.notification, row.monday, row.tuesday, row.wednesday, row.thursday, row.friday, row.saturday, row.sunday, row.startHour, row.startMinute, row.stopHour, row.stopMinute, row.interval, row.beep, row.nr_beep, row.vibrate, row.min_vibrate, row.GPS]);
+				GPSsettings = row['GPS'];
+				console.log ("gps settings " + GPSsettings);
+       			getUserLocation(GPSsettings);
+			}, this.errorHandler);
+			}
+		)
+	} catch(e) {
+		alert("Error Processing SQL: "+ e.message +".");
+	}
+}
+
+
+/* 
+ * Functie die de default settings uit de settingsData tabel haalt.
+ */
+Database.prototype.getSettings = function(){
+	try{// SQL statement die de default settings opslaat in de settingsData tabel
+		var sqlGetSettings = 'SELECT * FROM settingsData WHERE ID = ?' 
+     
+		this.myDb.transaction(
+		function(transaction){
+			// Het uitvoeren van sqlInsertDefaultSetData om de default settings in de settingsData tabel op te slaan.
+			transaction.executeSql(sqlGetSettings, [1], function (transaction, resultSet){
+				var row = resultSet.rows.item(0);
+       			setSettings([row['notification'], row['interval'], row['GPS']]);
 			}, this.errorHandler);
 			}
 		)
@@ -289,64 +508,58 @@ Database.prototype.getSettings = function(){
 }
 
 /*
- * Functie die de default settings opvraagt.
+ * Functie die ervoor zorgt dat de waardes voor de settings uit de database correct worden weergegeven
+ */
  
-function getSettings() {
-	var not = false;
-	var beep = false;
-	var vibr = false;
-	var GPS = false;
+function setSettings(settingsData) {
+	//console.log (settingsData);	
 	
-	if ($('#Notifications').val() == "true"){
-		not = true
-	} else {};
-	if ($('#Beep').val() == "true"){
-		beep = true
-	} else {};
-	if ($('#Vibrate').val() == "true"){
-		vibr = true
-	} else {};
-	if ($('#GPS').val() == "true"){
-		GPS = true
-	} else {};
+	// zet de waarde van number gelijk met de waarde opgeslagen in de settingstabel
+	$("input[type='number']").val(settingsData[1]);
 	
-	return [not, document.getElementById("Monday").checked, document.getElementById("Tuesday").checked, document.getElementById("Wednesday").checked, document.getElementById("Thursday").checked, document.getElementById("Friday").checked, document.getElementById("Saturday").checked, document.getElementById("Sunday").checked, beep, vibr, GPS];
+	// idem voor de notification checkbox
+	if (settingsData[0] == "true")
+	{	
+		$("input[type='checkbox']:first").attr("checked",true).checkboxradio("refresh");
+		$("input[type='number']").prop('disabled', false);
+	}
+	else {
+		$("input[type='checkbox']:first").attr("checked",false).checkboxradio("refresh");
+		$("input[type='number']").prop('disabled', true);
+	};
+	
+	// idem voor de GPS checkbox
+	if (settingsData[2] == "true"){
+		$("input[type='checkbox']:last").attr("checked",true).checkboxradio("refresh");
+	}
+	else {
+		$("input[type='checkbox']:last").prop("checked",false).checkboxradio("refresh");
+		}
 }
-
-
-
-
-
-
-/*function loadSetData() {
-	database.getSetData();
-}
-
-function updateSettings(){
-	var setData = getSettings();
-	database.updateSetData(setData);
-}
-*/	
 
 /*
-Database.prototype.updateSetData = function(setData){
-	try{
-		sqlUpdatSetData = 'UPDATE settingsData SET notification = ?, monday = ?, tuesday =?, wednesday = ?, thursday = ?, '
-        	+ 'friday = ?, saturday = ?, sunday = ?, startTime = ?, stopTime = ?, interval = ?, beep = ?, nr_beep = ?, vibrate = ?, '
-        	+ 'min_vibrate = ?, GPS = ? WHERE ID=1)';
-		this.myDb.transaction(
-			function(transaction){
-				
-			transaction.executeSql(sqlUpdateSetData,
-        	[setData[0], setData[1], setData[2],setData[3], setData[4], setData[5],setData[7], setData[8],setData[9], setData[10], setData[11], setData[12], setData[13], setData[14], setData[15]],
-        	 this.nullDataHandler, this.errorHandler);
-			}
-		)
-		
-	}catch (e) {
-		alert("Error Processing SQL: "+ e.message +".");
-	};
+ * Functie die wordt aangeroepen als de checkbox voor notificaties wordt gewijzigd.
+ * Als notificaties worden aangevinkt, wordt het interval inputvakje enabled of disabled
+ */
+function changeCheckboxNotifications(){
+	console.log ("we zijn er");
+	if ($('input[type="checkbox"]:first').is(':checked')){
+		$("input[type='number']").prop('disabled', false);
+	} else {
+		$("input[type='number']").prop('disabled', true);
+	}
 }
+
+/*
+ * Functie die wordt aangeroepen als de gebruiker op de checkbox klikt
+ */
+function showPopup(){
+	$( "#NotificationPopup" ).popup( "open" );
+	// zorg ervoor dat de notificatiecheckbox niet wordt aangevinkt
+	$("input[type='checkbox']:first").attr("checked",true).checkboxradio("refresh");
+	
+}
+
 
 
 /****************************** RESULTS ******************************************/
@@ -355,9 +568,13 @@ Database.prototype.updateSetData = function(setData){
  * De functie haalt alle observaties uit de database en berekent een aantal waarden die dan door de graph.js
  * gebruikt worden om in de resultpagina's een aantal samenvattende grafieken weer te geven.
  */
-function getData(){
+function getResultData(){
 	// haal alle observaties uit de database.
 	database.getResults();
+	
+	// verander de tekst op de homepage naar Thank you!
+	var text = document.getElementById("homepageText");
+        text.innerHTML = "Welcome !";
 }
 
 /*
@@ -418,9 +635,13 @@ function dataSelectHandler(transaction, results) {
 	var mostHueCat = 0;
 	
 	// variabelen voor het berekenene van de gemiddelde gemoedstoestand op de laatste location
-	var lastLocation = [Math.round(results.rows.item(AantalObs-1)['posLatitude']*1000), Math.round(results.rows.item(AantalObs-1)['posLongitude']*1000)];
+	//var lastLocationNotRound = [results.rows.item(AantalObs-1)['posLatitude'], results.rows.item(AantalObs-1)['posLongitude']]
+	var lastLocationNotRound = [64,422006, 2,084095];
+	console.log('lastlocation ' + lastLocationNotRound);
+	var lastLocation = [Math.round(lastLocationNotRound[0]*10000), Math.round(lastLocationNotRound[1]*10000)];
 	var lastLocationAantal = 0;
 	var lastLocationMood = 0;
+	console.log('lastlocationMood');
 	
 	// verwerking van de resultaten
 	// we overlopen alle rijen in het resultaat, dus in de gevalle alle rijen uit de tabel
@@ -432,7 +653,7 @@ function dataSelectHandler(transaction, results) {
     	// De hue van observatie i
     	var hue_cat = row['hue_cat'];
     	// De mood van observatie i (moet nog omgezet worden naar een integer)
-    	var mood = parseInt(row['moodrate']);
+    	var mood = parseInt(row['moodrate'], 10);
     	// een datum variabele voor de added_on van de observatie i
     	var d = new Date(row['added_on']);
     	// De dag waarop een observatie i werd toegevoegd (ma=0, di=1, woe=2, do=3, vrij=4, zat=5, zon=6)
@@ -442,9 +663,11 @@ function dataSelectHandler(transaction, results) {
     	// De brightness van observatie i
     	var bright = row['per_brightness'];
     	// De locatie van observatie i
-    	var location = [Math.round(row['posLatitude'] *1000), Math.round(row['posLongitude'] *1000)]; // afgerond op drie cijfers na de komma
+    	var location = [Math.round(row['posLatitude'] *10000), Math.round(row['posLongitude'] *10000)]; // afgerond op drie cijfers na de komma
     	
-    // berekenen van de gemiddelde gemoedstoestand per hue categorie
+    if (hue_cat != 0) // als een foto genomen werd in deze observatie
+    {
+    	// berekenen van de gemiddelde gemoedstoestand per hue categorie
        	if (hue_cat == 1) 
     	{ 	//als i tot de vigorous categorie
     		NrHue[0] += 1;
@@ -462,7 +685,7 @@ function dataSelectHandler(transaction, results) {
     		NrHue[3] += 1;
     		hueMood[3] += mood;};
     		
-     // berekenen van % per hue_cat als gebruiker ongelukkig is	
+     	// berekenen van % per hue_cat als gebruiker ongelukkig is	
     	if (mood <= 3) // Unhappy categorie
     	{ 	NrUnhappy = NrUnhappy + 1;
     		if (hue_cat == 1) // vigorous categorie
@@ -500,21 +723,23 @@ function dataSelectHandler(transaction, results) {
     		else if (hue_cat == 4) // flower categorie
     		{ 	FineHue[3]+= 1;}
     	};
+    	
+    	// berekenen van de gemiddelde saturation per gemoedstoestand (1-10)
+    	satNr[mood-1] += sat;
+    	// berekenen van de gemiddelde brightness per gemoedstoestand (1-10)
+    	brightNr[mood-1] += bright ;
+   		// aantal metingen per gemoedstoestand
+    	NrM [mood-1] += 1;
+    };
     
     // berekenen van gemiddelde gemoedstoestand op een bepaalde dag van de week
-    	// weekday waarde van 0-6 afh van de dag.
+    	// weekday waarde van 0-6 afh van de dag. heeft niet te maken met foto analyse dus die mag nul zijn
     	NrWd[weekday] += 1;
     	MoodWd[weekday] += mood;
     	
-    // berekenen van de gemiddelde saturation per gemoedstoestand (1-10)
-    	satNr[mood-1] += sat;
-    // berekenen van de gemiddelde brightness per gemoedstoestand (1-10)
-    	brightNr[mood-1] += bright ;
-   	// aantal metingen per gemoedstoestand
-    	NrM [mood-1] += 1;
     
     // vergelijken locatie observatie i met laatste locatie
-    if (lastLocation == location) {
+    if (location == lastLocation) {
     	lastLocationAantal += 1;
     	lastLocationMood += mood;
     }
@@ -577,7 +802,7 @@ function dataSelectHandler(transaction, results) {
    	};
    	
    	// gemiddelde mood op de laatste locatie
-   	lastLocationMood /= lastLocationAantal;
+   	//lastLocationMood /= lastLocationAantal;
    	
    	// gemiddelde gemoedstoestand
    	avgMood /= (NrHue[0]+ NrHue[1]+ NrHue[2] + NrHue[3]);
@@ -594,8 +819,10 @@ function dataSelectHandler(transaction, results) {
         }
     }
    	
+   	console.log('lastlocationMood ' + lastLocationMood);
+   	console.log('lastlocationAantal ' + lastLocationAantal);
    
-   openChart(hueMood, UnhappyHue, FineHue, HappyHue, MoodWd, satNr, brightNr, avgMood, mostHueCat, lastLocationMood, lastLocationAantal, lastLocation);
+   openChart(hueMood, UnhappyHue, FineHue, HappyHue, MoodWd, satNr, brightNr, avgMood, mostHueCat, lastLocationNotRound, lastLocationAantal, lastLocationMood);
 }
 	
 
@@ -627,15 +854,4 @@ Database.prototype.nullDataHandler = function(transaction, resultSet) {
 }
 
 
-/*
-
-
-/***
-**** Save 'default' data into DB table **
-***/
-
-/*function saveAll(){
-		prePopulate(1);
-}
-*/
 

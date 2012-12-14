@@ -9,6 +9,7 @@ package com.example.android;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.View;
 
 public class Camera extends OptionMenu  {
@@ -27,6 +28,12 @@ public class Camera extends OptionMenu  {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_RQ) {
             if (resultCode == RESULT_OK) {// Image captured and saved
+            	
+            	Bundle extras = data.getExtras();
+            	
+            	Intent intentPhoto = new Intent(this,PhotoAnalysisService.class);
+            	intentPhoto.putExtra("Photo", extras);
+            	startService(intentPhoto);
               
                 // Open new activity
                 Intent intent = new Intent(this, Audio.class);

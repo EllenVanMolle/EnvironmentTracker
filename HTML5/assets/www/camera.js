@@ -8,6 +8,7 @@
  * wordt.
  */
 function takeAPicture() {
+	analysisIsFinished = false;
 	navigator.camera.getPicture(onSuccess, onFail, { quality: 50, 
 		 destinationType: Camera.DestinationType.FILE_URI});
 }
@@ -17,9 +18,11 @@ function takeAPicture() {
  */
 function onSuccess(imageURI) {
 	// sla de foto locaal op
-	localStorage.setItem("placeImage", imageURI);
+	//localStorage.setItem("placeImage", imageURI);
 	// analyseer de foto
-	colorAnalysis();
+	//imageSrc =  'images/Autumn_Leaves.jpg'
+	imageSrc = imageURI;
+	colorAnalysis(imageSrc);
    }
 
 /*
@@ -29,4 +32,6 @@ function onSuccess(imageURI) {
 function onFail(message) {
 	// log de reden waarom het nemen van de foto gefaald heeft.
     console.log('Failed because: ' + message);  
+    // geef een 0 waardes aan alle fotovariabelen
+    analysisIsFinished = true;
 }

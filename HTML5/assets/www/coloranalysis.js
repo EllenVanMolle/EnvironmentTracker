@@ -5,9 +5,10 @@
 /*
  * Methode om een canvas te creëren om vervolgens de pixeldata van de afbeelding op te vragen
  */
-function colorAnalysis(){ 
+function colorAnalysis(imageSource){ 
 	
 	console.log("start");
+    
 	// Link de variable canvas met een item MyCanvas uit de htmlfile
 	var canvas = document.getElementById('MyCanvas');
    
@@ -20,7 +21,7 @@ function colorAnalysis(){
   		
   		// volgende functie wordt uitgevoerd bij het laden van de afbeelding
 		img.onload = function(){
-			/*	
+				
 			var maxWidth = window.innerWidth;
 			var maxHeight = window.innerHeight;
 			var imgWidth = img.width;
@@ -33,10 +34,7 @@ function colorAnalysis(){
            	ratio = maxHeight / imgHeight;
             	
            	var Width = imgWidth*ratio;
-           	var Height = imgHeight*ratio;*/
-            
-            var Width = img.width;
-  			var Height = img.heigth;
+           	var Height = imgHeight*ratio;
   				
 			canvas.width = Width;
 			canvas.height= Height;
@@ -51,7 +49,8 @@ function colorAnalysis(){
 			analysisOfPixels (imageData.data, Width, Height);
 		};
 		// definieer de source van de afbeelding
-		img.src = localStorage.getItem("placeImage"); 
+		//img.src = localStorage.getItem("placeImage"); 
+		img.src = imageSource;
       		
 	}
 	else {alert("no canvas") // canvas wordt niet ondersteund
@@ -120,14 +119,25 @@ function analysisOfPixels(Data, Width, Height){
   		 * wordt de categorie met het hoogste nummer opgeslagen als HueClass. Merk op dat de kans dat zo'n situatie zich voordoet heel klein is.
   		 */
         }
+        console.log(HueClass);
         
         // Bereken de procentuele waarde van de saturatie en de brightness en rond deze af op een eenheid. 	
         var Saturation = Math.round((totalSat / totalPixels)*100);
         var Brightness = Math.round((totalBr / totalPixels)*100);
+        console.log(Saturation + ' ' + Brightness);
         
-        // zet de waarde van pixData uit de database.js. Geeft de HueClass = overheersend hue categorie, saturation, brightness door aan de db.
-        pixData = [HueClass, Saturation, Brightness];
-        console.log(pixData);
+        // geef de waarde van de HueClass, Staturation and Brightness door aan de overeenstemmende span elementen
+        var hueClass = $("#HueClass");
+        var saturation = $("#Saturation");
+        var brightness = $("#Brightness");
+        
+		hueClass.text (HueClass); 
+        saturation.text (Saturation);
+        brightness.text (Brightness);
+        
+        console.log (hueClass.text() +' en ' + saturation.text() + ' en '+ brightness.text());
+        analysisIsFinished = true;
+        //console.log(pixData);
 }
 
 
