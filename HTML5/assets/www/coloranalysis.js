@@ -49,7 +49,7 @@ function colorAnalysis(imageSource){
 			analysisOfPixels (imageData.data, Width, Height);
 		};
 		// definieer de source van de afbeelding
-		//img.src = localStorage.getItem(imageSource); 
+		//img.src = localStorage.getItem("placeImage"); 
 		img.src = imageSource;
       		
 	}

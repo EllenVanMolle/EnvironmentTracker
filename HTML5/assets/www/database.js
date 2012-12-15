@@ -169,10 +169,16 @@ Database.prototype.createSettingsTable = function(){
 function getUserLocation(GPSsetting) {
 	console.log(GPSsetting);
 	
+<<<<<<< HEAD
 if (GPSsetting) {
 	console.log("user wants GPS location"); 
 	var timeoutVal = 5000;// we wachten max 5 sec
 	var maxAgeVal = 0;
+=======
+if (GPSsetting){
+	console.log("user wants GPS location"); 
+	  	
+>>>>>>> 2de168f13cec9fe11ca5d0760c9499825f733ba2
 	if (navigator.geolocation) {// Het is mogelijk om geolocatie te doen.
   		navigator.geolocation.getCurrentPosition(onSuccess, onError, 
     	{enableHighAccuracy: false, timeout: timeoutVal, maximumAge: maxAgeVal}); // Voer geolocatie uit met weinig accuraatheid
@@ -181,8 +187,13 @@ if (GPSsetting) {
 	else { // Het is niet mogelijk om aan geolocatie te doen omdat dit niet ondersteund wordt.
   		console.log("Geolocation is not supported."); // Geef dit weer in de logs
 	}
+<<<<<<< HEAD
 } else if (!GPSsetting) {
 	console.log ("User does not want GPSlocation");
+=======
+}	else 
+{	console.log ("User does not want GPSlocation");
+>>>>>>> 2de168f13cec9fe11ca5d0760c9499825f733ba2
 	var latitude = 0;
 	var longitude = 0;
 	getMoodRate(latitude, longitude);
@@ -236,7 +247,11 @@ function saveObservation (latitude, longitude, moodrate){
 	// bepaal huidige datum en tijd
 	var on_date = new Date();
 	
+<<<<<<< HEAD
 	console.log('analysis is finished: ' + analysisIsFinished);
+=======
+	console.log(analysisIsFinished);
+>>>>>>> 2de168f13cec9fe11ca5d0760c9499825f733ba2
 	
 	if (analysisIsFinished){
 		// sla de data op in de database
@@ -249,20 +264,32 @@ function saveObservation (latitude, longitude, moodrate){
         var brightness = parseInt($("#Brightness").text(), 10);
         
         brightness += 1;
+<<<<<<< HEAD
         console.log(brightness + ' en ' + saturation + ' en ' + hueClass);
+=======
+        console.log(brightness);
+>>>>>>> 2de168f13cec9fe11ca5d0760c9499825f733ba2
         
 		resetSpanElementen();
 		
 		console.log (moodrate+' en '+ on_date+' en '+ latitude+ ' en '+ longitude);
 		database.saveEnvData(moodrate, on_date, latitude, longitude, hueClass, saturation, brightness);
 	} else {
+<<<<<<< HEAD
 		window.setTimeout(retryToSaveObservation(latitude, longitude, moodrate), 3000);
+=======
+		var myVar = setTimeout(function(){retrySaveObservation}, 3000);
+>>>>>>> 2de168f13cec9fe11ca5d0760c9499825f733ba2
 	}
 	
 	
 }
 
+<<<<<<< HEAD
 function retryToSaveObservation (latitude, longitude, moodrate)
+=======
+function retrySaveObservation (latitude, longitude, moodrate)
+>>>>>>> 2de168f13cec9fe11ca5d0760c9499825f733ba2
 {	
 	saveObservation (latitude, longitude, moodrate);
 } 

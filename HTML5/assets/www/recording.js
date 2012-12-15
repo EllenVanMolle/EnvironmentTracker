@@ -102,10 +102,25 @@ function setAudioPosition(position) {
 
 
 /*
+ * Functie die wordt opgeroepen als het verwijderen van het mediaFile succesvol was.
+ */
+function removeSuccess(entry) {
+    console.log("Removal succeeded");
+}
+
+/*
+ * Functie die wordt opgeroepen als het verwijderen van het mediaFile niet succesvol was.
+ */
+function removeFail(error) {
+    alert('Error removing file: ' + error.code);
+}
+
+/*
  * Deze functie wordt aangeroepen wanneer het geluid succesvol is opgenomen.
  */
 /*var captureSuccess = function(mediaFiles) {
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+<<<<<<< HEAD
     	 path = mediaFiles[i].fullPath;
          console.log(path); // voorlopig log het pad
 		}
@@ -113,6 +128,16 @@ function setAudioPosition(position) {
     FileEntry entry = new FileEntry
    
 };*/
+=======
+    	mediaFile = mediaFiles[i];
+    	// mediaFile is a FileEntrie; an object that represnets a file on a file system.
+    	// get the path
+		}
+        // remove the mediaFile
+        mediaFile.remove(removeSuccess, removeFail);
+   
+};
+>>>>>>> 2de168f13cec9fe11ca5d0760c9499825f733ba2
 
 /*
  * Deze functie wordt aangeroepen wanneer het geluid niet is opgenomen. De gebruiker krijgt dan een foutmelding.
