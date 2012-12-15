@@ -83,7 +83,6 @@ public class PhotoAnalysisService extends IntentService {
         Log.d("Brightness", Float.toString(brightness));
         
         double decibel;
-        amplitude = 500;
         
         // Calculate the decibels
         if (amplitude == 0) {

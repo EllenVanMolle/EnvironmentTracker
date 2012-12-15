@@ -1,12 +1,25 @@
+/*
+ * het analyseren van de foto
+ */
 
-
-function pictureAnalysis(){ 
-	var canvas = document.getElementById('MyCanvas');
+/*
+ * Methode om een canvas te creëren om vervolgens de pixeldata van de afbeelding op te vragen
+ */
+function colorAnalysis(imageSource){ 
+	
+	console.log("start");
     
+	// Link de variable canvas met een item MyCanvas uit de htmlfile
+	var canvas = document.getElementById('MyCanvas');
+   
+   	// check of een canvas ondersteund wordt
     if (canvas.getContext){
   		var ctx = canvas.getContext('2d');
-  			
-  		var img = new Image();   // Create new img element
+  		
+  		//	creëer een nieuw afbeelding element
+  		var img = new Image();
+  		
+  		// volgende functie wordt uitgevoerd bij het laden van de afbeelding
 		img.onload = function(){
 				
 			var maxWidth = window.innerWidth;
@@ -22,77 +35,115 @@ function pictureAnalysis(){
             	
            	var Width = imgWidth*ratio;
            	var Height = imgHeight*ratio;
-            	
+  				
 			canvas.width = Width;
 			canvas.height= Height;
-  				
+  			
+  			// teken de afbeelding in het canvas	
   			ctx.drawImage(img,0,0); // execute drawImage statements here
-  				
+  			
+  			// haal de data van de afbeelding uit de context	
   			var imageData = ctx.getImageData(0, 0, Width, Height);	
-
-			pixalAnalysis (imageData.data, Width, Height);
+			
+			// voer de pixalAnalyse methode uit met de gevonden data
+			analysisOfPixels (imageData.data, Width, Height);
 		};
-		img.src = 'images/Autumn_Leaves.jpg'; 
+		// definieer de source van de afbeelding
+		//img.src = localStorage.getItem(imageSource); 
+		img.src = imageSource;
       		
 	}
-	else {alert("no canvas")
- 		 // canvas-unsupported code here
+	else {alert("Canvas is not supported.") // canvas wordt niet ondersteund
 	}	
 }
 
-function pixalAnalysis(Data, Width, Height){
+/*
+ * Methode om de kleuren van de pixels te analyseren
+ */
+function analysisOfPixels(Data, Width, Height){
 	
-	var nrPix = [0, 0, 0, 0];
-	var totalS = 0;
-	var totalB = 0;
+	// initialiseren van enkele variabelen
+	var nrPixelsHueCategory = [0, 0, 0, 0];
+	var totalSat = 0;
+	var totalBr = 0;
 					
-		// loop through each row
+		// loop door elke rij
 		for (var j = 0; j < Height; j++)
 		{
-   			//loop through each column
+   			//loop door elke kolom
      		for (var i = 0; i < Width; i++)
      		{ 	
-     			var index=(j * Width + i) * 4;
+     			var index = (j * Width + i) * 4;
       			var red = Data[index];	// red
       			var green = Data[++index];	// green
         		var blue = Data[++index];  //blue
        			
+       			// zet de rgb waarden om naar hsv waarden
        			var hsv = rgb2hsv (red, green, blue);
-         				
-         		if (hsv[0] <= 90)
-         		nrPix[0] = nrPix[0] + 1;
-         		else if (hsv[0] <= 180)
-         		nrPix[1] = nrPix[1] + 1;
-         		else if (hsv[0] <= 270)
-         		nrPix[2] = nrPix[2] + 1;
-         		else if (hsv[0] <= 360)
-         		nrPix[3] = nrPix[3] + 1;
-         		else {alert('hue is incorrect')};
-         				
-         		totalS = totalS + hsv[1];
-         				
-         		totalB = totalB + hsv[2];  
+         		
+         		// Bepaal tot welke hue categorie een pixel behoort		
+         		if (hsv[0] <= 90) // verhoog het aantal pixel is in de vigorous categorie met 1
+         		nrPixelsHueCategory[0] += 1;
+         		else if (hsv[0] <= 180) // verhoog het aantal pixel is in de nature categorie met 1
+         		nrPixelsHueCategory[1] += 1;
+         		else if (hsv[0] <= 270) // verhoog het aantal pixel is in de ocean categorie met 1
+         		nrPixelsHueCategory[2] += 1;
+         		else if (hsv[0] <= 360) // verhoog het aantal pixel is in de flower categorie met 1
+         		nrPixelsHueCategory[3] += 1;
+         		else {console.log('hue is incorrect')};
+         		// als het pixel tot geen enkele categorie behoort log dat de hue waarschijnlijk incorrect is.
+         		
+         		// verhoog de totale saturatie met de saturatie van deze pixel		
+         		totalSat += hsv[1];
+         		// verhoog de totale brightness met de brightness van deze pixel		
+         		totalBr += hsv[2];  
          	}
         }
-         	
-        var totalPix = Width * Height;
-        var MaxPix = Math.max.apply(null, nrPix);
-        
+         
+        // bepaal het totale aantal pixel door lengt maal breedte te doen	
+        var totalPixels = Width * Height;
+        // bepaal het hoogste pixel in een hue category
+        var MaxPixels = Math.max.apply(null, nrPixelsHueCategory);
+       
+       	// initialiseer een nieuwe variabele 
         var HueClass = 0;
-         	
+        
+        // loop door alle klassen (0-3)	
         for (var n=0; n < 4; n++ )
         {	
-        	if (nrPix[n] == MaxPix)
-         	{HueClass = (n+1);}
-  
+        	if (nrPixelsHueCategory[n] == MaxPixels) // vergelijk het aantal pixels in elke klasse met de maximumwaarde
+         	{// als het maximum gelijk is aan het aantal pixels in die klasse, stel hueclass gelijk aan die categorie
+         		HueClass = (n+1);
+         	}
+  		/*als twee categorieën allebij evenveel pixels hebben en dit aantal het maximum is over de vier categorieën, 
+  		 * wordt de categorie met het hoogste nummer opgeslagen als HueClass. Merk op dat de kans dat zo'n situatie zich voordoet heel klein is.
+  		 */
         }
-         	
-        var Saturation = (totalS / totalPix)*100;
-        var Brightness = (totalB / totalPix)*100;
-        pixData = [HueClass, Saturation, Brightness];
+        console.log(HueClass);
+        
+        // Bereken de procentuele waarde van de saturatie en de brightness en rond deze af op een eenheid. 	
+        var Saturation = Math.round((totalSat / totalPixels)*100);
+        var Brightness = Math.round((totalBr / totalPixels)*100);
+        console.log(Saturation + ' ' + Brightness);
+        
+        // geef de waarde van de HueClass, Staturation and Brightness door aan de overeenstemmende span elementen
+        var hueClass = $("#HueClass");
+        var saturation = $("#Saturation");
+        var brightness = $("#Brightness");
+        
+		hueClass.text (HueClass); 
+        saturation.text (Saturation);
+        brightness.text (Brightness);
+        
+        console.log (hueClass.text() +' en ' + saturation.text() + ' en '+ brightness.text());
+        analysisIsFinished = true;
+        //console.log(pixData);
 }
 
 
+/*
+ * Methode om de rgb waarden om te zetten naar hsvwaarden.
+ */
 function rgb2hsv (r,g,b) {
  var computedH = 0;
  var computedS = 0;
@@ -113,6 +164,7 @@ function rgb2hsv (r,g,b) {
    alert ('RGB values must be in the range 0 to 255.');
    return;
  }
+ 
  r=r/255; g=g/255; b=b/255;
  var minRGB = Math.min(r,Math.min(g,b));
  var maxRGB = Math.max(r,Math.max(g,b));
@@ -131,5 +183,4 @@ function rgb2hsv (r,g,b) {
  computedV = maxRGB;
  return [computedH,computedS,computedV]; 
  
- }
-    
+ }    

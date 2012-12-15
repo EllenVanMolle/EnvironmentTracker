@@ -5,9 +5,6 @@ import org.achartengine.GraphicalView;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
-
 
 public abstract class Chart {
 	
@@ -24,7 +21,7 @@ public abstract class Chart {
 		EnvironmentTrackerOpenHelper openhelper = new EnvironmentTrackerOpenHelper(ResultsContent.context);
 		SQLiteDatabase database = openhelper.getReadableDatabase();
 		results = database.query(true, "Observation", null, null, null, null, null, null, null);
-		database.close();
+		//database.close();
 	}
 
 	public String getId() {

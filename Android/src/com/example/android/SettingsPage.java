@@ -75,13 +75,13 @@ public class SettingsPage extends OptionMenu implements OnSharedPreferenceChange
     		
     		// If CheckBox Notification is enabled set the alarm
     		if (Return){  
-    			Toast.makeText(this, "Enabled", Toast.LENGTH_LONG).show();
+    			//Toast.makeText(this, "Enabled", Toast.LENGTH_LONG).show();
     			setAlarm();
     		}
     		
     		// If CheckBox Notification is disabled cancel the alarm
     		else {
-    			Toast.makeText(this, "Disabled", Toast.LENGTH_LONG).show();
+    			//Toast.makeText(this, "Disabled", Toast.LENGTH_LONG).show();
     			cancelAlarm();
     		}
     	}
@@ -121,7 +121,7 @@ public class SettingsPage extends OptionMenu implements OnSharedPreferenceChange
 					calNow.getTimeInMillis(), 
 					TimeUnit.MINUTES.toMillis(interval),
 					pendingIntent);
-			Toast.makeText(this, "Alarm is set: " + calNow.getTime(), Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, "Alarm is set: " + calNow.getTime(), Toast.LENGTH_LONG).show();
 
 	}
    
@@ -135,7 +135,7 @@ public class SettingsPage extends OptionMenu implements OnSharedPreferenceChange
     /** Method called to cancel the alarm*/
 	private void cancelAlarm(){
 
-		Toast.makeText(this, "Alarm Cancelled", Toast.LENGTH_LONG).show();
+		//Toast.makeText(this, "Alarm Cancelled", Toast.LENGTH_LONG).show();
 		
 		Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);

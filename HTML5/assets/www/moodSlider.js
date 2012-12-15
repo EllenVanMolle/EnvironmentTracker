@@ -1,26 +1,32 @@
 /*
+ * Moodslider
+ */
+
+/*
  * Functie die wordt aangesproken op het ogenblik dat de slider van waarde verandert.
  * De functie beschrijft hoe het gezichtje gelukkiger wordt als de mood groter wordt en
- * verdrietiger als de mood kleiner wordt. Daarnaast wordt ook de tekst onder het gezichtje
- * aangepast; Unhappy, Fine, Happy afh van de waarde van de mood.
+ * verdrietiger als de mood kleiner wordt. Daarnaast wordt ook de tekst boven de smiley
+ * aangepast; Unhappy, Fine, Happy afhankelijk van de waarde van de mood.
  */
 function sliderChange() {
 		
-		//variabelen
-		var mood = $("#moodSlider").val();
+		//intialiseer enkele variabelen
+		var mood = $("#moodSlider").val(); // stel mood gelik aan de waarde van de moodslider in de html pagina
 		var val;
 		var newWidth;
-		var mouth = $("#mouth");
-		var text = document.getElementById("moodText");
+		var mouth = $("#mouth"); // koppel mouth met een item mouth uit de html pagina
+		var text = document.getElementById("moodText"); // koppel text met een item moodtext uit de html pagina
 		
-		if(mood > 6) { //als de mood groter is dan 6
+		// zet de tekst van moodText afhankelijk van de waarde van de mood
+		if(mood > 7) { //als de mood groter is dan 7
 			text.innerHTML = "Happy";
 		}else if (mood < 4){ //als de mood kleiner is dan 4
 			text.innerHTML = "Unhappy";
-		}else{ //als de mood tussen 6 en 4 ligt.
+		}else{ //als de mood tussen 7 en 4 ligt.
 			text.innerHTML = "Fine";
 		};
 		
+		// zet de mond van de smiley afhankelijk van de waarde van de mood
 		if (mood > 5) { //als de mood groter is dan 5	
 		val = 10-mood;
 		newWidth = 90 + (val*20);
@@ -54,7 +60,7 @@ function sliderChange() {
         "border-radius" : newWidth / 2,
         left 			: 3-(mood*10)
         })
-		.removeClass("straight");
+		.removeClass("straight"); // verwijder de standaard neutrale, rechte mond.
 		
 		}
 	}

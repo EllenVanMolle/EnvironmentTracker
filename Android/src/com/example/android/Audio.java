@@ -33,6 +33,8 @@ public class Audio extends OptionMenu {
 	private Bitmap photo;
 	private int mood;
 	
+	private boolean isRecording;
+	
 	public static final int RecordedTime = 5000; // Number of milliseconds of recording
 	
 	
@@ -64,10 +66,18 @@ public class Audio extends OptionMenu {
     @Override
     public void onPause() {
         super.onPause();
-        if (myRecorder != null) {
-            myRecorder.release();
-            myRecorder = null;
+        if (isRecording) {
+        	this.stopRecording();
         }
+        //if (myRecorder != null) {
+         //   myRecorder.release();
+         //   myRecorder = null;
+        //}
+    }
+    
+    public void onResume() {
+    	super.onResume();
+        //myRecorder = new MediaRecorder();
     }
 
     /**Method called when RecordButton is clicked*/    
@@ -83,57 +93,61 @@ public class Audio extends OptionMenu {
 
         try {
             myRecorder.prepare();
+                
+	        //change the layout of the activity
+	        instruction.setVisibility(View.GONE);
+	        startRec.setVisibility(View.GONE);
+	    	myCounter.setVisibility(View.VISIBLE);
+	    	
+	    	//Count Down from 5 minutes to 0
+	    	new CountDownTimer(RecordedTime, 1000) {
+	    		
+	    		//Display every minute the time left to the end
+	            public void onTick(long millisUntilFinished) {
+	                myCounter.setText("" + millisUntilFinished / 1000);
+	            }
+	            
+	            //When finished stop the recorder
+	            public void onFinish() {
+	                myCounter.setText("Done!");
+	                stopRecording();
+	            }
+	    	}.start();
+	        
+	         //Start Recording
+	         myRecorder.start();
+	         this.isRecording = true;
+	         myRecorder.getMaxAmplitude();
         } catch (IOException e) {
             Log.e(LogTag, "prepare() failed");
         }
-        
-        //change the layout of the activity
-        instruction.setVisibility(View.GONE);
-        startRec.setVisibility(View.GONE);
-    	myCounter.setVisibility(View.VISIBLE);
-    	
-    	//Count Down from 5 minutes to 0
-    	new CountDownTimer(RecordedTime, 1000) {
-    		
-    		//Display every minute the time left to the end
-            public void onTick(long millisUntilFinished) {
-                myCounter.setText("" + millisUntilFinished / 1000);
-            }
-            
-            //When finished stop the recorder
-            public void onFinish() {
-                myCounter.setText("Done!");
-                stopRecording();
-            }
-         }.start();
-        
-        //Start Recording
-        myRecorder.start();
     }
 
     /**Method called to stop recording 
      * and open the next activity HomePage*/
     private void stopRecording() {
-        myRecorder.stop();
-        
-        int maxAmplitude = myRecorder.getMaxAmplitude();
-        Log.d("Amp", Integer.toString(maxAmplitude));
-        
-        myRecorder.reset();
-        
-        myRecorder.release();
-        myRecorder = null;
-        
-        // Opstarten van analyse en verwerking van de gegevens
-        
-        Intent intentPhoto = new Intent(this,PhotoAnalysisService.class);
-    	intentPhoto.putExtra("Photo", photo);
-    	intentPhoto.putExtra("mood", mood);
-    	intentPhoto.putExtra("Amplitude", maxAmplitude);
-    	startService(intentPhoto);
-        
-        Intent intent = new Intent(this, HomePage.class);     
-        intent.putExtra("FromAudio", true); //Additional info send to HomePage activity
-        startActivity(intent);
+    	if (isRecording) {
+	        myRecorder.stop();
+	        this.isRecording = false;
+	        
+	        int maxAmplitude = myRecorder.getMaxAmplitude();
+	        
+	        myRecorder.reset();
+	        
+	        myRecorder.release();
+	        myRecorder = null;
+	        
+	        // Opstarten van analyse en verwerking van de gegevens
+	        
+	        Intent intentPhoto = new Intent(this,PhotoAnalysisService.class);
+	    	intentPhoto.putExtra("Photo", photo);
+	    	intentPhoto.putExtra("mood", mood);
+	    	intentPhoto.putExtra("Amplitude", maxAmplitude);
+	    	startService(intentPhoto);
+	        
+	        Intent intent = new Intent(this, HomePage.class);     
+	        intent.putExtra("FromAudio", true); //Additional info send to HomePage activity
+	        startActivity(intent);
+    	}
     }
 }

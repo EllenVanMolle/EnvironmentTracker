@@ -42,10 +42,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 		if (CheckTime(context)){
 			//Send a notification
 			buildNotification(context); }
-		else {
-			//Do nothing
-			//Toast.makeText(context, "Bad Time", Toast.LENGTH_LONG).show();
-		}
 	}
 	
 	/**Method to create a notification*/
@@ -82,20 +78,14 @@ public class AlarmReceiver extends BroadcastReceiver {
 		//Get user time preferences on start and stop time
 		int StartHour = prefs.getInt(KEY_PREF_START + ".hour", 8);
   		int StartMinute = prefs.getInt(KEY_PREF_START + ".minute", 0);
-  		
-  		Toast.makeText(context, "StartHour: " + StartHour 
-  				+ " StartMinute: " + StartMinute, Toast.LENGTH_LONG).show();
 		
   		int StopHour = prefs.getInt(KEY_PREF_STOP + ".hour", 8);
   		int StopMinute =prefs.getInt(KEY_PREF_STOP + ".minute", 0);
   		
-  		Toast.makeText(context, "StopHour: " + StopHour 
-  				+ " StopMinute: " + StopMinute, Toast.LENGTH_LONG).show();
-  		
 		//Get a calendar set to the current time
   		Calendar calNow = Calendar.getInstance();
     	
-    	int HourNow = calNow.get(Calendar.HOUR);
+    	int HourNow = calNow.get(Calendar.HOUR_OF_DAY);
     	int MinuteNow = calNow.get(Calendar.MINUTE);
     	
     	//return true if time is between start and stop hour, otherwise return false
