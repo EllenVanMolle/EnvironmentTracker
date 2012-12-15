@@ -28,10 +28,6 @@ function recordNoise() {
 	tab1.className = tab1.className.replace("ui-disabled", "");
 	tab2.className = tab2.className.replace("ui-disabled", "");
 	
-	//Start het opnemen van het geluid. Je mag maximum 1 clip opnemen van maximum 5 sec.
-	// merk op soms treden er problemen op met limit en duration afhankelijk van het device waarop je ah werken bent. (Quircks)
-	var options = {limit:1, duration:5};
-	//navigator.device.capture.captureAudio(captureSuccess, captureError, options);
 	var src = 'file:///myrecording.wav';
     var mediaRec = new Media(src, onSuccess, onError);
 
@@ -99,49 +95,3 @@ function onError(error) {
 function setAudioPosition(position) {
     document.getElementById('audio_position').innerHTML = 5 - position;
 }
-
-
-/*
- * Functie die wordt opgeroepen als het verwijderen van het mediaFile succesvol was.
- */
-function removeSuccess(entry) {
-    console.log("Removal succeeded");
-}
-
-/*
- * Functie die wordt opgeroepen als het verwijderen van het mediaFile niet succesvol was.
- */
-function removeFail(error) {
-    alert('Error removing file: ' + error.code);
-}
-
-/*
- * Deze functie wordt aangeroepen wanneer het geluid succesvol is opgenomen.
- */
-/*var captureSuccess = function(mediaFiles) {
-    for (i = 0, len = mediaFiles.length; i < len; i += 1) {
-<<<<<<< HEAD
-    	 path = mediaFiles[i].fullPath;
-         console.log(path); // voorlopig log het pad
-		}
-    // Hier kan de analyse uitgevoerd worden.
-    FileEntry entry = new FileEntry
-   
-};*/
-=======
-    	mediaFile = mediaFiles[i];
-    	// mediaFile is a FileEntrie; an object that represnets a file on a file system.
-    	// get the path
-		}
-        // remove the mediaFile
-        mediaFile.remove(removeSuccess, removeFail);
-   
-};
->>>>>>> 2de168f13cec9fe11ca5d0760c9499825f733ba2
-
-/*
- * Deze functie wordt aangeroepen wanneer het geluid niet is opgenomen. De gebruiker krijgt dan een foutmelding.
- */
-/*var captureError = function(error) {
-    navigator.notification.alert('Error code: ' + error.message, null, 'Capture Error');
-};*/
