@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Environment Tracker</string>
+    <string name="app_name">Smood</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
 
@@ -11,11 +11,13 @@
     <string name="settings">Settings</string>
     <string name="results">Results</string>
     <string name="launch">Record</string>
+    <string name="thank_you">Thank you!</string>
 
     <!-- OptionMenu Menu -->
     <string name="title_activity_option_menu">OptionMenu</string>
     <string name="menu_stop">Exit</string>
     <string name="menu_home">Home</string>
+    <string name="goodbye">Goodbye!</string>
 
     <!-- How Are You? Activiteit -->
     <string name="title_activity_mood_page">How Are You?</string>
@@ -28,17 +30,27 @@
     <string name="title_activity_camera">Camera</string>
     <string name="picture_instruction">Take a Picture</string>
     <string name="go_button">Go!</string>
-
+    <string name="alert_dialog_error_message_camera">The mood was not captured correctly. Mood 5 is used. Go back if needed.</string>
+    <string name="alert_user_cancelled_camera">The camera is cancelled.</string>
+    <string name="alert_camera_failed">An error occurred, no picture is taken.</string>
+    
     <!-- Audio Activity -->
     <string name="title_activity_audio">Audio Recorder</string>
     <string name="sound_instruction">Record for 5 sec</string>
     <string name="record_button">Start Recording</string>
+    <string name="counter_done">Done!</string>
+    <string name="counter_paused">Paused</string>
 
     <!-- Settings Activity -->
     <string name="title_activity_settings_page">Settings</string>
 
     <!-- SettingsFragment Activity -->
     <string name="title_settings_fragment">Preferences</string>
+    
+    <!-- AlarmReceiver -->
+    <string name="alarm_received">Alarm received!</string>
+    <string name="notification_content">Time to collect some data!</string>
+    <string name="notification_ticker">Click me!</string>
 
     <!-- Settings XML -->
     <string name="pref_cat_a">General settings</string>
@@ -54,14 +66,51 @@
     <string name="pref_start_not_time_summ">Moment before which you do not want to receive notifications</string>
     <string name="pref_stop_not_time_summ">Moment after which you do not want to receive notifications</string>
     <string name="pref_not_interval_summ">Number of minutes between every notification</string>
+    
     <string name="title_result_detail">Result Detail</string>
     <string name="title_result_list">Results</string>
+    
+    <!-- ResultsContent -->
     <string name="color_graph">Color</string>
+    <string name="color_unhappy_graph">Color: Unhappy</string>
+    <string name="color_neutral_graph">Color: Neutral</string>
+    <string name="color_happy_graph">Color: Happy</string>
     <string name="saturation_graph">Saturation</string>
     <string name="brightness_graph">Brightness</string>
     <string name="time_graph">Time</string>
-    <string name="alert_dialog_error_message_camera">The mood was not captured correctly. Mood 5 is used. Go back if needed.</string>
-    <string name="alert_user_cancelled_camera">The camera is cancelled.</string>
-    <string name="alert_camera_failed">An error occurred, no picture is taken.</string>
+    <string name="decibel_unhappy_graph">Decibel: Unhappy</string>
+    <string name="decibel_neutral_graph">Decibel: Neutral</string>
+    <string name="decibel_happy_graph">Decibel: Happy</string>
+    
+    <!-- General: Charts -->
+    <string name="vigorous">Vigorous</string>
+    <string name="nature">Nature</string>
+    <string name="ocean">Ocean</string>
+    <string name="flower">Flower</string>
+    <string name="mood">Mood</string>
+    
+    <!-- Mood Versus Decibel -->
+    <string name="minimum">Minimum</string>
+    <string name="maximum">Maximum</string>
+    <string name="mean">Mean</string>
+    
+    <!-- Time Versus Mood -->
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="sunday">Sun</string>
+    <string name="day">Day</string>
+    <string name="weekdayVersusMood">Weekday Versus Mood</string>
+    
+    <!-- Color Versus Mood -->
+    <string name="moodVersusHue">Mood Versus Hue</string>
+    <string name="hueCategory">Hue Category</string>    
 
+
+
+
+    
 </resources>

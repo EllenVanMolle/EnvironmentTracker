@@ -20,13 +20,13 @@ public class ColorVersusMoodPieChart extends Chart {
 	public ColorVersusMoodPieChart(String newId, String newName) {
 		super(newId, newName);
 		
-		if (this.getName().equals("Color: Unhappy")) {
+		if (this.getId().equals("4")) {
 			minForMoodCategory = 0;
 			maxForMoodCategory = 3;
-		} else if (this.getName().equals("Color: Neutral")) {
+		} else if (this.getId().equals("3")) {
 			minForMoodCategory = 4;
 			maxForMoodCategory = 6;
-		} else if (this.getName().equals("Color: Happy")) {
+		} else if (this.getId().equals("2")) {
 			minForMoodCategory = 7;
 			maxForMoodCategory = 10;
 		}
@@ -36,12 +36,12 @@ public class ColorVersusMoodPieChart extends Chart {
 	public GraphicalView makeChart(Context context) {
 		if (pieChartView==null) {
 			DefaultRenderer renderer = getRenderer();
-			pieChartView = ChartFactory.getPieChartView(context, getDataset(), renderer);
+			pieChartView = ChartFactory.getPieChartView(context, getDataset(context), renderer);
 		}
 		return pieChartView;
 	}
 
-	public CategorySeries getDataset() {
+	public CategorySeries getDataset(Context context) {
 		results.moveToFirst();
 		
 		int[] nrOfObservationsInCategory = new int[4];
@@ -66,10 +66,10 @@ public class ColorVersusMoodPieChart extends Chart {
 		}
 		
 		CategorySeries dataset = new CategorySeries("data");
-		dataset.add("Vigorous", nrOfObservationsInCategory[0]);
-		dataset.add("Nature", nrOfObservationsInCategory[1]);
-		dataset.add("Ocean", nrOfObservationsInCategory[2]);
-		dataset.add("Flower", nrOfObservationsInCategory[3]);
+		dataset.add(context.getString(R.string.vigorous), nrOfObservationsInCategory[0]);
+		dataset.add(context.getString(R.string.nature), nrOfObservationsInCategory[1]);
+		dataset.add(context.getString(R.string.ocean), nrOfObservationsInCategory[2]);
+		dataset.add(context.getString(R.string.flower), nrOfObservationsInCategory[3]);
 		
 		return dataset;
 	}

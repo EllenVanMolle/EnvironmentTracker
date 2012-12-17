@@ -22,9 +22,9 @@ public class VerticalBarChartWithMood extends Chart {
 	public VerticalBarChartWithMood(String newId, String newName) {
 		super(newId, newName);
 		
-		if (getName().equals("Saturation")) {
+		if (getId().equals("5")) {
 			this.columnName = "SATURATION";
-		} else if (getName().equals("Brightness")) {
+		} else if (getId().equals("6")) {
 			this.columnName = "BRIGHTNESS";
 		}
 	}

@@ -25,7 +25,7 @@ public class ColorVersusMoodChart extends Chart {
 		
 		if (chartView==null)
 		{
-		XYMultipleSeriesRenderer renderer = getRenderer();
+		XYMultipleSeriesRenderer renderer = getRenderer(context);
 		chartView  = ChartFactory.getBarChartView(context, getDataset(),renderer, Type.DEFAULT);
 		}
 		return chartView;
@@ -68,25 +68,25 @@ public class ColorVersusMoodChart extends Chart {
 	         return myData;
 	}
 
-	public XYMultipleSeriesRenderer getRenderer() {
+	public XYMultipleSeriesRenderer getRenderer(Context context) {
 	    XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 	    renderer.setAxisTitleTextSize(30);
 	    renderer.setChartTitleTextSize(40);
 	    renderer.setLabelsTextSize(20);
 	    renderer.setBarSpacing(1);
 	    renderer.setXLabels(0);
-	    renderer.addXTextLabel(1, "Vigorous");
-	    renderer.addXTextLabel(2, "Nature"); 
-	    renderer.addXTextLabel(3, "Ocean"); 
-	    renderer.addXTextLabel(4, "Flower");
+	    renderer.addXTextLabel(1, context.getString(R.string.vigorous));
+	    renderer.addXTextLabel(2, context.getString(R.string.nature)); 
+	    renderer.addXTextLabel(3, context.getString(R.string.ocean)); 
+	    renderer.addXTextLabel(4, context.getString(R.string.flower));
 	    //top, left, bottom, right
 	    renderer.setMargins(new int[] {70, 50, 15, 20});
 	    SimpleSeriesRenderer r = new SimpleSeriesRenderer();
 	    r.setColor(Color.MAGENTA);
 	    renderer.addSeriesRenderer(r);
-	    renderer.setChartTitle("Mood versus Hue");
-	    renderer.setXTitle("Hue Category");
-	    renderer.setYTitle("Mood");
+	    renderer.setChartTitle(context.getString(R.string.moodVersusHue));
+	    renderer.setXTitle(context.getString(R.string.hueCategory));
+	    renderer.setYTitle(context.getString(R.string.mood));
 	    renderer.setXAxisMin(0);
 	    renderer.setXAxisMax(5);
 	    renderer.setYAxisMin(0);

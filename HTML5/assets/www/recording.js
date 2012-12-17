@@ -5,8 +5,7 @@
 
 /*
  * Deze functie past de layout aan van de datacollectiepagina's 
- * en neemt het geluid op, analyseert het en verwijdert het. (Enkel het opnemen van het geluid en 
- * het opslaan gebeurt nu.)
+ * en neemt het geluid op, analyseert het en verwijdert het.
  */
 function recordNoise() {
 	
@@ -28,7 +27,27 @@ function recordNoise() {
 	tab1.className = tab1.className.replace("ui-disabled", "");
 	tab2.className = tab2.className.replace("ui-disabled", "");
 	
-	var src = 'file:///myrecording.wav';
+	// Aanmaken van een nieuwe audio file (noodzakelijk voor iOS)
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onSuccessRequestingFileSystem, onErrorRequestingFileSystem);
+}
+
+// on Success Requesting File System Callback
+//
+function onSuccessRequestingFileSystem(filesystem) {
+	// Create a new recording file in the root directory
+	filesystem.root.getFile("myRecording.wav", {create: true, exclusive: true}, onSuccessCreateFile, onFailCreateFile);
+}
+
+// on Success Creating File Callback
+//
+function onSuccessCreateFile(fileEntry) {
+	fileEntry.file(onSuccessFileInformation, onErrorFileInformation);
+}
+
+// on Success Requesting File Information
+//
+function onSuccessFileInformation(file) {
+	var src = file.fullpath;
     var mediaRec = new Media(src, onSuccess, onError);
 
     // Record audio
@@ -49,19 +68,37 @@ function recordNoise() {
     }, 1000);
 }
 
-// onSuccess Callback Recording
+//on Success Callback Recording
 //
 function onSuccess() {
     console.log("recordAudio():Audio Success");
-    //window.resolveLocalFileSystemURI('file:///myrecording.wav', onResolveSuccess, onResolveFail);
+    window.resolveLocalFileSystemURI("file:///sdcard/myrecording.wav", onResolveSuccess, onResolveFail);
 }
-/*
+
 // onSuccess resolving URI
 //
 function onResolveSuccess(fileEntry) {
     console.log(fileEntry.name);
     console.log("File is opened succesfull.")
     fileEntry.remove(succesfullRemove, failedRemove);
+}
+
+// on Error Requesting File System Callback
+//
+function onErrorRequestingFileSystem(error) {
+	console.log("Couldn't find file system");
+}
+
+// on Error Creating File Callback
+//
+function onFailCreateFile(error) {
+	console.log("Failed to create or retrieve file: " + error.code);
+}
+
+// on Error Requesting File Information
+//
+function onErrorFileInformation(error) {
+	console.log("Couldn't find file information.")
 }
 
 // onError resolving URI
@@ -83,13 +120,13 @@ function failedRemove() {
 	console.log("Failed remove");
 }
 
-// onError Callback 
+// onError make Media object Callback 
 //
 function onError(error) {
     alert('code: '    + error.code    + '\n' + 
           'message: ' + error.message + '\n');
 }
-*/
+
 // Set audio position
 // 
 function setAudioPosition(position) {

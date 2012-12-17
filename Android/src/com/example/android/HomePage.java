@@ -32,9 +32,9 @@ public class HomePage extends OptionMenu {
         
         // Change Textview text if the previous activity was Audio
         if (FromAudio == true)
-        { textview.setText("Thank you!");}
+        { textview.setText(this.getString(R.string.thank_you));}
         else 
-        { textview.setText("Welcome!");}
+        { textview.setText(this.getString(R.string.welcome));}
     }
     
     /**Method called when user clicks on SettingsButton 

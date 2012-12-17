@@ -34,7 +34,7 @@ public class OptionMenu extends Activity {
         	//When menu_stop is selected
             case R.id.menu_stop: 
             	//Say Goodbye
-            	Toast.makeText(this, "Goodbye!", Toast.LENGTH_LONG).show();
+            	Toast.makeText(this, R.string.goodbye, Toast.LENGTH_LONG).show();
             	//Leave the application
             	ExitApp();
             	return true;

@@ -69,67 +69,111 @@ public final class R {
         public static final int activity_option_menu=0x7f070000;
     }
     public static final class string {
-        public static final int alert_camera_failed=0x7f05002d;
-        public static final int alert_dialog_error_message_camera=0x7f05002b;
-        public static final int alert_user_cancelled_camera=0x7f05002c;
+        /**  AlarmReceiver 
+         */
+        public static final int alarm_received=0x7f05001f;
+        public static final int alert_camera_failed=0x7f050017;
+        public static final int alert_dialog_error_message_camera=0x7f050015;
+        public static final int alert_user_cancelled_camera=0x7f050016;
         public static final int app_name=0x7f050000;
-        public static final int brightness_graph=0x7f050029;
-        public static final int color_graph=0x7f050027;
-        public static final int go_button=0x7f050012;
-        public static final int happy=0x7f05000d;
+        public static final int brightness_graph=0x7f050036;
+        /**  ResultsContent 
+         */
+        public static final int color_graph=0x7f050031;
+        public static final int color_happy_graph=0x7f050034;
+        public static final int color_neutral_graph=0x7f050033;
+        public static final int color_unhappy_graph=0x7f050032;
+        public static final int counter_done=0x7f05001b;
+        public static final int counter_paused=0x7f05001c;
+        public static final int day=0x7f05004a;
+        public static final int decibel_happy_graph=0x7f05003a;
+        public static final int decibel_neutral_graph=0x7f050039;
+        public static final int decibel_unhappy_graph=0x7f050038;
+        public static final int flower=0x7f05003e;
+        public static final int friday=0x7f050047;
+        public static final int go_button=0x7f050014;
+        public static final int goodbye=0x7f05000c;
+        public static final int happy=0x7f05000f;
         public static final int hello_world=0x7f050001;
+        public static final int hueCategory=0x7f05004d;
         public static final int launch=0x7f050007;
-        public static final int menu_home=0x7f05000a;
+        public static final int maximum=0x7f050041;
+        public static final int mean=0x7f050042;
+        public static final int menu_home=0x7f05000b;
         public static final int menu_settings=0x7f050002;
-        public static final int menu_stop=0x7f050009;
-        public static final int next_button=0x7f05000f;
-        public static final int off=0x7f050021;
-        public static final int on=0x7f050020;
-        public static final int picture_instruction=0x7f050011;
+        public static final int menu_stop=0x7f05000a;
+        /**  Mood Versus Decibel 
+         */
+        public static final int minimum=0x7f050040;
+        /**  Time Versus Mood 
+         */
+        public static final int monday=0x7f050043;
+        public static final int mood=0x7f05003f;
+        /**  Color Versus Mood 
+         */
+        public static final int moodVersusHue=0x7f05004c;
+        public static final int nature=0x7f05003c;
+        public static final int next_button=0x7f050011;
+        public static final int notification_content=0x7f050020;
+        public static final int notification_ticker=0x7f050021;
+        public static final int ocean=0x7f05003d;
+        public static final int off=0x7f05002b;
+        public static final int on=0x7f05002a;
+        public static final int picture_instruction=0x7f050013;
         /**  Settings XML 
          */
-        public static final int pref_cat_a=0x7f050018;
-        public static final int pref_cat_b=0x7f050019;
-        public static final int pref_cat_c=0x7f05001a;
-        public static final int pref_not_interval=0x7f05001e;
-        public static final int pref_not_interval_summ=0x7f050024;
-        public static final int pref_notification=0x7f05001b;
-        public static final int pref_ringtone=0x7f05001f;
-        public static final int pref_start_not_time=0x7f05001c;
-        public static final int pref_start_not_time_summ=0x7f050022;
-        public static final int pref_stop_not_time=0x7f05001d;
-        public static final int pref_stop_not_time_summ=0x7f050023;
-        public static final int question_mood=0x7f05000c;
-        public static final int record_button=0x7f050015;
+        public static final int pref_cat_a=0x7f050022;
+        public static final int pref_cat_b=0x7f050023;
+        public static final int pref_cat_c=0x7f050024;
+        public static final int pref_not_interval=0x7f050028;
+        public static final int pref_not_interval_summ=0x7f05002e;
+        public static final int pref_notification=0x7f050025;
+        public static final int pref_ringtone=0x7f050029;
+        public static final int pref_start_not_time=0x7f050026;
+        public static final int pref_start_not_time_summ=0x7f05002c;
+        public static final int pref_stop_not_time=0x7f050027;
+        public static final int pref_stop_not_time_summ=0x7f05002d;
+        public static final int question_mood=0x7f05000e;
+        public static final int record_button=0x7f05001a;
         public static final int results=0x7f050006;
-        public static final int saturation_graph=0x7f050028;
+        public static final int saturation_graph=0x7f050035;
+        public static final int saturday=0x7f050048;
         public static final int settings=0x7f050005;
-        public static final int sound_instruction=0x7f050014;
-        public static final int time_graph=0x7f05002a;
+        public static final int sound_instruction=0x7f050019;
+        public static final int sunday=0x7f050049;
+        public static final int thank_you=0x7f050008;
+        public static final int thursday=0x7f050046;
+        public static final int time_graph=0x7f050037;
         /**  Audio Activity 
          */
-        public static final int title_activity_audio=0x7f050013;
+        public static final int title_activity_audio=0x7f050018;
         /**  Camera Activiteit 
          */
-        public static final int title_activity_camera=0x7f050010;
+        public static final int title_activity_camera=0x7f050012;
         /**  Home Activity 
          */
         public static final int title_activity_home_page=0x7f050003;
         /**  How Are You? Activiteit 
          */
-        public static final int title_activity_mood_page=0x7f05000b;
+        public static final int title_activity_mood_page=0x7f05000d;
         /**  OptionMenu Menu 
          */
-        public static final int title_activity_option_menu=0x7f050008;
+        public static final int title_activity_option_menu=0x7f050009;
         /**  Settings Activity 
          */
-        public static final int title_activity_settings_page=0x7f050016;
-        public static final int title_result_detail=0x7f050025;
-        public static final int title_result_list=0x7f050026;
+        public static final int title_activity_settings_page=0x7f05001d;
+        public static final int title_result_detail=0x7f05002f;
+        public static final int title_result_list=0x7f050030;
         /**  SettingsFragment Activity 
          */
-        public static final int title_settings_fragment=0x7f050017;
-        public static final int unhappy=0x7f05000e;
+        public static final int title_settings_fragment=0x7f05001e;
+        public static final int tuesday=0x7f050044;
+        public static final int unhappy=0x7f050010;
+        /**  General: Charts 
+         */
+        public static final int vigorous=0x7f05003b;
+        public static final int wednesday=0x7f050045;
+        public static final int weekdayVersusMood=0x7f05004b;
         public static final int welcome=0x7f050004;
     }
     public static final class style {

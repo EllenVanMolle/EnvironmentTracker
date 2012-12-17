@@ -25,15 +25,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 	private static final String KEY_PREF_START = "pref_StartNotTime"; // Keyvalue for StartNotTime
 	private static final String KEY_PREF_STOP = "pref_StopNotTime";// Keyvalue for StopNotTime
 	
-	private static final String Not_Title = "Environment Tracker";
-	private static final String Not_Content = "Time to collect some data!";
-	private static final String Not_Ticker ="Click Me!";
-	
 	/**Method called when a broadcast is received*/
 	@Override
 	public void onReceive(Context context, Intent arg1) {
 		
-		Toast.makeText(context, "Alarm received!", Toast.LENGTH_LONG).show();
+		Toast.makeText(context, R.string.alarm_received, Toast.LENGTH_LONG).show();
 		
 		//Create a PreferenceManager to have access to the user preferences 
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -60,9 +56,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 		//Building a notification
 		Notification notification = new NotificationCompat.Builder(context)
 		.setSmallIcon(R.drawable.ic_launcher) //icon that appears in left corner of screen
-		.setContentTitle(Not_Title)
-		.setContentText(Not_Content)
-		.setTicker(Not_Ticker) //text that appears on top of the screen when notification is received
+		.setContentTitle(context.getString(R.string.app_name))
+		.setContentText(context.getString(R.string.notification_content))
+		.setTicker(context.getString(R.string.notification_ticker)) //text that appears on top of the screen when notification is received
 		.setDefaults(0xffffffff) // all notification properties will be inherited from system defaults
 		.setContentIntent(pendingIntent) //action taken when notification is opened
 		.setAutoCancel(true)

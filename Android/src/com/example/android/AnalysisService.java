@@ -10,10 +10,10 @@ import android.graphics.*;
 import android.os.Bundle;
 import android.util.Log;
 
-public class PhotoAnalysisService extends IntentService {
+public class AnalysisService extends IntentService {
 
-	public PhotoAnalysisService() {
-		super(PhotoAnalysisService.class.getName());
+	public AnalysisService() {
+		super(AnalysisService.class.getName());
 	}
 
 	@Override
@@ -23,8 +23,6 @@ public class PhotoAnalysisService extends IntentService {
 		Bitmap bitmap = (Bitmap) extras.get("Photo");
 		int mood = extras.getInt("mood");
 		int amplitude = extras.getInt("Amplitude");
-		Log.d("Mood in service", Integer.toString(mood));
-		Log.d("Amplitude in service", Integer.toString(amplitude));
 		
 		int [] nrPixInHueCategory = new int[4];
 		float totalSaturation = 0;
@@ -61,11 +59,6 @@ public class PhotoAnalysisService extends IntentService {
 		
         int totalPixels = bitmap.getWidth() * bitmap.getHeight();
         
-        Log.d("NrPixelsHue1", Integer.toString(nrPixInHueCategory[0]));
-        Log.d("NrPixelsHue2", Integer.toString(nrPixInHueCategory[1]));
-        Log.d("NrPixelsHue3", Integer.toString(nrPixInHueCategory[2]));
-        Log.d("NrPixelsHue4", Integer.toString(nrPixInHueCategory[3]));
-        
         // Bepalen welke categorie het meeste voorkomt.
         int maxNrOfPixels = 0;
         int hueClass = 0;
@@ -78,9 +71,6 @@ public class PhotoAnalysisService extends IntentService {
          	
         float saturation = (totalSaturation / totalPixels)*100;
         float brightness = (totalBrightness / totalPixels)*100;
-        Log.d("HueClass", Integer.toString(hueClass));
-        Log.d("Saturation", Float.toString(saturation));
-        Log.d("Brightness", Float.toString(brightness));
         
         double decibel;
         
@@ -102,11 +92,9 @@ public class PhotoAnalysisService extends IntentService {
         values.put("SATURATION", saturation);
         values.put("BRIGHTNESS", brightness);
         values.put("DECIBEL", decibel);
-        int row = (int) database.insert("Observation", null, values);
-        Log.d("ROW", Integer.toString(row));
+        database.insert("Observation", null, values);
         
         database.releaseReference();
 	}
 	
-
 }

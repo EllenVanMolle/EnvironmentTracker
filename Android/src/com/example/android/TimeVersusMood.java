@@ -26,8 +26,7 @@ public class TimeVersusMood extends Chart {
 	public GraphicalView makeChart(Context context) {
 		if (barChartView==null)
 		{
-		XYMultipleSeriesRenderer renderer = getRenderer();
-		setChartSettings(renderer);
+		XYMultipleSeriesRenderer renderer = getRenderer(context);
 		barChartView  = ChartFactory.getBarChartView(context, getDataset(),renderer, Type.DEFAULT);
 		}
 		return barChartView;
@@ -126,38 +125,34 @@ public class TimeVersusMood extends Chart {
 	         return myData;
 	}
 
-	public XYMultipleSeriesRenderer getRenderer() {
+	public XYMultipleSeriesRenderer getRenderer(Context context) {
 	    XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 	    renderer.setAxisTitleTextSize(30);
 	    renderer.setChartTitleTextSize(40);
 	    renderer.setLabelsTextSize(20);
 	    renderer.setBarSpacing(1);
 	    renderer.setXLabels(0);
-	    renderer.addXTextLabel(1, "Mon");
-	    renderer.addXTextLabel(2, "Tue"); 
-	    renderer.addXTextLabel(3, "Wed"); 
-	    renderer.addXTextLabel(4, "Thu");
-	    renderer.addXTextLabel(5, "Fri");
-	    renderer.addXTextLabel(6, "Sat");
-	    renderer.addXTextLabel(7, "Sun");
+	    renderer.addXTextLabel(1, context.getString(R.string.monday));
+	    renderer.addXTextLabel(2, context.getString(R.string.tuesday)); 
+	    renderer.addXTextLabel(3, context.getString(R.string.wednesday)); 
+	    renderer.addXTextLabel(4, context.getString(R.string.thursday));
+	    renderer.addXTextLabel(5, context.getString(R.string.friday));
+	    renderer.addXTextLabel(6, context.getString(R.string.saturday));
+	    renderer.addXTextLabel(7, context.getString(R.string.sunday));
 	    //top, left, bottom, right
 	    renderer.setMargins(new int[] {70, 50, 15, 20});
 	    SimpleSeriesRenderer r = new SimpleSeriesRenderer();
 	    r.setColor(Color.RED);
 	    renderer.addSeriesRenderer(r);
-	    return renderer;
-	}
-
-	public void setChartSettings(XYMultipleSeriesRenderer renderer) {
-	    renderer.setChartTitle("Weekday versus Mood");
-	    renderer.setXTitle("Day");
-	    renderer.setYTitle("Mood");
+	    renderer.setChartTitle(context.getString(R.string.weekdayVersusMood));
+	    renderer.setXTitle(context.getString(R.string.day));
+	    renderer.setYTitle(context.getString(R.string.mood));
 	    renderer.setXAxisMin(0);
 	    renderer.setXAxisMax(8);
 	    renderer.setYAxisMin(0);
 	    renderer.setYAxisMax(10);
 	    renderer.setShowLegend(false);
 	    renderer.setYLabelsAlign(Align.RIGHT);
+	    return renderer;
 	}
-
 }

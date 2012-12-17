@@ -33,10 +33,11 @@ public class Audio extends OptionMenu {
 	private Bitmap photo;
 	private int mood;
 	
-	private boolean isRecording;
+	private boolean isRecording = false;;
+	private int secondsTillStopRecording;
+	private CountDownTimer timer;
 	
 	public static final int RecordedTime = 5000; // Number of milliseconds of recording
-	
 	
 	public Audio(){
 		fileName = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -65,19 +66,57 @@ public class Audio extends OptionMenu {
      * Releases of MediaRecorder*/
     @Override
     public void onPause() {
-        super.onPause();
         if (isRecording) {
-        	this.stopRecording();
+        	secondsTillStopRecording = Integer.parseInt(myCounter.getText().toString());
+        	timer.cancel();
+        	myRecorder.release();
+        	myCounter.setText(getString(R.string.counter_paused));
+        } else if (myRecorder != null) {
+        	myRecorder.release();
         }
-        //if (myRecorder != null) {
-         //   myRecorder.release();
-         //   myRecorder = null;
-        //}
+        super.onPause();
     }
     
     public void onResume() {
     	super.onResume();
-        //myRecorder = new MediaRecorder();
+    	if (isRecording) {
+		    	myRecorder = new MediaRecorder();
+		        myRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+		        myRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+		        myRecorder.setOutputFile(fileName);
+		        
+		        myRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+		        
+		        try {
+		            myRecorder.prepare();
+		                
+			        //change the layout of the activity
+			        instruction.setVisibility(View.GONE);
+			        startRec.setVisibility(View.GONE);
+			    	myCounter.setVisibility(View.VISIBLE);
+			    	
+			    	//Count Down from 5 minutes to 0
+			    	timer = new CountDownTimer(secondsTillStopRecording * 1000, 1000) {
+			    		
+			    		//Display every minute the time left to the end
+			            public void onTick(long millisUntilFinished) {
+			                myCounter.setText("" + millisUntilFinished / 1000);
+			            }
+			            
+			            //When finished stop the recorder
+			            public void onFinish() {
+			                myCounter.setText(getString(R.string.counter_done));
+			                stopRecording();
+			            }
+			    	}.start();
+			        
+			         //Start Recording
+			         myRecorder.start();
+			         myRecorder.getMaxAmplitude();
+		        } catch (IOException e) {
+		            Log.e(LogTag, "prepare() failed");
+		        }
+        }
     }
 
     /**Method called when RecordButton is clicked*/    
@@ -100,7 +139,7 @@ public class Audio extends OptionMenu {
 	    	myCounter.setVisibility(View.VISIBLE);
 	    	
 	    	//Count Down from 5 minutes to 0
-	    	new CountDownTimer(RecordedTime, 1000) {
+	    	timer = new CountDownTimer(RecordedTime, 1000) {
 	    		
 	    		//Display every minute the time left to the end
 	            public void onTick(long millisUntilFinished) {
@@ -109,7 +148,7 @@ public class Audio extends OptionMenu {
 	            
 	            //When finished stop the recorder
 	            public void onFinish() {
-	                myCounter.setText("Done!");
+	                myCounter.setText(getString(R.string.counter_done));
 	                stopRecording();
 	            }
 	    	}.start();
@@ -132,14 +171,13 @@ public class Audio extends OptionMenu {
 	        
 	        int maxAmplitude = myRecorder.getMaxAmplitude();
 	        
-	        myRecorder.reset();
-	        
+	        myRecorder.reset();	        
 	        myRecorder.release();
 	        myRecorder = null;
 	        
 	        // Opstarten van analyse en verwerking van de gegevens
 	        
-	        Intent intentPhoto = new Intent(this,PhotoAnalysisService.class);
+	        Intent intentPhoto = new Intent(this,AnalysisService.class);
 	    	intentPhoto.putExtra("Photo", photo);
 	    	intentPhoto.putExtra("mood", mood);
 	    	intentPhoto.putExtra("Amplitude", maxAmplitude);

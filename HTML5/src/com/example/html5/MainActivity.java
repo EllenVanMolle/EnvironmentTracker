@@ -1,7 +1,6 @@
 package com.example.html5;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 import org.apache.cordova.*;
 

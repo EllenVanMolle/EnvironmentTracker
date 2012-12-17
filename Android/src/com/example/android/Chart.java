@@ -21,7 +21,6 @@ public abstract class Chart {
 		EnvironmentTrackerOpenHelper openhelper = new EnvironmentTrackerOpenHelper(ResultsContent.context);
 		SQLiteDatabase database = openhelper.getReadableDatabase();
 		results = database.query(true, "Observation", null, null, null, null, null, null, null);
-		//database.close();
 	}
 
 	public String getId() {

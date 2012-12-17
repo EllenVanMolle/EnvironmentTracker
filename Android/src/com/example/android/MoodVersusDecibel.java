@@ -19,13 +19,13 @@ public class MoodVersusDecibel extends Chart {
 	public MoodVersusDecibel(String newId, String newName) {
 		super(newId, newName);
 		
-		if (this.getName().equals("Decibel: Unhappy")) {
+		if (this.getId().equals("10")) {
 			minForMoodCategory = 0;
 			maxForMoodCategory = 3;
-		} else if (this.getName().equals("Decibel: Neutral")) {
+		} else if (this.getId().equals("9")) {
 			minForMoodCategory = 4;
 			maxForMoodCategory = 6;
-		} else if (this.getName().equals("Decibel: Happy")) {
+		} else if (this.getId().equals("8")) {
 			minForMoodCategory = 7;
 			maxForMoodCategory = 10;
 		}
@@ -36,12 +36,12 @@ public class MoodVersusDecibel extends Chart {
 		if (dialChartView==null) {
 			DialRenderer renderer = getRenderer();
 			setChartSettings(renderer);
-			dialChartView = ChartFactory.getDialChartView(context, getDataset(), renderer);
+			dialChartView = ChartFactory.getDialChartView(context, getDataset(context), renderer);
 		}
 		return dialChartView;
 	}
 	
-	private CategorySeries getDataset() {
+	private CategorySeries getDataset(Context context) {
 		
 		results.moveToFirst();
 		int nrOfObservation = 0;
@@ -74,9 +74,9 @@ public class MoodVersusDecibel extends Chart {
 		}
 		
 		CategorySeries dataset = new CategorySeries("Sound indicator");
-		dataset.add("Minimum", minDec);
-	    dataset.add("Mean", meanDec);
-	    dataset.add("Maximum", maxDec);
+		dataset.add(context.getString(R.string.minimum), minDec);
+	    dataset.add(context.getString(R.string.mean), meanDec);
+	    dataset.add(context.getString(R.string.maximum), maxDec);
 		return dataset;
 	}
 	

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
-import android.util.Log;
 
 public class ResultsContent {
 
@@ -25,17 +24,16 @@ public class ResultsContent {
 	static {	
 		// Add the graphs to the list.
 		context = ResultListFragment.getParameter();
-		Log.d("Toevoegen", "Het toevoegen van de grafieken.");
-		addItem(new ColorVersusMoodChart("1", "Color"));
-		addItem(new ColorVersusMoodPieChart("2", "Color: Unhappy"));
-		addItem(new ColorVersusMoodPieChart("3", "Color: Neutral"));
-		addItem(new ColorVersusMoodPieChart("4", "Color: Happy"));
-		addItem(new VerticalBarChartWithMood("5", "Saturation"));
-		addItem(new VerticalBarChartWithMood("6", "Brightness"));
-		addItem(new TimeVersusMood("7", "Time"));
-		addItem(new MoodVersusDecibel("8", "Decibel: Unhappy"));
-		addItem(new MoodVersusDecibel("9", "Decibel: Neutral"));
-		addItem(new MoodVersusDecibel("10", "Decibel: Happy"));
+		addItem(new ColorVersusMoodChart("1", context.getString(R.string.color_graph)));
+		addItem(new ColorVersusMoodPieChart("2", context.getString(R.string.color_happy_graph)));
+		addItem(new ColorVersusMoodPieChart("3", context.getString(R.string.color_neutral_graph)));
+		addItem(new ColorVersusMoodPieChart("4", context.getString(R.string.color_unhappy_graph)));
+		addItem(new VerticalBarChartWithMood("5", context.getString(R.string.saturation_graph)));
+		addItem(new VerticalBarChartWithMood("6", context.getString(R.string.brightness_graph)));
+		addItem(new TimeVersusMood("7", context.getString(R.string.time_graph)));
+		addItem(new MoodVersusDecibel("8", context.getString(R.string.decibel_happy_graph)));
+		addItem(new MoodVersusDecibel("9", context.getString(R.string.decibel_neutral_graph)));
+		addItem(new MoodVersusDecibel("10", context.getString(R.string.decibel_unhappy_graph)));
 	}
 
 	private static void addItem(Chart item) {

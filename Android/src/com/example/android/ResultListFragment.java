@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -77,10 +76,7 @@ public class ResultListFragment extends ListFragment {
 		// This ArrayAdapter shows the items in charts with the method toString
 		// in a list of textviews.
 		
-		this.context = getActivity();
-		
-		if (ResultsContent.context == null) Log.d("Context", "is null");
-		if (ResultsContent.context != null) Log.d("Context", "is not null");
+		ResultListFragment.setContext(getActivity());
 		
 		setListAdapter(new ArrayAdapter<Chart>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
@@ -166,6 +162,14 @@ public class ResultListFragment extends ListFragment {
 	}
 	
 	public static Context getParameter() {
+		return getContext();
+	}
+
+	public static Context getContext() {
 		return context;
+	}
+
+	public static void setContext(Context context) {
+		ResultListFragment.context = context;
 	}
 }

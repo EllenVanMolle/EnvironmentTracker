@@ -85,7 +85,7 @@
         </activity>
 
         <service
-            android:name="com.example.android.PhotoAnalysisService"
+            android:name="com.example.android.AnalysisService"
             android:enabled="true" >
         </service>
 

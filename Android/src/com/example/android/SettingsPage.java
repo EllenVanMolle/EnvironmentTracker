@@ -18,7 +18,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 public class SettingsPage extends OptionMenu implements OnSharedPreferenceChangeListener {
 	
