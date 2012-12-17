@@ -1,5 +1,5 @@
 /**This activity allows the user to take a picture
- * and afterwards automatically goes to the next step the Audio activity.
+ * and afterwards automatically goes to the next step: the Audio activity.
  * The user enters this activity after clicking the OK button 
  * in the MoodPage activity.
  * The activity is extension of the OptionMenu activity which provides two buttons*/
@@ -24,22 +24,26 @@ public class Camera extends OptionMenu  {
         setContentView(R.layout.activity_camera);
     }
 
-    
+    /*
+     * Method called when the picture is taken.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_RQ) {
-            if (resultCode == RESULT_OK) {// Image captured and saved
-            	
+            if (resultCode == RESULT_OK) {// Image is captured and saved
+            	// Get the picture that was taken.
             	Bundle extras = data.getExtras();
             	Bitmap photo = (Bitmap) extras.get("data");
+            	
+            	// Collect the mood given by the previous activity to this activity.
             	int mood = this.getIntent().getIntExtra("mood", -1);
             	
+            	// If the mood was not received correctly, tell it the user.
             	if (mood == -1) {
             		Toast.makeText(this, R.string.alert_dialog_error_message_camera, Toast.LENGTH_LONG).show();
             		mood = 5;
             	}
      
-              
                 // Open new activity and give the mood and the photo
                 Intent intent = new Intent(this, Audio.class);
                 intent.putExtra("Photo", photo);
@@ -57,7 +61,9 @@ public class Camera extends OptionMenu  {
         } 
     }
     
-    /**Method called when OK button is clicked*/
+    /**Method called when OK button is clicked
+     * The Camera application is opened.
+     */
     public void startCamera (View view){
     	
     	//Camera makes a request to capture a picture through an existing camera app 
@@ -66,6 +72,5 @@ public class Camera extends OptionMenu  {
         
         //Start image capture intent
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_RQ);
-       
         }
 }
