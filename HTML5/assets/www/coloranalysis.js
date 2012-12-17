@@ -55,6 +55,11 @@ function colorAnalysis(imageSource){
 	}
 	else {alert("Canvas is not supported.") // canvas wordt niet ondersteund
 	}
+    
+    console.log("Start removal image file.");
+    
+    // Removing picture
+    window.resolveLocalFileSystemURI(imageSource, onResolveSuccess, onResolveFail);
 }
 
 /*
@@ -138,10 +143,6 @@ function analysisOfPixels(Data, Width, Height){
         console.log (hueClass.text() +' en ' + saturation.text() + ' en '+ brightness.text());
         analysisIsFinished = true;
         //console.log(pixData);
-        console.log("Start removal image file.");
-        
-        // Removing picture again
-        window.resolveLocalFileSystemURI(imageSource, onResolveSuccess, onResolveFail);
 }
     	
     	// onSuccess resolving URI
