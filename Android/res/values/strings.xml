@@ -109,8 +109,10 @@
     <string name="moodVersusHue">Mood Versus Hue</string>
     <string name="hueCategory">Hue Category</string>    
 
-
-
-
+    <!-- Mood Versus Saturation -->
+    <string name="moodVersusSaturation">Mood Versus Saturation</string> 
     
+    <!-- Mood Versus Brightness -->
+    <string name="moodVersusBrightness">Mood Versus Brightness</string> 
+
 </resources>

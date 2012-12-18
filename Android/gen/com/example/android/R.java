@@ -109,9 +109,15 @@ public final class R {
          */
         public static final int monday=0x7f050043;
         public static final int mood=0x7f05003f;
+        /**  Mood Versus Brightness 
+         */
+        public static final int moodVersusBrightness=0x7f05004f;
         /**  Color Versus Mood 
          */
         public static final int moodVersusHue=0x7f05004c;
+        /**  Mood Versus Saturation 
+         */
+        public static final int moodVersusSaturation=0x7f05004e;
         public static final int nature=0x7f05003c;
         public static final int next_button=0x7f050011;
         public static final int notification_content=0x7f050020;

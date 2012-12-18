@@ -9,6 +9,8 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 
@@ -22,34 +24,41 @@ public class ColorVersusMoodChart extends Chart {
 	
 	@Override
 	public GraphicalView makeChart(Context context) {
-		
-		if (chartView==null)
-		{
+		// When the view isn't yet created, create it.
 		XYMultipleSeriesRenderer renderer = getRenderer(context);
 		chartView  = ChartFactory.getBarChartView(context, getDataset(),renderer, Type.DEFAULT);
-		}
+		// Return the view so it can be showed.
 		return chartView;
 	}
 
 	public XYMultipleSeriesDataset getDataset() {
 		// Get the data needed
+		// Open the database to read and get the mood and the hue category of all observations.
+		EnvironmentTrackerOpenHelper openhelper = new EnvironmentTrackerOpenHelper(ResultsContent.context);
+		SQLiteDatabase database = openhelper.getReadableDatabase();
+		String[] columns = new String[2];
+		columns[0] = "MOOD";
+		columns[1] = "HUE_CATEGORY";
+		Cursor results = database.query(true, "Observation", columns, null, null, null, null, null, null);
 		
+		// Make sure the cursor is at the start.
 		results.moveToFirst();
 		
 		int[] meanMoodCategoryHue = new int[4];
 		int[] nrMoodCategoryHue = new int[4];
 		
+		// Overloop de verschillende observaties.
 		while (!results.isAfterLast()) {
-			int columnIndexMood = results.getColumnIndex("MOOD");
-			int mood = results.getInt(columnIndexMood);
-			int columnIndexHue = results.getColumnIndex("HUE_CATEGORY");
-			int hue = results.getInt(columnIndexHue);
+			int mood = results.getInt(0);
+			int hue = results.getInt(1);
 			
+			// Tel de mood erbij en verhoog het aantal met 1 in de juiste categorie.
 			meanMoodCategoryHue[hue-1] = meanMoodCategoryHue[hue-1] + mood;
 			nrMoodCategoryHue[hue-1]++;
 			results.moveToNext();
 		}
 		
+		// Bereken voor elke hue categorie de gemiddelde mood.
 		for (int i=1;i<=4;i++) {
 			if (nrMoodCategoryHue[i-1] == 0) {
 				meanMoodCategoryHue[i-1] = 0;
@@ -58,6 +67,7 @@ public class ColorVersusMoodChart extends Chart {
 			}
 		}
 		
+		// Plaats de gegevens samen in een dataset voor de grafiek.
 		XYMultipleSeriesDataset myData = new XYMultipleSeriesDataset();
 	     XYSeries dataSeries = new XYSeries("data");
 	         dataSeries.add(1,meanMoodCategoryHue[0]);
@@ -68,6 +78,9 @@ public class ColorVersusMoodChart extends Chart {
 	         return myData;
 	}
 
+	/**
+	 * Stel de verschillende opties voor de grafiek in.
+	 */
 	public XYMultipleSeriesRenderer getRenderer(Context context) {
 	    XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 	    renderer.setAxisTitleTextSize(30);

@@ -38,9 +38,8 @@ public class ResultDetailFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 
 		if (getArguments().containsKey(ARG_ITEM_ID)) {
-			// Load the dummy content specified by the fragment
-			// arguments. In a real-world scenario, use a Loader
-			// to load content from a content provider.
+			// Load the chart content specified by the fragment
+			// arguments.
 			chart = ResultsContent.chartsMap.get(getArguments().getString(
 					ARG_ITEM_ID));
 		}
@@ -49,16 +48,47 @@ public class ResultDetailFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		// Get the chartview from the indicated chart.
+		GraphicalView oldChartView = chart.getChartView();
+		// If the chartview does exist, make sure the previous one is gone.
+		if (oldChartView != null) {
+			oldChartView.repaint();
+			oldChartView.setVisibility(View.GONE);
+			if (oldChartView.getParent() != null) {
+				((ViewGroup) oldChartView.getParent()).removeView(oldChartView);
+			}
+		}
+		// Always, make a new graph with updated data.
+		GraphicalView chartView = chart.makeChart(getActivity());
+		// If the chartview has already a parent, remove the chartview from this parent.
+		if (chartView.getParent() != null) {
+			((ViewGroup) chartView.getParent()).removeView(chartView);
+		}
+		// return the chartview to show
+		return chartView;
+	}
+	
+	/*
+	 * 	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// Get the chartview from the indicated chart.
 		GraphicalView chartView = chart.getChartView();
+		// If the chartview does exist, reuse it and make sure the previous one is gone.
 		if (chartView != null) {
 			chartView.repaint();
 			chartView.setVisibility(View.GONE);
 		} else {
+			// When the chartview does not exist yet, make a new one.
 			chartView = chart.makeChart(getActivity());
 		}
+		// If the chartview has already a parent, remove the chartview from this parent.
 		if (chartView.getParent() != null) {
 			((ViewGroup) chartView.getParent()).removeView(chartView);
 		}
+		// return the chartview to show
 		return chartView;
 	}
+}
+	 */
 }

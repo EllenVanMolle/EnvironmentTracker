@@ -23,7 +23,7 @@ public class ResultsContent {
 	
 	static {	
 		// Add the graphs to the list.
-		context = ResultListFragment.getParameter();
+		context = ResultListFragment.getContext();
 		addItem(new ColorVersusMoodChart("1", context.getString(R.string.color_graph)));
 		addItem(new ColorVersusMoodPieChart("2", context.getString(R.string.color_happy_graph)));
 		addItem(new ColorVersusMoodPieChart("3", context.getString(R.string.color_neutral_graph)));

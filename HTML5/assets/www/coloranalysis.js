@@ -58,8 +58,36 @@ function colorAnalysis(imageSource){
     
     console.log("Start removal image file.");
     
-    // Removing picture
-    window.resolveLocalFileSystemURI(imageSource, onResolveSuccess, onResolveFail);
+    // Removing picture again
+   window.resolveLocalFileSystemURI(imageSource, onResolveSuccess, onResolveFail);
+	
+	// onSuccess resolving URI
+	//
+	function onResolveSuccess(fileEntry) {
+	    console.log(fileEntry.name);
+	    console.log("File is opened succesfull.")
+	    fileEntry.remove(succesfullRemove, failedRemove);
+	}
+	
+	// onError resolving URI
+	//
+	function onResolveFail(evt) {
+		console.log("Resolving image file failed.")
+		console.log("there was an error: " + JSON.stringify(evt));
+	}
+	
+	// onSuccess remove Callback
+	//
+	function succesfullRemove() {
+		console.log("Removed image succesfull");
+	}
+	
+	// onFail remove Callback
+	//
+	function failedRemove() {
+		console.log("Failed image remove");
+	}
+   
 }
 
 /*
@@ -144,33 +172,6 @@ function analysisOfPixels(Data, Width, Height){
         analysisIsFinished = true;
         //console.log(pixData);
 }
-    	
-    	// onSuccess resolving URI
-    	//
-    	function onResolveSuccess(fileEntry) {
-    	    console.log(fileEntry.name);
-    	    console.log("File is opened succesfull.")
-    	    fileEntry.remove(succesfullRemove, failedRemove);
-    	}
-    	
-    	// onError resolving URI
-    	//
-    	function onResolveFail(evt) {
-    		console.log("Resolving image file failed.")
-    		console.log("there was an error: " + JSON.stringify(evt));
-    	}
-    	
-    	// onSuccess remove Callback
-    	//
-    	function succesfullRemove() {
-    		console.log("Removed image succesfull");
-    	}
-    	
-    	// onFail remove Callback
-    	//
-    	function failedRemove() {
-    		console.log("Failed image remove");
-    	}
 
 
 /*

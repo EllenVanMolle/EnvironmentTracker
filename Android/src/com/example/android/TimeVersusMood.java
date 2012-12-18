@@ -11,6 +11,8 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 
@@ -24,18 +26,25 @@ public class TimeVersusMood extends Chart {
 	
 	@Override
 	public GraphicalView makeChart(Context context) {
-		if (barChartView==null)
-		{
+		// When the view isn't yet created, create it.
 		XYMultipleSeriesRenderer renderer = getRenderer(context);
 		barChartView  = ChartFactory.getBarChartView(context, getDataset(),renderer, Type.DEFAULT);
-		}
+		// Return the view so it can be showed.
 		return barChartView;
 	}
 
 	public XYMultipleSeriesDataset getDataset() {
-		if (!results.isFirst()) {
-			results.moveToFirst();
-		}
+		// Get the data needed
+		// Open the database to read and get the mood and the day of all observations.
+		EnvironmentTrackerOpenHelper openhelper = new EnvironmentTrackerOpenHelper(ResultsContent.context);
+		SQLiteDatabase database = openhelper.getReadableDatabase();
+		String[] columns = new String[2];
+		columns[0] = "MOOD";
+		columns[1] = "DAY";
+		Cursor results = database.query(true, "Observation", columns, null, null, null, null, null, null);
+		
+		// Make sure the cursor is at the start.
+		results.moveToFirst();
 		
 		int meanMoodDay1 = 0;
 		int meanMoodDay2 = 0;
@@ -52,12 +61,12 @@ public class TimeVersusMood extends Chart {
 		int nrMoodDay6 = 0;
 		int nrMoodDay7 = 0;		
 		
+		// Overloop de verschillende observaties.
 		while (results.moveToNext()) {
-			int columnIndexMood = results.getColumnIndex("MOOD");
-			int mood = results.getInt(columnIndexMood);
-			int columnIndexDay = results.getColumnIndex("DAY");
-			int day = results.getInt(columnIndexDay);
+			int mood = results.getInt(0);
+			int day = results.getInt(1);
 			
+			// Verhoog de mood met de gevonden mood en het aantal met 1 bij de gevonden dag.
 			if (day == Calendar.MONDAY) {
 				meanMoodDay1 = meanMoodDay1 + mood;
 				nrMoodDay1++;
@@ -82,6 +91,7 @@ public class TimeVersusMood extends Chart {
 			}
 		}
 		
+		// Bereken de gemiddelde mood voor elke dag.
 		if (nrMoodDay1 == 0) {
 			meanMoodDay1 = 0;
 		} else {
@@ -112,6 +122,7 @@ public class TimeVersusMood extends Chart {
 			meanMoodDay7 = meanMoodDay7/nrMoodDay7;
 		}
 		
+		// Plaats de gegevens in de dataset voor de grafiek.
 		XYMultipleSeriesDataset myData = new XYMultipleSeriesDataset();
 	     XYSeries dataSeries = new XYSeries("data");
 	         dataSeries.add(1,meanMoodDay1);
@@ -125,6 +136,10 @@ public class TimeVersusMood extends Chart {
 	         return myData;
 	}
 
+
+	/**
+	 * Stel de verschillende opties voor de grafiek in.
+	 */
 	public XYMultipleSeriesRenderer getRenderer(Context context) {
 	    XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 	    renderer.setAxisTitleTextSize(30);

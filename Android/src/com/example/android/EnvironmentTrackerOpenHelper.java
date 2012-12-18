@@ -4,9 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * De klasse helpt andere klassen om de sqlite database te openen en te sluiten.
+ */
 public class EnvironmentTrackerOpenHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_TABLE_NAME = "Observation";
     private static final String DICTIONARY_TABLE_CREATE =
     		"CREATE TABLE " + DATABASE_TABLE_NAME + " (" +
@@ -24,6 +27,9 @@ public class EnvironmentTrackerOpenHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Maak een nieuwe database aan met het gedefinieerde statement in DICTIONARY_TABLE_CREATE.
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DICTIONARY_TABLE_CREATE);

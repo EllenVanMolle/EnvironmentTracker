@@ -3,8 +3,6 @@ package com.example.android;
 import org.achartengine.GraphicalView;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 /**
  * Een abstracte klasse waarvan de specialisaties de verschillende klassen voorstellen.
@@ -26,19 +24,9 @@ public abstract class Chart {
 	 */
 	private GraphicalView chartView;
 	
-	/*
-	 * Een cursor waarin alle verzamelde observaties zitten.
-	 */
-	protected Cursor results;
-	
 	public Chart(String newId, String newName) {
 		setId(newId);
 		setName(newName);
-		
-		// Open the database to read and get the all observations.
-		EnvironmentTrackerOpenHelper openhelper = new EnvironmentTrackerOpenHelper(ResultsContent.context);
-		SQLiteDatabase database = openhelper.getReadableDatabase();
-		results = database.query(true, "Observation", null, null, null, null, null, null, null);
 	}
 
 	public String getId() {
@@ -55,13 +43,6 @@ public abstract class Chart {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	/**
-	 * Controleert of de view van de grafiek al gedefinieerd is.
-	 */
-	public boolean chartViewAlreadyExists() {
-		return (chartView != null);
 	}
 	
 	public GraphicalView getChartView() {

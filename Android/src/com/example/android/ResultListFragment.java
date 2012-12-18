@@ -161,10 +161,12 @@ public class ResultListFragment extends ListFragment {
 		mActivatedPosition = position;
 	}
 	
-	public static Context getParameter() {
-		return getContext();
-	}
-
+	/**
+	 * This method is needed to make it possible for ResultsContent to get the context.
+	 * The graphs needs it to be created. Because the graphs are created when loading ResultsContent,
+	 * and ResultsContent is not initialised anywhere, we are not able to pass the context as a parameter
+	 * in a method in ResultsContent. Therefore, we use the static methode getContext().
+	 */
 	public static Context getContext() {
 		return context;
 	}
