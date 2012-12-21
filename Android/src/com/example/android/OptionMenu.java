@@ -19,10 +19,11 @@ public class OptionMenu extends Activity {
         setContentView(R.layout.activity_option_menu);
     }
 
-    /** Menu Creation*/
+    /** creation of the menu*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	MenuInflater inflater = getMenuInflater();
+    	//linking the layout
         inflater.inflate(R.menu.activity_option_menu, menu);
         return true;
     }
@@ -59,6 +60,5 @@ public class OptionMenu extends Activity {
     private void GoHome() {
     	Intent intent = new Intent(this, HomePage.class);
     	startActivity(intent);
-
     }
 }

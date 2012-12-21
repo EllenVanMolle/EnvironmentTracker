@@ -1,4 +1,6 @@
-/**Custom preference for entering an integer. */
+/**Custom preference for entering an integer. 
+ * source:
+ * http://matthias-braunhofer-projects.googlecode.com/svn-history/r146/trunk/sipai/src/it/unibz/sipai/android/preference/IntEditTextPreference.java */
 
 package com.example.android;
 

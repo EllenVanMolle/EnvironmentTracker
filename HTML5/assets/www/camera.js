@@ -2,6 +2,7 @@
  * Taking a picture
  */
 
+document.addEventListener("deviceready",onDeviceReady,false);
 /*
  * Deze functie wordt aangesproken wanneer de gebruiker in stap 2 op de knop 'Take A picture' drukt. Deze functie
  * moet er voor zorgen dat de foto gemaakt wordt, tijdelijk opgeslagen en verwerkt wordt en nadien terug verwijderd
@@ -30,7 +31,14 @@ function onSuccess(imageURI) {
  */
 function onFail(message) {
 	// log de reden waarom het nemen van de foto gefaald heeft.
-    console.log('Failed because: ' + message);  
+    console.log('Failed because: ' + message);
+    var hueClass = $("#HueClass");
+    var saturation = $("#Saturation");
+    var brightness = $("#Brightness");
+    
+	hueClass.text (0); 
+    saturation.text (0);
+    brightness.text (0);
     // geef een 0 waardes aan alle fotovariabelen
     analysisIsFinished = true;
 }

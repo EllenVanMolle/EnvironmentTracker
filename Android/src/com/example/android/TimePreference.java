@@ -1,6 +1,7 @@
 /**Custom preference for time selection. Hour and minute are persistent and
  * stored separately as ints in the underlying shared preferences under keys
  * KEY.hour and KEY.minute, where KEY is the preference's key.
+ * Source: http://www.twodee.org/weblog/?p=1037
  */
 
 package com.example.android;

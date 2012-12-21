@@ -15,8 +15,6 @@ import android.graphics.Color;
 import android.graphics.Paint.Align;
 
 public class ColorVersusMoodChart extends Chart {
-	
-	private GraphicalView chartView;
 
 	public ColorVersusMoodChart(String newId, String newName) {
 		super(newId, newName);

@@ -20,6 +20,9 @@ import android.widget.Toast;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
+	/**
+	 * a variable that allows us to retrieve the preferences of the user
+	 */
 	private SharedPreferences prefs;
 	
 	private static final String KEY_PREF_START = "pref_StartNotTime"; // Keyvalue for StartNotTime
@@ -28,8 +31,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 	/**Method called when a broadcast is received*/
 	@Override
 	public void onReceive(Context context, Intent arg1) {
-		
-		Toast.makeText(context, R.string.alarm_received, Toast.LENGTH_LONG).show();
 		
 		//Create a PreferenceManager to have access to the user preferences 
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -81,6 +82,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		//Get a calendar set to the current time
   		Calendar calNow = Calendar.getInstance();
     	
+  		// Get current time of the day (24h) and minutes
     	int HourNow = calNow.get(Calendar.HOUR_OF_DAY);
     	int MinuteNow = calNow.get(Calendar.MINUTE);
     	

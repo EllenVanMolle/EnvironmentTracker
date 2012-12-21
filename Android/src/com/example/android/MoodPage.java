@@ -43,7 +43,7 @@ import android.content.Intent;
 	    /** Method called when user clicks on NextButton */
 	    public void OpenCamera (View view){
 	    	
-	    	//Open Next Camera Activity
+	    	//Open Next Camera Activity and give the mood to it
 	    	Intent intent = new Intent(this, Camera.class);
 	    	intent.putExtra("mood", Bar.getProgress());
 	    	startActivity(intent);	

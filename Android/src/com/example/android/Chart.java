@@ -22,7 +22,7 @@ public abstract class Chart {
 	/*
 	 * De view die de grafiek weergeeft.
 	 */
-	private GraphicalView chartView;
+	protected GraphicalView chartView;
 	
 	public Chart(String newId, String newName) {
 		setId(newId);

@@ -3,8 +3,8 @@
 <html>
 <head>
 
-<!-- De titel van de webpagina is Environment Tracker. -->
-<title>Environment Tracker</title>
+<!-- De titel van de webpagina is SMood. -->
+<title>SMood</title>
 
 <!-- De tag meta viewport zorgt ervoor dat de breedte van de pagina steeds aangepast 
 		wordt aan de breedte van de device. -->
@@ -41,12 +41,12 @@
 -----------------------------------------------------STARTPAGNA------------------------------------------------------------------>
 	
 <!-- Begin van de startpagina. Deze pagina krijgt id homepage. De gebruiker krijgt een
-		aantal opties te zien; Settings, View results, Record-->
+		aantal opties te zien; View results, Record-->
 <div data-role="page" id="homepage" data-theme="e">
 
 	<!-- Begin van de hoofding van de startpagina. -->
 	<div data-role="header" data-theme="a">
-		<h1>Environment Tracker</h1>
+		<h1>SMood</h1>
 	</div><!-- Einde van de hoofding. -->
 	
 	<!-- Begin van de inhoud van de startpagina. -->
@@ -55,17 +55,13 @@
 			Deze worden beschreven in de stylepagina smiley.css-->
 		<p id="homepageText" align="center" class="instruction">Welcome !</p>
 		
-		<!-- De knop settings is een link naar de settingspagina. Een speciale pagina-overgang is gedefinieerd, nl. Flow.
-			Als op de knop geklikt wordt, wordt de settingdata uit de database gehaald -->
-		<a href="#settings" data-role="button" data-transition="flow" onclick="getSettingsData()">Settings</a>
-		
 		<!-- De knop view results is een link naar de resultatenpagina. Een speciale pagina-overgang is gedefinieerd, nl. Flow.
 			Als op de knop geklikt wordt, wordt de obeservatiedata uit de database gehaald. -->
 		<a href="#colorResults" data-role="button" data-transition="flow" onclick="getResultData()">View results</a>
 		
 		<!-- De knop Record is een link naar stepone. Een speciale pagina-overgang is gedefinieerd, nl. Slidefade.
-			Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
-		<a href="#stepone" data-role="button" data-transition="slidefade" >Record</a>
+			Alles wordt terug naar de oorspronkelijke waarden terug gebracht.-->
+		<a href="#stepone" data-role="button" data-transition="slidefade" onclick="resetLayout()">Record</a>
 		
 	</div><!-- Einde van de inhoud. -->
 	
@@ -256,7 +252,7 @@
 			De step 3 tab en de save button in alle drie de datacollectie pagina's wordt respectievelijk enabled of zichtbaar gemaakt.
 			Dit laat de gebruiker toe om eventueel nog wijziging aan te brengen in de data. -->
 		<a data-role="button" onclick="recordNoise()" data-transistion="slidefade">Start Recording</a>
-		<p id="audio_position"><font size="4"></font></p>			
+		<p id="audio_position" align="center" class="instruction"></p>			
 	</div><!-- Einde van de inhoud. -->
 	
 	<!-- Een voettekst met een "home" knop. Deze is hetzelfde voor elke pagina in de datacollectiefase. -->		
@@ -319,82 +315,6 @@
 
 
 <!-------------------------------------------------------------------------------------------------------------------------------	
------------------------------------------------------SETTINGS-------------------------------------------------------------------->
-
-<!-- Het begin van de settingspagina. Deze pagina heeft de id settings en 
-	wordt geopend als men in de homepage op de settingsbutton klikt-->
-<div data-role="page" id="settings" data-theme="e">
-
-	<!-- Begin van de hoofding van de settingspagina. -->
-	<div data-role="header" data-theme="a">
-		<h1>Settings</h1>
-	</div><!-- Einde van de hoofding. -->
-
-	<!-- Begin van de inhoud van de settingspagina. -->
-	<div data-role="content" id="content">
-		
-		<!-- Begin van de accordeon-->
-		<div data-role="collapsible-set" data-theme="e" data-content-theme="c">
-			
-			
-			<!-- Begin Eerste uitklapbare -->
-			<div data-role="collapsible" id="accordeon">
-				<!-- Titel -->
-				<h2>Notification settings</h2>
-				<!-- Lijst -->
-				<ul data-role="listview">
-					<li>
-						<!-- Een checkbox dat door de gebruiker kan worden aangevinkt als deze notificaties wil krijgen -->
-						<legend>Notifications: </legend>
-	   					<input type="checkbox" name="Notifications" id="checkboxNotifications" class="custom" onclick="showPopup" onchange="changeCheckboxNotifications()"  />
-	   					<label for="checkboxNotifications">Yes I want Notifications</label>
-					</li>
-					<li>
-						<!-- Een numberbox waarin de gebruiker het interval tussen de notificaties kan aangeven-->
-						<legend class="ui-disabled">Interval between two notifications: </legend>
-						<input type="number" name="interval" id="interval" min="0" value="0" disabled="false"/>					
-					</li>	
-				</ul> <!-- Einde lijst -->
-			</div> <!-- Einde eerste uitklapbare -->
-			
-			<div data-role="popup" id="NotificationPopup">
-		<p>Sorry notifications are not supported by this language!<p>
-			</div>
-			
-			<!-- Begin tweede uitklapbare -->
-			<div data-role="collapsible" id="accordeon2">
-				<!-- Titel -->
-				<h2>GPS settings</h2>
-				<!-- BeginLijst -->
-				<ul data-role="listview">
-					<li>
-					<form id="formGPS">
-						<legend>GPS tracking: </legend>
-	   					<input type="checkbox" name="GPS" id="checkboxGPS" class="custom" />
-	   					<label for="checkboxGPS" >Yes I want GPS tracking!</label>
-	   				</form>
-					</li>
-				</ul><!-- Einde lijst -->
-			</div><!-- Einde derde uitklapbare -->
-			
-		</div><!-- Eind van de accordeon-->
-		
-		<div>
-			<!-- Knop die de Settings opslaat in de database en daarna terug naar de homepage gaat -->
-			<a data-role="button" data-inline="true" href="#homepage" onclick="saveSettings()" data-transition="pop" data-theme="b">Save</a>
-			<!-- Knop die de Settings NIET opslaat en gewoon terug naar de homepage gaat -->
-			<a data-role="button" data-inline="true" href="#homepage" data-transition="pop" data-theme="a">Cancel </a>
-		</div>
-		
-	</div><!-- Einde van de inhoud. -->
-	
-	
-</div><!-- Einde van de settingspagina -->
-
-
-
-
-<!-------------------------------------------------------------------------------------------------------------------------------	
 -----------------------------------------------------RESULTATEN-------------------------------------------------------------------->
 
 <!-- Het begin van de resultatenpagina. Deze pagina krijg het id colorResults-->
@@ -409,8 +329,6 @@
 				<li><a class="ui-btn-active">Color</a></li>
 				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
 				<li><a href="#timeResults" data-transition="turn">Time</a></li>
-				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
-				<li><a href="#locationResults" data-transition="turn">Location</a></li>
 			</ul>
 		</div><!-- Einde van de navigatiebar-->
 	</div><!-- Einde van de hoofding -->
@@ -420,9 +338,6 @@
 		
 		<!-- Het begin van een verzameling knoppen. Op die manier hangen de knoppen aan elkaar. -->
 		<div data-role="controlgroup">
-			<!-- De knop Averages is een link naar de averages pagina. Een speciale pagina-overgan is gedefinieerd, nl. turn.
-				Er wordt geen extra actie uitgevoerd als op de knop geklikt wordt. -->
-			<a href="#averages" data-role="button" data-transition="turn">Averages</a>
 			<!-- De knop Hue versus Mood is een link naar de hueGraphPage. Een speciale pagina-overgang is gedefinieerd, nl. turn. 
 				Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
 			<a href="#hueGraphPage" data-role="button" data-transition="turn">Hue Graph</a>
@@ -459,46 +374,7 @@
 
 <!------------------------------------------------ColorResultatengrafieken------------------------------------------------------------->
 
-<!-- Het begin van colorresutlatenpagina. Deze pagina krijg het id averages -->
-<div data-role="page" id="averages" data-theme="e">
-	
-	<!-- Begin van de hoofding  -->
-	<div data-role="header" data-theme="a" data-position="fixed">
-		<!-- Begin van de navigatiebar met Color, Saturation, Brightness, Time -->
-		<div data-role="navbar">
-			<ul>
-				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Color geselecteerd is.-->
-				<li><a href="#colorResults"class="ui-btn-active">Color</a></li>
-				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
-				<li><a href="#timeResults" data-transition="turn">Time</a></li>
-				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
-				<li><a href="#locationResults" data-transition="turn">Location</a></li>
-			</ul>
-		</div><!-- Einde van de navigatiebar-->
-	</div><!-- Einde van de hoofding -->
-	
-	<!-- Begin van de inhoud van de averages pagina-->
-	<div data-role="content" datatheme="e">
-		
-		<!-- Tekst die gecentreerd wordt op het scherm. De klasse instruction geeft bepaalde layoutkenmerken 
-			aan de tekst mee (grote, vetgedrukt). Deze worden beschreven in de stylepagina smiley.css-->
-		<p align="center" class="instruction">On average you Feel:</p>
-		
-		<!-- Tekst: Geeft average mood in woorden weer; Unhappy, Fine, Happy-->
-  		<p id="averageMoodText" align="center" class="instruction">Average Mood</p>
-  		
-  		<!-- Tekst: Geeft average mood in number: 1-10-->
-  		<p id="averageMoodNumber" align="center" class="instruction">Number</p>
-		
-		<!-- Tekst die gecentreerd wordt op het scherm. De klasse instruction geeft bepaalde layoutkenmerken 
-			aan de tekst mee (grote, vetgedrukt). Deze worden beschreven in de stylepagina smiley.css-->
-		<p align="center" class="instruction">You are usually surround by this color:</p>
-		
-		<div id="colorbox"></div>	
-			
-	</div><!-- Einde van de inhoud van de averages pagina-->
-	
-</div><!-- Einde van de averages pagina-->
+
 
 <!-- Het begin van de eerste Color-resultatenpagina. Deze pagina krijg het id hueGraphPage -->
 <div data-role="page" id="hueGraphPage" data-theme="e">
@@ -512,8 +388,6 @@
 				<li><a href="#colorResults" class="ui-btn-active">Color</a></li>
 				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
 				<li><a href="#timeResults" data-transition="turn">Time</a></li>
-				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
-				<li><a href="#locationResults" data-transition="turn">Location</a></li>
 			</ul>
 		</div><!-- Einde van de navigatiebar-->
 	</div><!-- Einde van de hoofding -->
@@ -540,8 +414,6 @@
 				<li><a href="#colorResults" class="ui-btn-active">Color</a></li>
 				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
 				<li><a href="#timeResults" data-transition="turn">Time</a></li>
-				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
-				<li><a href="#locationResults" data-transition="turn">Location</a></li>
 			</ul>
 		</div><!-- Einde van de navigatiebar-->
 	</div><!-- Einde van de hoofding -->
@@ -568,8 +440,6 @@
 				<li><a href="#colorResults" class="ui-btn-active">Color</a></li>
 				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
 				<li><a href="#timeResults" data-transition="turn">Time</a></li>
-				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
-				<li><a href="#locationResults" data-transition="turn">Location</a></li>
 			</ul>
 		</div><!-- Einde van de navigatiebar-->
 	</div><!-- Einde van de hoofding -->
@@ -596,8 +466,6 @@
 				<li><a href="#colorResults" class="ui-btn-active">Color</a></li>
 				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
 				<li><a href="#timeResults" data-transition="turn">Time</a></li>
-				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
-				<li><a href="#locationResults" data-transition="turn">Location</a></li>
 			</ul>
 		</div><!-- Einde van de navigatiebar-->
 	</div><!-- Einde van de hoofding -->
@@ -625,8 +493,6 @@
 				<li><a href="#colorResults" class="ui-btn-active">Color</a></li>
 				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
 				<li><a href="#timeResults" data-transition="turn">Time</a></li>
-				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
-				<li><a href="#locationResults" data-transition="turn">Location</a></li>
 			</ul>
 		</div><!-- Einde van de navigatiebar-->
 	</div><!-- Einde van de hoofding -->
@@ -653,8 +519,6 @@
 				<li><a href="#colorResults" class="ui-btn-active">Color</a></li>
 				<!-- Deze tab is een link naar de TimeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
 				<li><a href="#timeResults" data-transition="turn">Time</a></li>
-				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
-				<li><a href="#locationResults" data-transition="turn">Location</a></li>
 			</ul>
 		</div><!-- Einde van de navigatiebar-->
 	</div><!-- Einde van de hoofding -->
@@ -683,8 +547,6 @@
 				<li><a href="#colorResults" data-transition="turn">Color</a></li>
 				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Time geselecteerd is.-->
 				<li><a class="ui-btn-active">Time</a></li>
-				<!-- Deze tab is een link naar de locationResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
-				<li><a href="#locationResults" data-transition="turn">Location</a></li>
 			</ul>
 		</div><!-- Einde van de navigatiebar-->
 	</div><!-- Einde van de hoofding  -->
@@ -706,59 +568,6 @@
 	</div><!-- Einde van de voettekst. -->
 </div>
 
-<!-- Het begin van de resultatenpagina. Deze pagina krijg het id timeResults-->
-<div data-role="page" id="locationResults" data-theme="e">
-	
-	<!-- Begin van de hoofding. De header is ongeveer hetzelfde voor elke pagina in de resultaten. -->
-	<div data-role="header" data-theme="a" data-position="fixed">
-		<!-- Begin van de navigatiebar met Color, Time, Location -->
-		<div data-role="navbar">
-			<ul>
-				<!-- Deze tab is een link naar de colorResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
-				<li><a href="#colorResults" data-transition="turn">Color</a></li>
-				<!-- Deze tab is een link naar de timeResults pagina. Een speciale pagina-overgang is gedefinieerd, nl. turn.-->
-				<li><a href="#timeResults" data-transition="turn">Time</a></li>
-				<!-- Deze tab doet niets. Het class attribuut zorgt ervoor dat Location geselecteerd is.-->
-				<li><a class="ui-btn-active">Location</a></li>
-			</ul>
-		</div><!-- Einde van de navigatiebar-->
-	</div><!-- Einde van de hoofding  -->
-	
-	<!-- Begin van de inhoud-->
-	<div data-role="content" datatheme="e" >
-		
-		<div id="mapcontainer"></div>
-		
-		<!-- Tekst die gecentreerd wordt op het scherm. De klasse instruction geeft bepaalde layoutkenmerken 
-			aan de tekst mee (grote, vetgedrukt). Deze worden beschreven in de stylepagina smiley.css
-		<p align="center" class="instruction">The location of your last observation was:</p>
-		
-		<!-- Tekst: Geeft die laatste locatie van de gebruiker geeft 
-  		<p id="locationText" align="center" class="instruction">Location</p>
-  		
-  		<!-- Tekst: Geeft die laatste locatie van de gebruiker geeft
-  		<p id="aantalText" align="center" class="instruction">aantal</p>
-  		
-  		<!-- Tekst die gecentreerd wordt op het scherm. De klasse instruction geeft bepaalde layoutkenmerken 
-			aan de tekst mee (grote, vetgedrukt). Deze worden beschreven in de stylepagina smiley.css
-		<p align="center" class="instruction">Your average mood on that location is:</p>
-		
-  		<!-- Tekst: Geeft average mood in woorden weer; Unhappy, Fine, Happy
-  		<p id="averageLocationMoodText" align="center" class="instruction">Average Location Mood</p>
-  		 
-  		<!-- Tekst: Geeft average mood weer voor de laatste locatie: 1-10
-  		<p id="averageLocationMood" align="center" class="instruction">Number</p>	-->
-		
-	</div><!-- Einde van de inhoud van de colorResultspagina-->
-		
-	<!-- Een voettekst met een home knop. Deze is hetzelfde voor elke resultatenpagina -->	
-	<div data-role="footer" class="ui-bar" data-theme="a" data-position="fixed">
-		<!-- De knop Home is een link naar de homepage.De knop is net zo groot als nodig om de tekst te omvatten. 
-		Een speciale pagina-overgang is gedefinieerd, nl. slidedown. Er wordt geen extra actie uitgevoerd als op deze knop geklikt wordt.-->
-		<a href="#homepage" data-role="button" data-inline="true" data-theme="b" data-transition="slidefade">Home</a>
-			
-	</div><!-- Einde van de voettekst. -->
-</div>	
 
 <!-------------------------------------------------------------------------------------------------------------------------------	
 -----------------------------------------------------END-------------------------------------------------------------------->

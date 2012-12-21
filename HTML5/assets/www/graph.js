@@ -5,7 +5,7 @@
 /*
  * Functie die de grafieken creëert
  */
-function openChart(HueData, UnhappyData, FineData, HappyData, WdMoodData, SatData, BrightData, avgMood, mostHueCat, location, locAantal, locMood){
+function openChart(HueData, UnhappyData, FineData, HappyData, WdMoodData, SatData, BrightData){
 	
 	// initialiseer variabelen voor alle grafieken die zullen worden opgesteld.
 	var chartHue;
@@ -19,7 +19,7 @@ function openChart(HueData, UnhappyData, FineData, HappyData, WdMoodData, SatDat
 	var width = window.innerWidth;
 	var heigth = window.innerHeigth;
 	var graphWidth= width-30;
-	var graphHeigth= heigth-150;
+	var graphHeigth= heigth-100;
 	
 /*
  * eerste grafiek, barchart die voor elke hue categorie de gemiddelde mood geeft.
@@ -55,7 +55,7 @@ function openChart(HueData, UnhappyData, FineData, HappyData, WdMoodData, SatDat
                 	var mood;
                 	if (this.y <=3 )
                 	{mood = 'Unhappy'}
-                	else if (this.y >=8)
+                	else if (this.y <8)
                 	{mood= 'Fine'}
                 	else {mood= 'Happy'};
                     return 'When '+
@@ -239,11 +239,11 @@ function openChart(HueData, UnhappyData, FineData, HappyData, WdMoodData, SatDat
                 	var mood;
                 	if (this.y <=3 )
                 	{mood = 'Unhappy'}
-                	else if (this.y >=8)
+                	else if (this.y <8)
                 	{mood= 'Fine'}
                 	else {mood= 'Happy'};
                     return 'on '+
-                        this.x + 'days you feel '+ mood +' !';
+                        this.x + ' you feel '+ mood +' !';
                 }
            }, 
          plotOptions: {
@@ -292,10 +292,10 @@ function openChart(HueData, UnhappyData, FineData, HappyData, WdMoodData, SatDat
                		var brightness;
                		if (this.y < 33) {
                			brightness = "low"
-               		} else if (this.y > 66){
-               			brightness = "high"
-               		} else {
+               		} else if (this.y < 66){
                			brightness = "average"
+               		} else {
+               			brightness =  "high"
                		};
                    return 'if the brightness is '+
                        brightness + ' your mood is '+ this.x +' !';
@@ -347,10 +347,10 @@ function openChart(HueData, UnhappyData, FineData, HappyData, WdMoodData, SatDat
                    var saturation;
                		if (this.y < 33) {
                			saturation = "low"
-               		} else if (this.y > 66){
-               			saturation = "high"
-               		} else {
+               		} else if (this.y < 66){
                			saturation = "average"
+               		} else {
+               			saturation = "high"
                		};
                    return 'if the saturation is '+
                        saturation + ' your mood is '+ this.x +' !';
@@ -371,65 +371,5 @@ function openChart(HueData, UnhappyData, FineData, HappyData, WdMoodData, SatDat
            data: SatData
         }]
      });
-
-/*
- * Pas de tekst in de averages pagina aan zodat de average mood en meest voorkomende hue class worden weergegeven.
- */
-	// koppel de variabelen met de gepaste element uit de html pagina
-     var text = document.getElementById("averageMoodText");
-     var moodNumber = document.getElementById("averageMoodNumber");
-     var color; 
-     var colorbox = $("#colorbox"); 
-     var distance = (width/2)-40
-		
-		// zet de tekst van averageMoodText afhankelijk van de waarde van de avgMood
-		if(avgMood > 7) { //als de mood groter is dan 7
-			text.innerHTML = "Happy";
-		}else if (avgMood < 4){ //als de mood kleiner is dan 4
-			text.innerHTML = "Unhappy";
-		}else{ //als de mood tussen 7 en 4 ligt.
-			text.innerHTML = "Fine";
-		};
-		
-		// zet de tekst van averageMoodNumber gelijk aan de avgMood
-		moodNumber.innerHTML = avgMood.toString();
-		
-		// zet color gelijk aan de kleur die overeenstemt met de meest voorkomende categorie
-		if (mostHueCat ==1) {
-			color = "yellow"
-		} else if (mostHueCat == 2){
-			color = "green"
-		} else if (mostHueCat == 3){
-			color = "blue"
-		} else {
-			color = "purple"
-		};
-		
-		colorbox.css({ 
-       	// Pas het css document aan zodat het vakje de juist kleur krijgt
-       	"background-color": color,
-       	left: distance
-       	
-       })
-
-/*
- * Pas de tekst in de location pagina aan zodat de average mood voor de laatste locatie worden weergegeven.
- 
-	var coords = new google.maps.LatLng(64,422006, 2,084095);
-  	var options = {
-    zoom: 15,
-    center: coords,
-    mapTypeControl: false,
-    navigationControlOptions: {
-    	style: google.maps.NavigationControlStyle.SMALL
-    },
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  var map = new google.maps.Map(document.getElementById("mapcontainer"), options);
-  var marker = new google.maps.Marker({
-      position: coords,
-      map: map,
-      title:"You are here!"
-  });*/
 
 }

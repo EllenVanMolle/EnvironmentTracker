@@ -14,13 +14,19 @@ import android.graphics.Color;
 
 public class MoodVersusDecibel extends Chart {
 	
-	private GraphicalView dialChartView;
+	/*
+	 * The variable containing the lower bound for the mood
+	 */
 	private int minForMoodCategory;
+	/*
+	 * The variable containing the upper bound for the mood
+	 */
 	private int maxForMoodCategory;
 
 	public MoodVersusDecibel(String newId, String newName) {
 		super(newId, newName);
 		
+		// Define the minimum and maximum mood for this graph.
 		if (this.getId().equals("10")) {
 			minForMoodCategory = 0;
 			maxForMoodCategory = 3;
@@ -37,9 +43,9 @@ public class MoodVersusDecibel extends Chart {
 	public GraphicalView makeChart(Context context) {
 		// When the view isn't yet created, create it.
 		DialRenderer renderer = getRenderer();
-		dialChartView = ChartFactory.getDialChartView(context, getDataset(context), renderer);
+		chartView = ChartFactory.getDialChartView(context, getDataset(context), renderer);
 		// Return the view so it can be showed.
-		return dialChartView;
+		return chartView;
 	}
 	
 	private CategorySeries getDataset(Context context) {

@@ -46,7 +46,7 @@ function colorAnalysis(imageSource){
   			var imageData = ctx.getImageData(0, 0, Width, Height);	
 			
 			// voer de pixalAnalyse methode uit met de gevonden data
-			analysisOfPixels (imageData.data, Width, Height);
+			analysisOfPixels (imageSource,imageData.data, Width, Height);
 		};
 		// definieer de source van de afbeelding
 		//img.src = localStorage.getItem("placeImage"); 
@@ -55,45 +55,13 @@ function colorAnalysis(imageSource){
 	}
 	else {alert("Canvas is not supported.") // canvas wordt niet ondersteund
 	}
-    
-    console.log("Start removal image file.");
-    
-    // Removing picture again
-   window.resolveLocalFileSystemURI(imageSource, onResolveSuccess, onResolveFail);
-	
-	// onSuccess resolving URI
-	//
-	function onResolveSuccess(fileEntry) {
-	    console.log(fileEntry.name);
-	    console.log("File is opened succesfull.")
-	    fileEntry.remove(succesfullRemove, failedRemove);
-	}
-	
-	// onError resolving URI
-	//
-	function onResolveFail(evt) {
-		console.log("Resolving image file failed.")
-		console.log("there was an error: " + JSON.stringify(evt));
-	}
-	
-	// onSuccess remove Callback
-	//
-	function succesfullRemove() {
-		console.log("Removed image succesfull");
-	}
-	
-	// onFail remove Callback
-	//
-	function failedRemove() {
-		console.log("Failed image remove");
-	}
    
 }
 
 /*
  * Methode om de kleuren van de pixels te analyseren
  */
-function analysisOfPixels(Data, Width, Height){
+function analysisOfPixels(imageSource, Data, Width, Height){
 	
 	// initialiseren van enkele variabelen
 	var nrPixelsHueCategory = [0, 0, 0, 0];
@@ -170,7 +138,36 @@ function analysisOfPixels(Data, Width, Height){
         
         console.log (hueClass.text() +' en ' + saturation.text() + ' en '+ brightness.text());
         analysisIsFinished = true;
-        //console.log(pixData);
+        
+        // Removing picture again
+       window.resolveLocalFileSystemURI(imageSource, onResolveSuccess, onResolveFail);
+    	
+    	// onSuccess resolving URI
+    	//
+    	function onResolveSuccess(fileEntry) {
+    	    console.log(fileEntry.name);
+    	    console.log("File is opened succesfull.")
+    	    fileEntry.remove(succesfullRemove, failedRemove);
+    	}
+    	
+    	// onError resolving URI
+    	//
+    	function onResolveFail(evt) {
+    		console.log("Resolving image file failed.")
+    		console.log("there was an error: " + JSON.stringify(evt));
+    	}
+    	
+    	// onSuccess remove Callback
+    	//
+    	function succesfullRemove() {
+    		console.log("Removed image succesfull");
+    	}
+    	
+    	// onFail remove Callback
+    	//
+    	function failedRemove() {
+    		console.log("Failed image remove");
+    	}
 }
 
 

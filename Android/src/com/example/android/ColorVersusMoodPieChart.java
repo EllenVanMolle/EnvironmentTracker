@@ -13,8 +13,6 @@ import android.graphics.Color;
 
 public class ColorVersusMoodPieChart extends Chart {
 	
-	private GraphicalView pieChartView;
-	
 	private int minMood;
 	
 	private int maxMood;
@@ -39,9 +37,9 @@ public class ColorVersusMoodPieChart extends Chart {
 	public GraphicalView makeChart(Context context) {
 		// When the view isn't yet created, create it.
 		DefaultRenderer renderer = getRenderer();
-		pieChartView = ChartFactory.getPieChartView(context, getDataset(context), renderer);
+		chartView = ChartFactory.getPieChartView(context, getDataset(context), renderer);
 		// Return the view so it can be showed.
-		return pieChartView;
+		return chartView;
 	}
 
 	public CategorySeries getDataset(Context context) {

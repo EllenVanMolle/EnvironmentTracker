@@ -17,8 +17,6 @@ import android.graphics.Paint.Align;
 
 public class VerticalBarChartWithMood extends Chart {
 	
-	private GraphicalView barChartView;
-	
 	private String columnName;
 
 	public VerticalBarChartWithMood(String newId, String newName) {
@@ -36,9 +34,9 @@ public class VerticalBarChartWithMood extends Chart {
 	public GraphicalView makeChart(Context context) {
 		// When the view isn't yet created, create it.
 		XYMultipleSeriesRenderer renderer = getRenderer(context);
-		barChartView  = ChartFactory.getBarChartView(context, getDataset(),renderer, Type.DEFAULT);
+		chartView  = ChartFactory.getBarChartView(context, getDataset(),renderer, Type.DEFAULT);
 		// Return the view so it can be showed.
-		return barChartView;
+		return chartView;
 	}
 	
 	public XYMultipleSeriesDataset getDataset() {
