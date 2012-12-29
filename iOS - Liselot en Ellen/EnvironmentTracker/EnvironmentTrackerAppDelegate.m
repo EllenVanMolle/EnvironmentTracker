@@ -7,6 +7,8 @@
 //
 
 #import "EnvironmentTrackerAppDelegate.h"
+#import "PieChartHappyViewController.h"
+#import "StartViewController.h"
 
 @implementation EnvironmentTrackerAppDelegate
 
@@ -96,11 +98,44 @@
         && ![topView.accessibilityLabel isEqual:@"recordPhoto"]
         && ![topView.accessibilityLabel isEqualToString:@"recordSound"]) {
         NSLog(@"Niet op record mood");
-        [topViewController performSegueWithIdentifier:@"startRecording" sender:self];
+        // Geef een alert zodanig dat de gebruiker weet dat de recordfase geopend wordt>
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Start recording"
+                                                        message:@"Do you want to make an observation?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"YES"
+                                              otherButtonTitles:@"NO", nil];
+        [alert show];
     } else {
         NSLog(@"Geen notificatie want al aan het opnemen.");
     }
     
+}
+
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    UINavigationController *navigationController = self.window.rootViewController;
+    UIViewController * topViewController = navigationController.topViewController;
+    
+    if (buttonIndex == 0){ // if user hits yes button
+        
+        if ([topViewController isKindOfClass: [UITabBarController class]]) {
+            PieChartHappyViewController *firstViewController = [[(UITabBarController *)topViewController viewControllers] objectAtIndex:0];
+            [firstViewController performSegueWithIdentifier:@"startRecording" sender:self];
+        } else {
+            [topViewController performSegueWithIdentifier:@"startRecording" sender:self];
+        } 
+        
+    } else { // if user hits no button
+        if ([topViewController isKindOfClass: [UITabBarController class]]) {
+            PieChartHappyViewController *firstViewController = [[(UITabBarController *)topViewController viewControllers] objectAtIndex:0];
+            [firstViewController.model startUpNextNotification];
+        } else {
+            StartViewController *startViewController = (StartViewController *)topViewController;
+            [startViewController.model startUpNextNotification];
+        }
+
+    }
 }
 
 

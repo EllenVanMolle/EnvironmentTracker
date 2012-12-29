@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F1AF557167E012A00B5D6B2 /* SoundChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F1AF556167E012A00B5D6B2 /* SoundChartViewController.m */; };
 		3F1D9FAD1641280600872CC5 /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F1D9FAA1641280600872CC5 /* PhotoViewController.m */; };
 		3F1D9FAE1641280600872CC5 /* MoodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F1D9FAC1641280600872CC5 /* MoodViewController.m */; };
 		3F1E32A4164943FD0070B5F2 /* EnvironmentTrackerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F1E32A3164943FD0070B5F2 /* EnvironmentTrackerModel.m */; };
 		3F1E32AC164950630070B5F2 /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F1E32AB164950630070B5F2 /* StartViewController.m */; };
+		3F1FAF3C1680963100DA0C36 /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F1FAF391680960A00DA0C36 /* libCorePlot-CocoaTouch.a */; };
 		3F28FF17164270D70014C554 /* EnvironmentTrackerDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F28FF15164270D70014C554 /* EnvironmentTrackerDataModel.xcdatamodeld */; };
 		3F4E2F56164125BD00A61593 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F4E2F55164125BD00A61593 /* UIKit.framework */; };
 		3F4E2F58164125BD00A61593 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F4E2F57164125BD00A61593 /* Foundation.framework */; };
@@ -23,13 +25,41 @@
 		3F4E2F6C164125BD00A61593 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4E2F6B164125BD00A61593 /* Default-568h@2x.png */; };
 		3F4E2F6F164125BD00A61593 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F4E2F6D164125BD00A61593 /* MainStoryboard.storyboard */; };
 		3F56E0D4165CF88400C23C3C /* Observation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E0D3165CF88400C23C3C /* Observation.m */; };
-		3F8AFA01165287DE00F693DF /* ResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F8AFA00165287DE00F693DF /* ResultsViewController.m */; };
+		3F6F111F166E3BA00016F614 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F6F111E166E3BA00016F614 /* QuartzCore.framework */; };
 		3F933AD516415F4F0077A72B /* AudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F933AD416415F4F0077A72B /* AudioViewController.m */; };
+		3FACABAB16738E3300C497B6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FACABAA16738E3300C497B6 /* SettingsViewController.m */; };
 		3FB3143E164ABAD4003720D2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FB3143D164ABAD4003720D2 /* CoreData.framework */; };
+		3FB40E2316773AB700A8224C /* PieChartHappyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB40E2216773AB700A8224C /* PieChartHappyViewController.m */; };
+		3FB6EEC316787DA900511F65 /* ColorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6EEC216787DA900511F65 /* ColorViewController.m */; };
+		3FB6EEE016788F9800511F65 /* hueChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6EEDF16788F9700511F65 /* hueChartViewController.m */; };
+		3FB6EEE71678903100511F65 /* saturationChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6EEE61678903100511F65 /* saturationChartViewController.m */; };
+		3FB6EEEC1678BC3300511F65 /* BrightnessChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6EEEB1678BC3100511F65 /* BrightnessChartViewController.m */; };
+		3FB6EEEF1678C2B500511F65 /* TimeChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6EEEE1678C2B300511F65 /* TimeChartViewController.m */; };
+		3FB7DEA21678D9040086725B /* PieChartUnhappyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB7DEA11678D9040086725B /* PieChartUnhappyViewController.m */; };
+		3FB7DEA51678D91B0086725B /* PieChartFineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB7DEA41678D91B0086725B /* PieChartFineViewController.m */; };
 		3FD6B19416418EAC0065B9CB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD6B19316418EAC0065B9CB /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3F1FAF381680960A00DA0C36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3F1FAF2F1680960A00DA0C36 /* CorePlot-CocoaTouch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BC9B83470FB8A0A40035D8DA;
+			remoteInfo = "CorePlot-CocoaTouch";
+		};
+		3F1FAF3A1680962C00DA0C36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3F1FAF2F1680960A00DA0C36 /* CorePlot-CocoaTouch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BC9B83460FB8A0A40035D8DA;
+			remoteInfo = "CorePlot-CocoaTouch";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		3F1AF555167E012A00B5D6B2 /* SoundChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundChartViewController.h; sourceTree = "<group>"; };
+		3F1AF556167E012A00B5D6B2 /* SoundChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundChartViewController.m; sourceTree = "<group>"; };
 		3F1D9FA91641280600872CC5 /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
 		3F1D9FAA1641280600872CC5 /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 		3F1D9FAB1641280600872CC5 /* MoodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoodViewController.h; sourceTree = "<group>"; };
@@ -38,6 +68,7 @@
 		3F1E32A3164943FD0070B5F2 /* EnvironmentTrackerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnvironmentTrackerModel.m; sourceTree = "<group>"; };
 		3F1E32AA164950630070B5F2 /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
 		3F1E32AB164950630070B5F2 /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
+		3F1FAF2F1680960A00DA0C36 /* CorePlot-CocoaTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CorePlot-CocoaTouch.xcodeproj"; path = "Core-Plot/framework/CorePlot-CocoaTouch.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		3F28FF16164270D70014C554 /* EnvironmentTrackerDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EnvironmentTrackerDataModel.xcdatamodel; sourceTree = "<group>"; };
 		3F4E2F51164125BD00A61593 /* EnvironmentTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnvironmentTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F4E2F55164125BD00A61593 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -55,11 +86,28 @@
 		3F4E2F6E164125BD00A61593 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		3F56E0D2165CF88400C23C3C /* Observation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Observation.h; sourceTree = "<group>"; };
 		3F56E0D3165CF88400C23C3C /* Observation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Observation.m; sourceTree = "<group>"; };
-		3F8AF9FF165287DE00F693DF /* ResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsViewController.h; sourceTree = "<group>"; };
-		3F8AFA00165287DE00F693DF /* ResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsViewController.m; sourceTree = "<group>"; };
+		3F6F111E166E3BA00016F614 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3F933AD316415F4F0077A72B /* AudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioViewController.h; sourceTree = "<group>"; };
 		3F933AD416415F4F0077A72B /* AudioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioViewController.m; sourceTree = "<group>"; };
+		3FACABA916738E3300C497B6 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		3FACABAA16738E3300C497B6 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		3FB3143D164ABAD4003720D2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		3FB40E2116773AB700A8224C /* PieChartHappyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartHappyViewController.h; sourceTree = "<group>"; };
+		3FB40E2216773AB700A8224C /* PieChartHappyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartHappyViewController.m; sourceTree = "<group>"; };
+		3FB6EEC116787DA900511F65 /* ColorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorViewController.h; sourceTree = "<group>"; };
+		3FB6EEC216787DA900511F65 /* ColorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorViewController.m; sourceTree = "<group>"; };
+		3FB6EEDE16788F8B00511F65 /* hueChartViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hueChartViewController.h; sourceTree = "<group>"; };
+		3FB6EEDF16788F9700511F65 /* hueChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hueChartViewController.m; sourceTree = "<group>"; };
+		3FB6EEE51678903100511F65 /* saturationChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = saturationChartViewController.h; sourceTree = "<group>"; };
+		3FB6EEE61678903100511F65 /* saturationChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = saturationChartViewController.m; sourceTree = "<group>"; };
+		3FB6EEEA1678BC3000511F65 /* BrightnessChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrightnessChartViewController.h; sourceTree = "<group>"; };
+		3FB6EEEB1678BC3100511F65 /* BrightnessChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrightnessChartViewController.m; sourceTree = "<group>"; };
+		3FB6EEED1678C2B100511F65 /* TimeChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeChartViewController.h; sourceTree = "<group>"; };
+		3FB6EEEE1678C2B300511F65 /* TimeChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeChartViewController.m; sourceTree = "<group>"; };
+		3FB7DEA01678D9040086725B /* PieChartUnhappyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartUnhappyViewController.h; sourceTree = "<group>"; };
+		3FB7DEA11678D9040086725B /* PieChartUnhappyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartUnhappyViewController.m; sourceTree = "<group>"; };
+		3FB7DEA31678D91B0086725B /* PieChartFineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartFineViewController.h; sourceTree = "<group>"; };
+		3FB7DEA41678D91B0086725B /* PieChartFineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartFineViewController.m; sourceTree = "<group>"; };
 		3FD6B19316418EAC0065B9CB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -68,7 +116,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F6F111F166E3BA00016F614 /* QuartzCore.framework in Frameworks */,
 				3F4E2F56164125BD00A61593 /* UIKit.framework in Frameworks */,
+				3F1FAF3C1680963100DA0C36 /* libCorePlot-CocoaTouch.a in Frameworks */,
 				3F4E2F58164125BD00A61593 /* Foundation.framework in Frameworks */,
 				3F4E2F5A164125BD00A61593 /* CoreGraphics.framework in Frameworks */,
 				3FD6B19416418EAC0065B9CB /* AVFoundation.framework in Frameworks */,
@@ -79,6 +129,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F1FAF301680960A00DA0C36 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3F1FAF391680960A00DA0C36 /* libCorePlot-CocoaTouch.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3F4E2F46164125BD00A61593 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +157,7 @@
 		3F4E2F54164125BD00A61593 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3F6F111E166E3BA00016F614 /* QuartzCore.framework */,
 				3FB3143D164ABAD4003720D2 /* CoreData.framework */,
 				3FD6B19316418EAC0065B9CB /* AVFoundation.framework */,
 				3F4E2F55164125BD00A61593 /* UIKit.framework */,
@@ -111,6 +170,7 @@
 		3F4E2F5B164125BD00A61593 /* EnvironmentTracker */ = {
 			isa = PBXGroup;
 			children = (
+				3F1FAF2F1680960A00DA0C36 /* CorePlot-CocoaTouch.xcodeproj */,
 				3FB31425164AA52B003720D2 /* Core Data */,
 				3F4E2F64164125BD00A61593 /* EnvironmentTrackerAppDelegate.h */,
 				3F4E2F65164125BD00A61593 /* EnvironmentTrackerAppDelegate.m */,
@@ -122,16 +182,35 @@
 				3F28FF15164270D70014C554 /* EnvironmentTrackerDataModel.xcdatamodeld */,
 				3F1D9FA91641280600872CC5 /* PhotoViewController.h */,
 				3F1D9FAA1641280600872CC5 /* PhotoViewController.m */,
-				3F8AF9FF165287DE00F693DF /* ResultsViewController.h */,
-				3F8AFA00165287DE00F693DF /* ResultsViewController.m */,
 				3F1D9FAB1641280600872CC5 /* MoodViewController.h */,
 				3F1D9FAC1641280600872CC5 /* MoodViewController.m */,
 				3F1E32AA164950630070B5F2 /* StartViewController.h */,
 				3F1E32AB164950630070B5F2 /* StartViewController.m */,
 				3F4E2F5C164125BD00A61593 /* Supporting Files */,
+				3FACABA916738E3300C497B6 /* SettingsViewController.h */,
+				3FACABAA16738E3300C497B6 /* SettingsViewController.m */,
+				3FB40E2116773AB700A8224C /* PieChartHappyViewController.h */,
+				3FB40E2216773AB700A8224C /* PieChartHappyViewController.m */,
+				3FB7DEA01678D9040086725B /* PieChartUnhappyViewController.h */,
+				3FB7DEA11678D9040086725B /* PieChartUnhappyViewController.m */,
+				3FB7DEA31678D91B0086725B /* PieChartFineViewController.h */,
+				3FB7DEA41678D91B0086725B /* PieChartFineViewController.m */,
+				3FB6EEC116787DA900511F65 /* ColorViewController.h */,
+				3FB6EEC216787DA900511F65 /* ColorViewController.m */,
+				3FB6EEEA1678BC3000511F65 /* BrightnessChartViewController.h */,
+				3FB6EEEB1678BC3100511F65 /* BrightnessChartViewController.m */,
+				3FB6EEED1678C2B100511F65 /* TimeChartViewController.h */,
+				3FB6EEEE1678C2B300511F65 /* TimeChartViewController.m */,
+				3FB6EEDF16788F9700511F65 /* hueChartViewController.m */,
+				3FB6EEDE16788F8B00511F65 /* hueChartViewController.h */,
+				3FB6EEE51678903100511F65 /* saturationChartViewController.h */,
+				3FB6EEE61678903100511F65 /* saturationChartViewController.m */,
+				3F1AF555167E012A00B5D6B2 /* SoundChartViewController.h */,
+				3F1AF556167E012A00B5D6B2 /* SoundChartViewController.m */,
 			);
 			path = EnvironmentTracker;
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		3F4E2F5C164125BD00A61593 /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -170,6 +249,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3F1FAF3B1680962C00DA0C36 /* PBXTargetDependency */,
 			);
 			name = EnvironmentTracker;
 			productName = EnvironmentTracker;
@@ -196,12 +276,28 @@
 			mainGroup = 3F4E2F46164125BD00A61593;
 			productRefGroup = 3F4E2F52164125BD00A61593 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3F1FAF301680960A00DA0C36 /* Products */;
+					ProjectRef = 3F1FAF2F1680960A00DA0C36 /* CorePlot-CocoaTouch.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3F4E2F50164125BD00A61593 /* EnvironmentTracker */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		3F1FAF391680960A00DA0C36 /* libCorePlot-CocoaTouch.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libCorePlot-CocoaTouch.a";
+			remoteRef = 3F1FAF381680960A00DA0C36 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3F4E2F4F164125BD00A61593 /* Resources */ = {
@@ -231,12 +327,29 @@
 				3F28FF17164270D70014C554 /* EnvironmentTrackerDataModel.xcdatamodeld in Sources */,
 				3F1E32A4164943FD0070B5F2 /* EnvironmentTrackerModel.m in Sources */,
 				3F1E32AC164950630070B5F2 /* StartViewController.m in Sources */,
-				3F8AFA01165287DE00F693DF /* ResultsViewController.m in Sources */,
 				3F56E0D4165CF88400C23C3C /* Observation.m in Sources */,
+				3FACABAB16738E3300C497B6 /* SettingsViewController.m in Sources */,
+				3FB40E2316773AB700A8224C /* PieChartHappyViewController.m in Sources */,
+				3FB6EEC316787DA900511F65 /* ColorViewController.m in Sources */,
+				3FB6EEE016788F9800511F65 /* hueChartViewController.m in Sources */,
+				3FB6EEE71678903100511F65 /* saturationChartViewController.m in Sources */,
+				3FB6EEEC1678BC3300511F65 /* BrightnessChartViewController.m in Sources */,
+				3FB6EEEF1678C2B500511F65 /* TimeChartViewController.m in Sources */,
+				3FB7DEA21678D9040086725B /* PieChartUnhappyViewController.m in Sources */,
+				3FB7DEA51678D91B0086725B /* PieChartFineViewController.m in Sources */,
+				3F1AF557167E012A00B5D6B2 /* SoundChartViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3F1FAF3B1680962C00DA0C36 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CorePlot-CocoaTouch";
+			targetProxy = 3F1FAF3A1680962C00DA0C36 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3F4E2F5E164125BD00A61593 /* InfoPlist.strings */ = {
@@ -277,10 +390,12 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -297,11 +412,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -317,7 +434,16 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EnvironmentTracker/EnvironmentTracker-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "\"/Users/student/Documents/EnvironmentTracker2-2/Core-Plot/framework/**";
 				INFOPLIST_FILE = "EnvironmentTracker/EnvironmentTracker-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/EnvironmentTracker\"",
+					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/EnvironmentTracker-ayfuhiftijqdusbkiqzpitjlblbi/Build/Products/Debug-iphoneos\"",
+					"\"$(SRCROOT)/EnvironmentTracker/CorePlot_1.1/Binaries/iOS\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -333,7 +459,16 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EnvironmentTracker/EnvironmentTracker-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "\"/Users/student/Documents/EnvironmentTracker2-2/Core-Plot/framework/**";
 				INFOPLIST_FILE = "EnvironmentTracker/EnvironmentTracker-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/EnvironmentTracker\"",
+					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/EnvironmentTracker-ayfuhiftijqdusbkiqzpitjlblbi/Build/Products/Debug-iphoneos\"",
+					"\"$(SRCROOT)/EnvironmentTracker/CorePlot_1.1/Binaries/iOS\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

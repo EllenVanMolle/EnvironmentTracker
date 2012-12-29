@@ -9,7 +9,8 @@
 #import "StartViewController.h"
 #import "EnvironmentTrackerModel.h"
 #import "MoodViewController.h"
-#import "ResultsViewController.h"
+#import "ColorViewController.h"
+#import "SettingsViewController.h"
 
 
 @implementation StartViewController
@@ -24,9 +25,15 @@
  */
 -(void) viewDidLoad {
     [super viewDidLoad];
+    
+    // make sure the navigatiebar is displaid
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    // make sure the toolbar is not displaid
+    [self.navigationController setToolbarHidden:YES animated:YES];
+    
     // De back-button wordt verborgen.
     [self.navigationItem setHidesBackButton:TRUE];
-    
     
     // Het initialiseren en alloceren van het model als het nog niet bestaat.
     if (!self.model) {
@@ -48,11 +55,17 @@
         newController.model = self.model;
     // Als de gebruiker op de knop view results heeft gedrukt, moet een resultsviewcontroller aangemaakt worden.
     } else if ([segue.identifier isEqualToString:@"viewResults"]) {
-        ResultsViewController *newController = segue.destinationViewController;
+        ColorViewController *newController = segue.destinationViewController;
+        // the segue will do the work of putting the new controller on screen
+        // We geven het model door aan de volgende controller.
+        newController.model = self.model;
+    } else if ([segue.identifier isEqualToString:@"openSettings"]) {
+        SettingsViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
         newController.model = self.model;
     }
+
 }
 
 @end

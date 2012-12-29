@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="11G56" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="OML-PJ-E8Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="11G56" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="OML-PJ-E8Q">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
         <!--Mood View Controller - Record mood-->
@@ -32,11 +32,15 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="How are you feeling?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBu-k9-twc">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="183" id="O88-rr-AlN"/>
+                                    <constraint firstAttribute="height" constant="28" id="zyX-Ur-p39"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Neutraal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLD-3K-cWs">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Neutral" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLD-3K-cWs">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="SgJ-cC-XHt"/>
                                 </constraints>
@@ -50,16 +54,16 @@
                             <bool key="isElement" value="YES"/>
                         </accessibility>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="ULN-0m-g5G" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="2PU-98-21u"/>
-                            <constraint firstAttribute="bottom" secondItem="Aac-KB-JYn" secondAttribute="bottom" constant="120" id="DK4-tk-oDq"/>
-                            <constraint firstItem="aBu-k9-twc" firstAttribute="top" secondItem="3" secondAttribute="top" constant="57" id="GHT-1X-04C"/>
-                            <constraint firstAttribute="trailing" secondItem="WLD-3K-cWs" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="I39-BV-1jl"/>
+                            <constraint firstItem="ULN-0m-g5G" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="3XS-zh-dUu"/>
+                            <constraint firstItem="ULN-0m-g5G" firstAttribute="trailing" secondItem="WLD-3K-cWs" secondAttribute="trailing" type="default" id="60E-Br-cOf"/>
+                            <constraint firstAttribute="bottom" secondItem="Aac-KB-JYn" secondAttribute="bottom" constant="68" id="7Pb-h4-V65"/>
+                            <constraint firstItem="WLD-3K-cWs" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" type="default" id="8hw-85-IHz"/>
+                            <constraint firstItem="ULN-0m-g5G" firstAttribute="centerX" secondItem="Aac-KB-JYn" secondAttribute="centerX" type="default" id="GZD-9Y-TxE"/>
+                            <constraint firstItem="ULN-0m-g5G" firstAttribute="top" secondItem="3" secondAttribute="top" constant="213" id="LD7-b1-avC"/>
                             <constraint firstItem="WLD-3K-cWs" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="OKt-7e-57F"/>
-                            <constraint firstItem="aBu-k9-twc" firstAttribute="centerX" secondItem="WLD-3K-cWs" secondAttribute="centerX" type="default" id="OnS-pv-ygJ"/>
-                            <constraint firstItem="ULN-0m-g5G" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="VjW-3A-NSK"/>
-                            <constraint firstAttribute="bottom" secondItem="ULN-0m-g5G" secondAttribute="bottom" constant="224" id="kUo-Gt-5Si"/>
-                            <constraint firstItem="Aac-KB-JYn" firstAttribute="centerX" secondItem="ULN-0m-g5G" secondAttribute="centerX" type="default" id="ldd-y8-rQS"/>
-                            <constraint firstItem="WLD-3K-cWs" firstAttribute="top" secondItem="aBu-k9-twc" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="z20-Vo-Ig8"/>
+                            <constraint firstItem="aBu-k9-twc" firstAttribute="centerX" secondItem="WLD-3K-cWs" secondAttribute="centerX" type="default" id="SYj-cj-OoJ"/>
+                            <constraint firstItem="WLD-3K-cWs" firstAttribute="top" secondItem="3" secondAttribute="top" constant="83" id="bTZ-BY-dWL"/>
+                            <constraint firstItem="aBu-k9-twc" firstAttribute="top" secondItem="3" secondAttribute="top" constant="20" symbolic="YES" type="default" id="d3B-lE-p7A"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Record mood" id="VgO-ew-duX"/>
@@ -72,7 +76,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="551" y="-563"/>
+            <point key="canvasLocation" x="326" y="-675"/>
         </scene>
         <!--Photo View Controller - Take a picture-->
         <scene sceneID="V8F-WI-4mW">
@@ -107,10 +111,10 @@
                             <bool key="isElement" value="YES"/>
                         </accessibility>
                         <constraints>
-                            <constraint firstItem="aY1-5v-WIj" firstAttribute="centerX" secondItem="9uZ-hN-8Ga" secondAttribute="centerX" type="default" id="9nk-uQ-osM"/>
                             <constraint firstItem="aY1-5v-WIj" firstAttribute="top" secondItem="9uZ-hN-8Ga" secondAttribute="top" constant="48" id="EgQ-S4-OJz"/>
+                            <constraint firstItem="3e9-J0-uXF" firstAttribute="top" secondItem="9uZ-hN-8Ga" secondAttribute="top" constant="190" id="XgC-UH-Wbo"/>
                             <constraint firstItem="3e9-J0-uXF" firstAttribute="centerX" secondItem="aY1-5v-WIj" secondAttribute="centerX" type="default" id="fc4-tU-x4W"/>
-                            <constraint firstAttribute="bottom" secondItem="3e9-J0-uXF" secondAttribute="bottom" constant="126" id="fnp-z0-ofC"/>
+                            <constraint firstItem="3e9-J0-uXF" firstAttribute="centerX" secondItem="9uZ-hN-8Ga" secondAttribute="centerX" type="default" id="jp2-i6-uzl"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Take a picture" id="Pab-PV-97Y"/>
@@ -120,7 +124,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="48A-c2-iFb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="997" y="-563"/>
+            <point key="canvasLocation" x="801" y="-675"/>
         </scene>
         <!--Audio View Controller - Record the sound-->
         <scene sceneID="wAN-L1-pFS">
@@ -148,11 +152,12 @@
                                     <action selector="recordAudio" destination="pPM-J4-rUf" eventType="touchUpInside" id="u0I-RS-xo6"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9uz-di-Dlw">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9uz-di-Dlw">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="42" id="vSy-23-Bhc"/>
+                                    <constraint firstAttribute="height" constant="68" id="OBl-sF-yoM"/>
+                                    <constraint firstAttribute="width" constant="109" id="nJB-Q8-mSa"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -162,12 +167,12 @@
                             <bool key="isElement" value="YES"/>
                         </accessibility>
                         <constraints>
-                            <constraint firstItem="9uz-di-Dlw" firstAttribute="top" secondItem="yEi-Rq-hcQ" secondAttribute="top" constant="121" id="0a3-Cr-5WU"/>
-                            <constraint firstItem="9uz-di-Dlw" firstAttribute="centerX" secondItem="rPg-7h-Yj0" secondAttribute="centerX" type="default" id="ATZ-Zd-n98"/>
+                            <constraint firstItem="9uz-di-Dlw" firstAttribute="top" secondItem="yEi-Rq-hcQ" secondAttribute="top" constant="97" id="Dui-Xy-WmY"/>
                             <constraint firstItem="rPg-7h-Yj0" firstAttribute="top" secondItem="yEi-Rq-hcQ" secondAttribute="top" constant="50" id="QiC-5T-Uss"/>
-                            <constraint firstItem="pox-ML-DIC" firstAttribute="centerX" secondItem="yEi-Rq-hcQ" secondAttribute="centerX" type="default" id="XuK-kA-HV5"/>
-                            <constraint firstItem="9uz-di-Dlw" firstAttribute="centerX" secondItem="pox-ML-DIC" secondAttribute="centerX" type="default" id="cfg-2C-1UR"/>
-                            <constraint firstItem="pox-ML-DIC" firstAttribute="centerY" secondItem="yEi-Rq-hcQ" secondAttribute="centerY" type="default" id="hVc-3C-iWM"/>
+                            <constraint firstItem="9uz-di-Dlw" firstAttribute="centerX" secondItem="rPg-7h-Yj0" secondAttribute="centerX" type="default" id="XkI-pi-Oki"/>
+                            <constraint firstItem="9uz-di-Dlw" firstAttribute="centerX" secondItem="pox-ML-DIC" secondAttribute="centerX" type="default" id="coj-LD-zlz"/>
+                            <constraint firstItem="9uz-di-Dlw" firstAttribute="centerX" secondItem="yEi-Rq-hcQ" secondAttribute="centerX" type="default" id="ofu-dp-Xq1"/>
+                            <constraint firstItem="pox-ML-DIC" firstAttribute="top" secondItem="yEi-Rq-hcQ" secondAttribute="top" constant="200" id="qEj-ci-74g"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Record the sound" id="DTc-0t-KyV"/>
@@ -178,12 +183,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F7B-yw-JvX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1510" y="-563"/>
+            <point key="canvasLocation" x="1290" y="-683"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="en4-Vu-hUn">
             <objects>
-                <navigationController restorationIdentifier="navigationController" toolbarHidden="NO" id="OML-PJ-E8Q" sceneMemberID="viewController">
+                <navigationController restorationIdentifier="navigationController" id="OML-PJ-E8Q" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="soI-sQ-Zdn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -200,7 +205,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rj2-1D-Ueh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-481" y="81"/>
+            <point key="canvasLocation" x="-637" y="2"/>
         </scene>
         <!--Start View Controller - Home-->
         <scene sceneID="Y8P-AJ-hKu">
@@ -245,72 +250,69 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="SVV-Jp-Fkj" kind="push" identifier="settings" id="erx-Hd-8Kn"/>
+                                    <segue destination="FKW-me-a5D" kind="push" identifier="openSettings" id="UMJ-nm-Vt8"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.10486519704876872" green="0.25674180600933438" blue="0.54486208545918369" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="TCt-mC-3fz" firstAttribute="top" secondItem="VAG-W1-9EI" secondAttribute="top" constant="208" id="4lM-4P-oWy"/>
-                            <constraint firstItem="DYA-MC-uGV" firstAttribute="top" secondItem="VAG-W1-9EI" secondAttribute="top" constant="71" id="9T7-1A-6XL"/>
-                            <constraint firstAttribute="bottom" secondItem="P3d-ZE-4gB" secondAttribute="bottom" constant="68" id="KNY-Rv-Yhs"/>
-                            <constraint firstItem="TCt-mC-3fz" firstAttribute="centerX" secondItem="DYA-MC-uGV" secondAttribute="centerX" type="default" id="KTn-iH-wOQ"/>
-                            <constraint firstItem="TCt-mC-3fz" firstAttribute="centerX" secondItem="P3d-ZE-4gB" secondAttribute="centerX" type="default" id="aZ1-WS-8AW"/>
-                            <constraint firstItem="TCt-mC-3fz" firstAttribute="centerX" secondItem="VAG-W1-9EI" secondAttribute="centerX" type="default" id="rdf-YR-sOw"/>
+                            <constraint firstItem="DYA-MC-uGV" firstAttribute="top" secondItem="VAG-W1-9EI" secondAttribute="top" constant="48" id="1Zb-6v-fLu"/>
+                            <constraint firstItem="TCt-mC-3fz" firstAttribute="leading" secondItem="P3d-ZE-4gB" secondAttribute="leading" type="default" id="600-3o-ed0"/>
+                            <constraint firstItem="TCt-mC-3fz" firstAttribute="centerX" secondItem="VAG-W1-9EI" secondAttribute="centerX" type="default" id="Hv4-hq-BSa"/>
+                            <constraint firstItem="P3d-ZE-4gB" firstAttribute="top" secondItem="VAG-W1-9EI" secondAttribute="top" constant="205" id="Zl5-v9-ET0"/>
+                            <constraint firstItem="TCt-mC-3fz" firstAttribute="trailing" secondItem="DYA-MC-uGV" secondAttribute="trailing" type="default" id="bCM-vf-Wjq"/>
+                            <constraint firstItem="P3d-ZE-4gB" firstAttribute="trailing" secondItem="TCt-mC-3fz" secondAttribute="trailing" type="default" id="c4T-Fm-WWa"/>
+                            <constraint firstItem="TCt-mC-3fz" firstAttribute="top" secondItem="VAG-W1-9EI" secondAttribute="top" constant="122" id="nqC-Qn-kbr"/>
+                            <constraint firstItem="DYA-MC-uGV" firstAttribute="leading" secondItem="TCt-mC-3fz" secondAttribute="leading" type="default" id="wFV-Q8-dma"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="GfL-F0-0f8"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yTE-Js-h4H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2" y="78"/>
+            <point key="canvasLocation" x="-158" y="-6"/>
         </scene>
-        <!--Results View Controller - Results-->
+        <!--Color View Controller - Color-->
         <scene sceneID="ATn-hc-2ni">
             <objects>
-                <viewController id="nZf-6F-apk" customClass="ResultsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="" title="Color" id="nZf-6F-apk" customClass="ColorViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FQM-UG-Yt3">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Identifier" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lRm-Sy-jMZ">
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OtS-xc-2J6">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="74" id="xre-Ic-8JU"/>
+                                    <constraint firstAttribute="width" constant="179" id="RTh-pV-QIc"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
+                                <state key="normal" title="Hue Chart">
+                                    <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Be9-Hb-YFT" kind="push" identifier="goToHueChart" id="4eu-bx-tvX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ql-Wu-I4e">
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="&lt;identifier>" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsE-2B-2KT">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="89" id="3Ff-n8-hLU"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MrV-yY-rox">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="42" id="L7C-fh-AeL"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="&lt;date>" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oxa-OM-9sz">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="218" id="IGC-tm-hcP"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tcg-io-f7R">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="73" id="dyf-VI-Pe3"/>
-                                </constraints>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Saturation Chart">
+                                            <attributes>
+                                                <color key="NSColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="15" name="Helvetica-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
+                                <connections>
+                                    <segue destination="XY3-ov-Pof" kind="push" identifier="goToSaturationChart" id="6im-OY-7hF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LiG-VL-Nwb">
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Show">
+                                <state key="normal" title="Color Pie Charts">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -318,35 +320,145 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="viewResults" destination="nZf-6F-apk" eventType="touchUpInside" id="wOs-b3-qUM"/>
+                                    <segue destination="Xy3-kT-t4f" kind="push" identifier="goToPieCharts" id="tbh-8c-4Dw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9TV-3b-Ydg">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Brightness Chart">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="ksy-nA-Qdk" kind="push" identifier="goToBrightnessChart" id="k7F-7j-ilj"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.10486519699999999" green="0.25674180600000002" blue="0.54486208550000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="rsE-2B-2KT" firstAttribute="top" secondItem="FQM-UG-Yt3" secondAttribute="top" constant="20" symbolic="YES" type="default" id="4Zy-LI-Ul9"/>
-                            <constraint firstAttribute="trailing" secondItem="Oxa-OM-9sz" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="8mo-ej-xfs"/>
-                            <constraint firstItem="Tcg-io-f7R" firstAttribute="top" secondItem="FQM-UG-Yt3" secondAttribute="top" constant="252" id="Edc-Q0-CNC"/>
-                            <constraint firstItem="lRm-Sy-jMZ" firstAttribute="top" secondItem="FQM-UG-Yt3" secondAttribute="top" constant="20" symbolic="YES" type="default" id="HbM-ck-kib"/>
-                            <constraint firstItem="Oxa-OM-9sz" firstAttribute="baseline" secondItem="MrV-yY-rox" secondAttribute="baseline" type="default" id="SQb-Bx-8OA"/>
-                            <constraint firstItem="lRm-Sy-jMZ" firstAttribute="leading" secondItem="FQM-UG-Yt3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="YBE-gH-xVo"/>
-                            <constraint firstItem="MrV-yY-rox" firstAttribute="top" secondItem="lRm-Sy-jMZ" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="d5Q-Pw-C8y"/>
-                            <constraint firstAttribute="trailing" secondItem="rsE-2B-2KT" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="drU-ig-oz2"/>
-                            <constraint firstItem="Tcg-io-f7R" firstAttribute="centerX" secondItem="FQM-UG-Yt3" secondAttribute="centerX" type="default" id="f2P-RY-kV1"/>
-                            <constraint firstItem="MrV-yY-rox" firstAttribute="leading" secondItem="FQM-UG-Yt3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="f8Y-MI-Pn2"/>
+                            <constraint firstItem="OtS-xc-2J6" firstAttribute="trailing" secondItem="3ql-Wu-I4e" secondAttribute="trailing" type="default" id="5PB-g1-1TM"/>
+                            <constraint firstItem="LiG-VL-Nwb" firstAttribute="trailing" secondItem="9TV-3b-Ydg" secondAttribute="trailing" type="default" id="Rr1-i1-Rz3"/>
+                            <constraint firstItem="OtS-xc-2J6" firstAttribute="top" secondItem="FQM-UG-Yt3" secondAttribute="top" constant="35" id="VV0-sQ-X6L"/>
+                            <constraint firstItem="9TV-3b-Ydg" firstAttribute="trailing" secondItem="3ql-Wu-I4e" secondAttribute="trailing" type="default" id="WG6-vD-ls8"/>
+                            <constraint firstItem="9TV-3b-Ydg" firstAttribute="top" secondItem="3ql-Wu-I4e" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="ca5-7S-9Jn"/>
+                            <constraint firstItem="3ql-Wu-I4e" firstAttribute="leading" secondItem="OtS-xc-2J6" secondAttribute="leading" type="default" id="uhH-A1-uKG"/>
+                            <constraint firstItem="LiG-VL-Nwb" firstAttribute="leading" secondItem="9TV-3b-Ydg" secondAttribute="leading" type="default" id="v08-KP-nl4"/>
+                            <constraint firstItem="LiG-VL-Nwb" firstAttribute="top" secondItem="9TV-3b-Ydg" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="vp6-Tq-mcd"/>
+                            <constraint firstItem="3ql-Wu-I4e" firstAttribute="top" secondItem="OtS-xc-2J6" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="wcd-3L-BfZ"/>
+                            <constraint firstItem="9TV-3b-Ydg" firstAttribute="leading" secondItem="3ql-Wu-I4e" secondAttribute="leading" type="default" id="ya6-j2-swd"/>
+                            <constraint firstItem="9TV-3b-Ydg" firstAttribute="centerX" secondItem="FQM-UG-Yt3" secondAttribute="centerX" type="default" id="zZK-Cj-sdf"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Results" id="a8P-lH-pxC"/>
+                    <navigationItem key="navigationItem" title="Color" id="a8P-lH-pxC"/>
                     <connections>
-                        <outlet property="labelDate" destination="Oxa-OM-9sz" id="ujb-bq-9CV"/>
-                        <outlet property="labelIdentifier" destination="rsE-2B-2KT" id="8oe-Go-W2R"/>
+                        <outlet property="brightnessChartButton" destination="9TV-3b-Ydg" id="8Bi-el-kxd"/>
+                        <outlet property="hueChartButton" destination="OtS-xc-2J6" id="1ty-ED-lz3"/>
+                        <outlet property="pieChartsButton" destination="LiG-VL-Nwb" id="4sO-Ta-gzM"/>
+                        <outlet property="saturationChartButton" destination="3ql-Wu-I4e" id="tVw-7Z-Vbk"/>
                         <segue destination="tAv-cs-oJY" kind="push" identifier="segueDatabaseNotReady" id="pbz-hI-owl"/>
-                        <segue destination="2" kind="push" identifier="startRecording" id="wCI-ni-hCB"/>
+                        <segue destination="cBX-6M-Voh" kind="push" identifier="openTimeChart" id="Zqb-E9-93u"/>
+                        <segue destination="61x-e3-rwy" kind="push" identifier="openSoundChart" id="nTN-mx-If7"/>
+                        <segue destination="tt3-zc-4Si" kind="push" identifier="openHome" id="OWs-VM-xjA"/>
+                        <segue destination="2" kind="push" identifier="startRecording" id="rCG-YS-R2c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b8e-oz-kxU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="552" y="90"/>
+            <point key="canvasLocation" x="373" y="718"/>
+        </scene>
+        <!--Settings View Controller - Settings-->
+        <scene sceneID="U59-rv-DQu">
+            <objects>
+                <viewController title="Settings" id="FKW-me-a5D" customClass="SettingsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YQf-u2-fV2">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vry-dT-Ksw">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Minutes between notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1OR-oE-wMd">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s2p-82-DUh">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="97" id="FlG-jN-8h8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TsS-9e-pWj">
+                                <connections>
+                                    <action selector="toggleEnableIntervalTextField:" destination="FKW-me-a5D" eventType="valueChanged" id="ae5-GW-lS1"/>
+                                </connections>
+                            </switch>
+                        </subviews>
+                        <color key="backgroundColor" red="0.3283850273159919" green="0.58600118885869568" blue="0.36340891735386038" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="TsS-9e-pWj" firstAttribute="top" secondItem="vry-dT-Ksw" secondAttribute="top" type="default" id="3ir-ZR-OX1"/>
+                            <constraint firstItem="s2p-82-DUh" firstAttribute="top" secondItem="YQf-u2-fV2" secondAttribute="top" constant="169" id="8sV-zs-x8s"/>
+                            <constraint firstItem="s2p-82-DUh" firstAttribute="centerX" secondItem="1OR-oE-wMd" secondAttribute="centerX" type="default" id="GGy-yI-y5i"/>
+                            <constraint firstItem="vry-dT-Ksw" firstAttribute="top" secondItem="YQf-u2-fV2" secondAttribute="top" constant="62" id="bf8-qx-3vh"/>
+                            <constraint firstItem="1OR-oE-wMd" firstAttribute="top" secondItem="YQf-u2-fV2" secondAttribute="top" constant="126" id="c8b-1x-ghV"/>
+                            <constraint firstItem="1OR-oE-wMd" firstAttribute="centerX" secondItem="YQf-u2-fV2" secondAttribute="centerX" type="default" id="dFI-Id-2Cc"/>
+                            <constraint firstItem="TsS-9e-pWj" firstAttribute="trailing" secondItem="1OR-oE-wMd" secondAttribute="trailing" type="default" id="gdI-xz-xHe"/>
+                            <constraint firstItem="vry-dT-Ksw" firstAttribute="leading" secondItem="1OR-oE-wMd" secondAttribute="leading" type="default" id="pKF-Nv-Sgh"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="klh-0p-nne"/>
+                    <connections>
+                        <outlet property="intervalTextField" destination="s2p-82-DUh" id="8G9-bP-kZe"/>
+                        <outlet property="notificationSwitch" destination="TsS-9e-pWj" id="4Gl-bQ-97C"/>
+                        <segue destination="tt3-zc-4Si" kind="push" identifier="openHomeFromSettings" id="Xky-yj-oWS"/>
+                        <segue destination="2" kind="push" identifier="startRecording" id="hYm-i5-bLj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WaN-gi-oVl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="326" y="-6"/>
+        </scene>
+        <!--Saturation Chart View Controller - Saturation Chart-->
+        <scene sceneID="Pqt-AQ-NpE">
+            <objects>
+                <viewController id="XY3-ov-Pof" customClass="saturationChartViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oMT-fb-pXg">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Saturation Chart" id="G2U-zo-pzL"/>
+                    <connections>
+                        <segue destination="2" kind="push" identifier="startRecording" id="PD6-2y-QcR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sHB-LX-iVz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1278" y="724"/>
+        </scene>
+        <!--Hue Chart View Controller - Mood versus Hue-->
+        <scene sceneID="lYX-UM-HXB">
+            <objects>
+                <viewController title="Mood versus Hue" id="Be9-Hb-YFT" customClass="hueChartViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ALa-Yp-Bb4" customClass="Graph1">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Hue Chart" id="dyu-L3-xaW"/>
+                    <connections>
+                        <segue destination="2" kind="push" identifier="startRecording" id="G51-3S-cYT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ggz-hs-Ggg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="801" y="724"/>
         </scene>
         <!--View Controller - Database is not ready-->
         <scene sceneID="NL1-lO-NjE">
@@ -378,50 +490,375 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1hj-8U-CmZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="994" y="94"/>
+            <point key="canvasLocation" x="1278" y="-14"/>
         </scene>
-        <!--Table View Controller - Settings-->
-        <scene sceneID="0lq-CX-OhY">
+        <!--Time Chart View Controller - Charts-->
+        <scene sceneID="7H6-hT-Ivv">
             <objects>
-                <tableViewController id="SVV-Jp-Fkj" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="d6E-cn-dfl">
+                <viewController title="Charts" id="cBX-6M-Voh" customClass="TimeChartViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HSK-Q2-XCd">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.10486519699999999" green="0.25674180600000002" blue="0.54486208550000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SettingsCell" id="m41-nO-vYr">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="SVV-Jp-Fkj" id="Syl-mj-sV9"/>
-                            <outlet property="delegate" destination="SVV-Jp-Fkj" id="T0l-yw-J46"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="dIq-Gi-iRS"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Time Graph" id="dzM-Ih-YuX"/>
                     <connections>
-                        <segue destination="2" kind="push" identifier="backToStartFromSettings" id="FOE-0C-3M4"/>
+                        <segue destination="61x-e3-rwy" kind="push" identifier="openSoundfromTime" id="e0m-nb-kQJ"/>
+                        <segue destination="nZf-6F-apk" kind="push" identifier="openColorfromTime" id="qmw-Tb-od7"/>
+                        <segue destination="2" kind="push" identifier="startRecording" id="ocb-Dc-snO"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dE1-6T-4wE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aJ6-OO-7eS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="552" y="794"/>
+            <point key="canvasLocation" x="-158" y="1428"/>
+        </scene>
+        <!--Pie Chart Fine View Controller - Fine-->
+        <scene sceneID="C4V-kN-7fY">
+            <objects>
+                <viewController id="FME-Z2-dbf" customClass="PieChartFineViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TLX-Qq-ygE">
+                        <rect key="frame" x="0.0" y="20" width="320" height="499"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kIF-n6-pGF">
+                                <items>
+                                    <barButtonItem systemItem="reply" id="3Qk-5d-JT4">
+                                        <connections>
+                                            <segue destination="nZf-6F-apk" kind="push" identifier="goToColor" id="8df-Zr-7UZ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="UDe-ED-SVF"/>
+                                    <barButtonItem title="Theme" id="9aS-i5-vQW">
+                                        <connections>
+                                            <action selector="themeTapped:" destination="FME-Z2-dbf" id="EAw-kV-DxB"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <accessibility key="accessibilityConfiguration" label="PieChart">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
+                        <constraints>
+                            <constraint firstItem="kIF-n6-pGF" firstAttribute="leading" secondItem="TLX-Qq-ygE" secondAttribute="leading" type="default" id="4PP-Wz-59C"/>
+                            <constraint firstItem="kIF-n6-pGF" firstAttribute="top" secondItem="TLX-Qq-ygE" secondAttribute="top" type="default" id="8Q2-EQ-c9L"/>
+                            <constraint firstItem="kIF-n6-pGF" firstAttribute="trailing" secondItem="TLX-Qq-ygE" secondAttribute="trailing" type="default" id="lcV-DQ-EJn"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Fine" id="i7B-Jy-Yff"/>
+                    <connections>
+                        <outlet property="BackBarButton" destination="3Qk-5d-JT4" id="dj3-c5-3fq"/>
+                        <outlet property="themeBarButton" destination="9aS-i5-vQW" id="Q6p-sd-JNw"/>
+                        <outlet property="toolbar" destination="kIF-n6-pGF" id="WLC-iy-bTj"/>
+                        <segue destination="2" kind="push" identifier="startRecording" id="pyZ-FL-S0E"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iac-6r-fi2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1774" y="1428"/>
+        </scene>
+        <!--Pie Chart Happy View Controller - Title-->
+        <scene sceneID="Mha-Sa-n14">
+            <objects>
+                <viewController id="2fi-VA-2wV" customClass="PieChartHappyViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WyH-Kj-4mV">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uie-Ya-gRZ">
+                                <items>
+                                    <barButtonItem systemItem="reply" id="Aef-yC-c6W">
+                                        <connections>
+                                            <segue destination="nZf-6F-apk" kind="push" identifier="goToColor" id="l31-Fy-yrA"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="q7X-bL-JdE"/>
+                                    <barButtonItem title="Theme" id="3gK-qh-dP9">
+                                        <connections>
+                                            <action selector="themeTapped:" destination="2fi-VA-2wV" id="3cS-ZC-iJA"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <accessibility key="accessibilityConfiguration" label="PieChart">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
+                        <constraints>
+                            <constraint firstItem="Uie-Ya-gRZ" firstAttribute="top" secondItem="WyH-Kj-4mV" secondAttribute="top" type="default" id="ZbX-gF-LJu"/>
+                            <constraint firstItem="Uie-Ya-gRZ" firstAttribute="trailing" secondItem="WyH-Kj-4mV" secondAttribute="trailing" type="default" id="lWL-aX-fYk"/>
+                            <constraint firstItem="Uie-Ya-gRZ" firstAttribute="leading" secondItem="WyH-Kj-4mV" secondAttribute="leading" type="default" id="zhv-h1-9iH"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Happy" id="1SU-U3-9EJ"/>
+                    <navigationItem key="navigationItem" title="Title" id="dtv-ZB-HIE"/>
+                    <connections>
+                        <outlet property="BackBarButton" destination="Aef-yC-c6W" id="A47-ye-4kS"/>
+                        <outlet property="themeBarButton" destination="3gK-qh-dP9" id="6JP-bE-Lmi"/>
+                        <outlet property="toolbar" destination="Uie-Ya-gRZ" id="6zm-FL-AqB"/>
+                        <segue destination="2" kind="push" identifier="startRecording" id="5W4-g8-vxf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qQ3-22-kI2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1278" y="1428"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="pz9-Ir-4kz">
+            <objects>
+                <tabBarController definesPresentationContext="YES" id="Xy3-kT-t4f" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="1NU-lM-XM3"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="GxT-Ba-m8c">
+                        <rect key="frame" x="129" y="330" width="163" height="49"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="2fi-VA-2wV" kind="relationship" relationship="viewControllers" id="mIn-t1-TVc"/>
+                        <segue destination="FME-Z2-dbf" kind="relationship" relationship="viewControllers" id="Bwl-Je-NO4"/>
+                        <segue destination="wFF-rg-y0d" kind="relationship" relationship="viewControllers" id="DPV-S6-zPJ"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="el3-u8-4fb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="801" y="1428"/>
+        </scene>
+        <!--Pie Chart Unhappy View Controller - Unhappy-->
+        <scene sceneID="wsE-5d-Ceu">
+            <objects>
+                <viewController id="wFF-rg-y0d" customClass="PieChartUnhappyViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YcZ-xR-ngP">
+                        <rect key="frame" x="0.0" y="20" width="320" height="499"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="grn-Qz-oQI">
+                                <items>
+                                    <barButtonItem systemItem="reply" id="hlP-bO-jUv">
+                                        <connections>
+                                            <segue destination="nZf-6F-apk" kind="push" identifier="goToColor" id="Z01-EZ-Y9X"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="GhD-cG-A99"/>
+                                    <barButtonItem title="Theme" id="xMo-lP-eVN">
+                                        <connections>
+                                            <action selector="themeTapped:" destination="wFF-rg-y0d" id="Cw8-x7-obY"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <accessibility key="accessibilityConfiguration" label="PieChart">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
+                        <constraints>
+                            <constraint firstItem="grn-Qz-oQI" firstAttribute="leading" secondItem="YcZ-xR-ngP" secondAttribute="leading" type="default" id="1fe-jD-WA1"/>
+                            <constraint firstItem="grn-Qz-oQI" firstAttribute="top" secondItem="YcZ-xR-ngP" secondAttribute="top" type="default" id="OAk-ys-h5r"/>
+                            <constraint firstItem="grn-Qz-oQI" firstAttribute="trailing" secondItem="YcZ-xR-ngP" secondAttribute="trailing" type="default" id="eOb-Wi-ACr"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Unhappy" id="Vil-HY-toS"/>
+                    <connections>
+                        <outlet property="BackBarButton" destination="hlP-bO-jUv" id="wcm-Nt-FzW"/>
+                        <outlet property="themeBarButton" destination="xMo-lP-eVN" id="Li9-dm-USY"/>
+                        <outlet property="toolbar" destination="grn-Qz-oQI" id="mHS-2P-LmO"/>
+                        <segue destination="2" kind="push" identifier="startRecording" id="NVa-jc-MY9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BW8-Nh-9kE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2240" y="1428"/>
+        </scene>
+        <!--Brightness Chart View Controller - Brightness Chart-->
+        <scene sceneID="xHx-Rs-c0J">
+            <objects>
+                <viewController id="ksy-nA-Qdk" customClass="BrightnessChartViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FAe-sW-vPE">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Brightness Chart" id="ass-y8-TLX"/>
+                    <connections>
+                        <segue destination="2" kind="push" identifier="startRecording" id="LH7-CY-gQq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="maX-in-ETf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1774" y="724"/>
+        </scene>
+        <!--Sound Chart View Controller - Charts-->
+        <scene sceneID="kaG-T4-s2i">
+            <objects>
+                <viewController title="Charts" id="61x-e3-rwy" customClass="SoundChartViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="upG-cg-bPn">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Average Decibels of last recording:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1K5-74-Cbd">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="KEE-IO-5hy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTV-ac-J1g">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="104" id="fTw-52-62w"/>
+                                    <constraint firstAttribute="height" constant="53" id="wsS-t0-9Kh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iFq-Ak-q2v">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="235" id="2M4-GV-P7r"/>
+                                    <constraint firstAttribute="height" constant="65" id="hCP-4b-cQv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.10486519699999999" green="0.25674180600000002" blue="0.54486208550000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="oTV-ac-J1g" firstAttribute="top" secondItem="1K5-74-Cbd" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="YnI-R9-YLd"/>
+                            <constraint firstItem="iFq-Ak-q2v" firstAttribute="top" secondItem="oTV-ac-J1g" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="d6W-MB-rC2"/>
+                            <constraint firstItem="iFq-Ak-q2v" firstAttribute="centerX" secondItem="oTV-ac-J1g" secondAttribute="centerX" type="default" id="orP-sm-eO5"/>
+                            <constraint firstItem="1K5-74-Cbd" firstAttribute="top" secondItem="upG-cg-bPn" secondAttribute="top" constant="41" id="pHu-tu-MWE"/>
+                            <constraint firstItem="1K5-74-Cbd" firstAttribute="leading" secondItem="upG-cg-bPn" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="qpp-Qd-zpg"/>
+                            <constraint firstItem="oTV-ac-J1g" firstAttribute="centerX" secondItem="1K5-74-Cbd" secondAttribute="centerX" type="default" id="zSU-cp-0hV"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Time Graph" id="l12-cr-FUB"/>
+                    <connections>
+                        <outlet property="DecibelRemark" destination="iFq-Ak-q2v" id="8bd-gG-wEP"/>
+                        <outlet property="avgDecibelsLabel" destination="oTV-ac-J1g" id="7LL-Wn-ggz"/>
+                        <segue destination="cBX-6M-Voh" kind="push" identifier="openTimefromSound" id="PgX-mw-1IQ"/>
+                        <segue destination="nZf-6F-apk" kind="push" identifier="openColorfromSound" id="LGk-6F-TCe"/>
+                        <segue destination="2" kind="push" identifier="startRecording" id="iX4-CJ-QcH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q8I-cQ-49z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="326" y="1428"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="AudioViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AudioViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="recordAudio"/>
+                <relationship kind="outlet" name="labelCountingDown" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="startRecordingButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="BrightnessChartViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BrightnessChartViewController.h"/>
+        </class>
+        <class className="ColorViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ColorViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="brightnessChartButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="hueChartButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="pieChartsButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="saturationChartButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="MoodViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MoodViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="changeLabel:" candidateClass="UISlider"/>
+                <relationship kind="action" name="saveMood"/>
+                <relationship kind="outlet" name="continueFromMood" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="labelMood" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="moodSlider" candidateClass="UISlider"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PhotoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="takeAPicture"/>
+            </relationships>
+        </class>
+        <class className="PieChartFineViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PieChartFineViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="themeTapped:"/>
+                <relationship kind="outlet" name="BackBarButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="themeBarButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="PieChartHappyViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PieChartHappyViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="themeTapped:"/>
+                <relationship kind="outlet" name="BackBarButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="themeBarButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="PieChartUnhappyViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PieChartUnhappyViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="themeTapped:"/>
+                <relationship kind="outlet" name="BackBarButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="themeBarButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="SettingsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleEnableIntervalTextField:"/>
+                <relationship kind="outlet" name="intervalTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="notificationSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="SoundChartViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SoundChartViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="DecibelRemark" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="avgDecibelsLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="StartViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StartViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="recordButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="settingsButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="viewResultsButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="TimeChartViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TimeChartViewController.h"/>
+        </class>
+        <class className="hueChartViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/hueChartViewController.h"/>
+        </class>
+        <class className="saturationChartViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/saturationChartViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="NWk-2e-zpK"/>
-        <segue reference="wCI-ni-hCB"/>
-        <segue reference="p6d-Ij-NOS"/>
+        <segue reference="LGk-6F-TCe"/>
+        <segue reference="nTN-mx-If7"/>
+        <segue reference="PgX-mw-1IQ"/>
+        <segue reference="iX4-CJ-QcH"/>
+        <segue reference="l3y-j8-HBV"/>
     </inferredMetricsTieBreakers>
 </document>

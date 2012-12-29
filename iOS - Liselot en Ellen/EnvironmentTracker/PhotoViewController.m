@@ -19,21 +19,33 @@
  */
 -(void) cancelRecording {
     // Geef een alert zodanig dat de gebruiker weet dat de gegevens niet worden opgeslagen>
-    // Eventueel: Maak ook een cancel button.
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cancel recording"
-                                                    message:@"You cancelled the recording. The current data is not recorded."
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
+                                                    message:@"Do you want to cancel the recording? The current data will not be saved."
+                                                   delegate:self
+                                          cancelButtonTitle:@"YES"
+                                          otherButtonTitles:@"NO", nil];
     [alert show];
-    // Start de volgende notificatie op.
-    [self.model startUpNextNotification];
-    // Zorg dat de gebruiker terug naar de startpagina gaat.
-    [self performSegueWithIdentifier:@"backToStartFromPhoto" sender:self];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"Button: %i, was pressed.", buttonIndex);
+    if (buttonIndex == 0){
+        // Start de volgende notificatie op.
+        [self.model startUpNextNotification];
+        // Zorg dat de gebruiker terug naar de startpagina gaat.
+        [self performSegueWithIdentifier:@"backToStartFromPhoto" sender:self];
+    }
 }
 
 -(void) viewDidLoad {
     [super viewDidLoad];
+    // make sure the navigatiebar is displaid
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    // make sure the toolbar is not displaid
+    [self.navigationController setToolbarHidden:YES animated:YES];
     
     // Het verbergen van de back button.
     [self.navigationItem setHidesBackButton:TRUE];
@@ -76,14 +88,31 @@
         {
             NSLog(@"Geen camera");
         }
+
     }
 
+/* Methode die aangeroepen wordt als de foto genomen is.
+ */
 #pragma mark imagePickerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-	// Dismiss imagePickerViewController
+    // cameraImage is the UIimage that represents the picture captured by the camera.
+    self.model.cameraImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    // Dismiss imagePickerViewController
     [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    // First create a queue to make sure the analysis happens asynchronously
+    self.model.analysisQueue = dispatch_queue_create("analysisQueue", NULL);
+    
+    // Now you can put things in the FIFO queue
+    dispatch_async(self.model.analysisQueue, ^{
+        NSLog(@" Start QueQue");
+        [self.model analyseImage];
+    });
 }
+/* Methode die aangeroepen wordt als het nemen vam de foto gecanceld is
+ */
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
 	// Dismiss the image selection and close the program

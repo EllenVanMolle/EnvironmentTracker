@@ -23,23 +23,35 @@
  */
 -(void) cancelRecording {
     // Geef een alert zodanig dat de gebruiker weet dat de gegevens niet worden opgeslagen>
-    // Eventueel: Maak ook een cancel button.
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cancel recording"
-                                                    message:@"You cancelled the recording. The current data is not recorded."
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
+                                                    message:@"Do you want to cancel the recording? The current data will not be saved."
+                                                   delegate:self
+                                          cancelButtonTitle:@"YES"
+                                          otherButtonTitles:@"NO", nil];
     [alert show];
-    // Start de volgende notificatie op.
-    [self.model startUpNextNotification];
-    // Zorg dat de gebruiker terug naar de startpagina gaat.
-    [self performSegueWithIdentifier:@"backToStartFromMood" sender:self];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"Button: %i, was pressed.", buttonIndex);
+    if (buttonIndex == 0){
+        // Start de volgende notificatie op.
+        [self.model startUpNextNotification];
+        // Zorg dat de gebruiker terug naar de startpagina gaat.
+        [self performSegueWithIdentifier:@"backToStartFromMood" sender:self];
+    }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    // make sure the navigatiebar is displaid
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    // make sure the toolbar is not displaid
+    [self.navigationController setToolbarHidden:YES animated:YES];
     
     // Zorg dat de back button niet getoond wordt.
     [self.navigationItem setHidesBackButton:TRUE];
@@ -78,40 +90,18 @@
  */
 -(IBAction)changeLabel:(UISlider *)sender {
     if ([sender value] < 4.0) {
-        [_labelMood setText:@"Ongelukkig"];
+        [_labelMood setText:@"Unhappy"];
     } else if ([sender value] < 8.0) {
-        [_labelMood setText:@"Neutraal"];
+        [_labelMood setText:@"Neutral"];
     } else {
-        [_labelMood setText:@"Gelukkig"];
+        [_labelMood setText:@"Happy"];
     }
 }
-/*
--(int) makeIdentifier {
-    return 1;
-}
-
--(int) mood {
-    return [self.moodSlider value];
-}
-
--(NSDate *) date {
-    return [NSDate date];
-}
-
--(int) determineLocationLengteLigging {
-    return 1;
-}
-
--(int) determineLocationBreedteLigging {
-    return 1;
-}
- */
 
 /* Deze methode wordt aangeroepen wanneer de gebruiker op de knop continue drukt en zorgt dat de mood wordt doorgegeven aan het model zodanig dat het in het model kan worden opgeslagen.
  */
 -(void) saveMood {
     [self.model setMood:[NSNumber numberWithInt:[self.moodSlider value]]];
-    //[self.model saveObservationWithID:[self makeIdentifier] WithMood:[self mood] WithDate:[self date] WithBreedteligging:[self determineLocationBreedteLigging] WithLengteligging:[self determineLocationLengteLigging]];
 }
 
 @end

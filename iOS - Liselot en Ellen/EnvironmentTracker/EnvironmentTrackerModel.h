@@ -14,9 +14,26 @@
 
 @property NSNumber *identifier;
 @property NSNumber *mood;
-@property NSNumber *breedteligging;
-@property NSNumber *lengteligging;
 @property NSDate *date;
+@property NSNumber *biggestHueCategory;
+@property NSNumber *avgSaturation;
+@property NSNumber *avgBrightness;
+@property NSNumber *lengteligging;
+@property NSNumber *breedteligging;
+
+@property UIImage *cameraImage;
+@property dispatch_queue_t analysisQueue;
+
+@property NSNumber *avgDecibels;
+
+@property NSMutableArray *hueHappy;
+@property NSMutableArray *hueFine;
+@property NSMutableArray *hueUnhappy;
+@property NSMutableArray *hueMood;
+@property NSMutableArray *avgDecibelMood;
+@property NSMutableArray *saturationMood;
+@property NSMutableArray *brightnessMood;
+@property NSMutableArray *dayOfWeekMood;
 
 @property (nonatomic) UIManagedDocument *database;
 @property (nonatomic) NSManagedObjectContext *context;
@@ -26,5 +43,7 @@
 -(IBAction)saveObservationToDatabase;
 -(BOOL) isDatabaseReady;
 -(void)startUpNextNotification;
+-(void) getDataFromDatabase;
+-(void) analyseImage;
 
 @end

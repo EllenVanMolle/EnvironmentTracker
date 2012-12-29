@@ -11,30 +11,44 @@
 
 @implementation AudioViewController
 
+// synthesize the variables from the header
 @synthesize startRecordingButton = _startRecordingButton;
 @synthesize labelCountingDown = _labelCountingDown;
 @synthesize countDownTimer = _countDownTimer;
 @synthesize model = _model;
+
+-(void)saveObservation{
+    
+    dispatch_sync(self.model.analysisQueue, ^{});
+    [self.model  saveObservationToDatabase];
+    
+    
+}
 
 // Private methods
 
 /* Deze methode wordt aangeroepen wanneer men wil stoppen met geluid op te nemen.
  */
 -(void)stop
-{
-    NSLog(@"Stop recording audio");
-    //_startRecordingButton.enabled = YES;
+{   self.model.avgDecibels = [NSNumber numberWithInt: (120 + lroundf([audioRecorder averagePowerForChannel:0]))];
     
-    // Zorg dat de volgende notificatie wordt ingesteld.
-    [self.model startUpNextNotification];
+    NSLog(@"decibels %@", self.model.avgDecibels);
+    
+    NSLog(@"Stop recording audio");
     
     if (audioRecorder.recording)
-    {
+    {   
         // Stop met opnemen als hij aan het opnemen is.
         [audioRecorder stop];
         // Laat de gebruiker teruggaan naar de startpagina.
         [self performSegueWithIdentifier:@"segueAfterRecording" sender:self];
+        
     }
+    
+    // Zorg dat de volgende notificatie wordt ingesteld.
+    [self.model startUpNextNotification];
+    [self saveObservation];
+   
 }
 
 /* Deze methode zorgt er voor dat er afgeteld wordt (ook op het scherm) en wanneer 0 bereikt wordt, de opname wordt gestopt door de methode stop aan te roepen.*/
@@ -42,9 +56,12 @@
     // Verminder de teller met 1.
     numberDisplayedCountingDown = numberDisplayedCountingDown - 1;
     [_labelCountingDown setText: [NSString stringWithFormat:@"%d", numberDisplayedCountingDown]];
+    
     if (numberDisplayedCountingDown == 0) {
+        
         // Zet the timer af.
         [_countDownTimer invalidate];
+        
         // Stop met opnemen.
         [self stop];
     }
@@ -55,26 +72,45 @@
  */
 -(void) cancelRecording {
     // Geef een alert zodanig dat de gebruiker weet dat de gegevens niet worden opgeslagen>
-    // Eventueel: Maak ook een cancel button.
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cancel recording"
-                                                    message:@"You cancelled the recording. The current data is not recorded."
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
+                                                    message:@"Do you want to cancel the recording? The current data will not be saved."
+                                                   delegate:self
+                                          cancelButtonTitle:@"YES"
+                                          otherButtonTitles:@"NO", nil];
     [alert show];
-    // Start de volgende notificatie op.
-    [self.model startUpNextNotification];
-    // Zorg dat de gebruiker terug naar de startpagina gaat.
-    [self performSegueWithIdentifier:@"segueAfterRecording" sender:self];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"Button: %i, was pressed.", buttonIndex);
+    if (buttonIndex == 0){
+        // Start de volgende notificatie op.
+        [self.model startUpNextNotification];
+        
+        dispatch_sync(self.model.analysisQueue, ^{});
+        [self.model  saveObservationToDatabase];
+        
+        // Zorg dat de gebruiker terug naar de startpagina gaat.
+        [self performSegueWithIdentifier:@"segueAfterRecording" sender:self];
+
+    }
 }
 
 -(void) viewDidLoad {
 
     [super viewDidLoad];
     
-    // Verbergen van de back button en een cancel knop in de plaats.
+    // make sure the navigatiebar is displaid
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    // make sure the toolbar is displaid
+    [self.navigationController setToolbarHidden:YES animated:YES];
+    
+    // Verbergen van de back button
     [self.navigationItem setHidesBackButton:TRUE];
     
+    // define te cancelbutton and put it in the navigationbar where the backbutton usually is.
     UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelRecording)];
     [self.navigationItem setLeftBarButtonItem:leftBarButton];
     
@@ -117,8 +153,6 @@
     }
 }
 
-
-
 /* Deze methode wordt aangeroepen net voordat de segue wordt uitgevoerd. We gebruiken deze om het model door te geven aan de volgende controller.
  */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -131,17 +165,22 @@
     }
 }
 
+
 /* Deze methode wordt aangeroepen wanneer de gebruiker op start drukt en start het opnemen van het geluid.
  */
 -(IBAction)recordAudio
 {
     if (!audioRecorder.recording)
     {
+        audioRecorder.meteringEnabled = YES; // this way we will be able to retrieve the decibels
         // Start het opnemen.
         [audioRecorder record];
+        [audioRecorder updateMeters];
         // Start de timer die aftelt vanaf 5 seconden.
         _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countDown) userInfo:nil repeats:YES];
         numberDisplayedCountingDown = 5;
+        // put the average power of the recording in the avgDecibels variabel of the model
+        
     }
 }
 
