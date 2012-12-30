@@ -26,12 +26,14 @@ CGFloat const CPDBar = 0.25f;
     [self initPlot];
 }
 
+/* Method called when screen is rotated. The graph is regenerated
+ */
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self initPlot];
 }
 
-#pragma mark - UIViewController lifecycle methods
+/* Method called when view is loaded*/
 -(void)viewDidLoad {
     [super viewDidLoad];
     
@@ -48,7 +50,8 @@ CGFloat const CPDBar = 0.25f;
     
 }
 
-
+/* Method called when theme button in the toolbar is tapped. An actionsheet is generated from the tabbar that allows the user to change the theme of the graph
+ */
 - (void) themeTapped {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Apply a Theme" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Dark Gradient", @"Plain Black", @"Plain White",@"Slate", @"Name Stocks", nil];
     [actionSheet showFromBarButtonItem:self.themeButton animated:YES];
@@ -89,7 +92,7 @@ CGFloat const CPDBar = 0.25f;
  
     // Set up plot space
     CGFloat xMin = 0.0f;
-    CGFloat xMax = 100.0f;    // maximum aantal bars = aantal hue categories
+    CGFloat xMax = 100.0f;  // maximum value for the saturation
     CGFloat yMin = 0.0f;
     CGFloat yMax = 11.0f;  // maximum value for the mood
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *) graph.defaultPlotSpace;
@@ -103,7 +106,6 @@ CGFloat const CPDBar = 0.25f;
     }
     
     [graph applyTheme:self.selectedTheme];
-    // Configure styles
     
 }
 
@@ -117,18 +119,16 @@ CGFloat const CPDBar = 0.25f;
     barLineStyle.lineColor = [CPTColor darkGrayColor];
     barLineStyle.lineWidth = 0.5;
     
-    //    barPlot.baseValue = CPTDecimalFromString(@"0");
     barPlot.dataSource = self;
     barPlot.delegate = self;
     barPlot.barWidth = CPTDecimalFromDouble(CPDBarWidth);
     barPlot.barOffset = CPTDecimalFromDouble(CPDBar);
     barPlot.lineStyle = barLineStyle;
-    // barPlot.identifier = @"Hue BarPlot";
     
     // Add plots to graph
     CPTGraph *graph = self.hostView.hostedGraph;
     
-    // 4 - Add plot to graph
+    // Add plot to graph
     [graph addPlot:barPlot toPlotSpace:graph.defaultPlotSpace];
     
 }
@@ -193,15 +193,16 @@ CGFloat const CPDBar = 0.25f;
     // Dispose of any resources that can be recreated.
 }
 
+/* Method that returns the number of bars in the plot (this is 11 and not 10 because 0 is also a possibility*/
 #pragma mark - CPTPlotDataSource methods
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
     return 11;
 }
 
+/* Method that returns the value for every bar in the plot*/
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
     NSDecimalNumber *barValue = nil;
     if ((fieldEnum == CPTBarPlotFieldBarTip) && (index < 11)) {
-        // NSLog(@"here we are");
         barValue = (NSDecimalNumber *)[self.model.saturationMood objectAtIndex:(index)];
         
     } else {
@@ -233,8 +234,8 @@ CGFloat const CPDBar = 0.25f;
     
 }
 
+/* Deze methode wordt aangeroepen net voordat de segue wordt uitgevoerd. We gebruiken deze om het model door te geven aan de volgende controller.*/
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Als de gebruiker op de knop Hue Chart heeft gedrukt, moet een viewcontroller aangemaakt worden.
     if ([segue.identifier isEqualToString:@"startRecording"]) {
         MoodViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen

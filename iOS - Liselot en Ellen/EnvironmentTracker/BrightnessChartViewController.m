@@ -20,19 +20,21 @@ CGFloat const CPDBar = 0.25f;
 @synthesize model = _model;
 @synthesize themeButton = _themeButton;
 
-
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     // The plot is initialized here, since the view bounds have not transformed for landscape until now
     [self initPlot];
 }
 
+/* Method called when screen is rotated. The graph is regenerated
+ */
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self initPlot];
 }
 
-#pragma mark - UIViewController lifecycle methods
+/* Method called after view is loaded
+ */
 -(void)viewDidLoad {
     [super viewDidLoad];
     
@@ -49,7 +51,8 @@ CGFloat const CPDBar = 0.25f;
     
 }
 
-
+/* Method called when theme button in the toolbar is tapped. An actionsheet is generated from the tabbar that allows the user to change the theme of the graph
+ */
 - (void) themeTapped {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Apply a Theme" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Dark Gradient", @"Plain Black", @"Plain White",@"Slate", @"Name Stocks", nil];
     [actionSheet showFromBarButtonItem:self.themeButton animated:YES];
@@ -63,6 +66,7 @@ CGFloat const CPDBar = 0.25f;
     [self configureAxes];
 }
 
+/* Method called to configure the hostview for the graph*/
 -(void) configureHost {
     
     // Set up view frame
@@ -74,6 +78,7 @@ CGFloat const CPDBar = 0.25f;
     [self.view addSubview:self.hostView];
 }
 
+/* Method called to configure the graph*/
 -(void)configureGraph {
     // Create the graph
     CPTGraph *graph = [[CPTXYGraph alloc] initWithFrame:self.hostView.bounds];
@@ -90,7 +95,7 @@ CGFloat const CPDBar = 0.25f;
     
     // Set up plot space
     CGFloat xMin = 0.0f;
-    CGFloat xMax = 100.0f;    // maximum aantal bars = aantal hue categories
+    CGFloat xMax = 100.0f; // maximum value for brightness
     CGFloat yMin = 0.0f;
     CGFloat yMax = 11.0f;  // maximum value for the mood
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *) graph.defaultPlotSpace;
@@ -108,6 +113,7 @@ CGFloat const CPDBar = 0.25f;
     
 }
 
+/* Method called to configure the plot */
 -(void)configurePlots {
     
     // Set up plots
@@ -118,22 +124,21 @@ CGFloat const CPDBar = 0.25f;
     barLineStyle.lineColor = [CPTColor darkGrayColor];
     barLineStyle.lineWidth = 0.5;
     
-    //    barPlot.baseValue = CPTDecimalFromString(@"0");
     barPlot.dataSource = self;
     barPlot.delegate = self;
     barPlot.barWidth = CPTDecimalFromDouble(CPDBarWidth);
     barPlot.barOffset = CPTDecimalFromDouble(CPDBar);
     barPlot.lineStyle = barLineStyle;
-    // barPlot.identifier = @"Hue BarPlot";
     
     // Add plots to graph
     CPTGraph *graph = self.hostView.hostedGraph;
     
-    // 4 - Add plot to graph
+    // Add plot to graph
     [graph addPlot:barPlot toPlotSpace:graph.defaultPlotSpace];
     
 }
 
+/* Method called to create and configure the axes */
 -(void)configureAxes {
     CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
     axisTitleStyle.color = [CPTColor grayColor];
@@ -194,14 +199,15 @@ CGFloat const CPDBar = 0.25f;
 }
 
 #pragma mark - CPTPlotDataSource methods
+/* Method that returns the amount of bars in the barchart*/
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
     return 11;
 }
 
+/* Method that returns a value for every bar in teh plot*/
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
     NSDecimalNumber *barValue = nil;
     if ((fieldEnum == CPTBarPlotFieldBarTip) && (index < 11)) {
-        // NSLog(@"here we are");
         barValue = (NSDecimalNumber *)[self.model.brightnessMood objectAtIndex:(index)];
         
     } else {
@@ -232,8 +238,8 @@ CGFloat const CPDBar = 0.25f;
     
 }
 
+/* Deze methode wordt aangeroepen net voordat de segue wordt uitgevoerd. We gebruiken deze om het model door te geven aan de volgende controller.*/
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Als de gebruiker op de knop Hue Chart heeft gedrukt, moet een viewcontroller aangemaakt worden.
     if ([segue.identifier isEqualToString:@"startRecording"]) {
         MoodViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen

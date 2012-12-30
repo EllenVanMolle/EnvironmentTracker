@@ -10,7 +10,6 @@
 #import "ColorViewController.h"
 #import "MoodViewController.h"
 
-
 @implementation PieChartHappyViewController
 
 @synthesize toolbar = _toolbar;
@@ -18,23 +17,25 @@
 @synthesize selectedTheme = _selectedTheme;
 @synthesize model = _model;
 
-#pragma mark - UIViewController lifecycle methods
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     // The plot is initialized here, since the view bounds have not transformed for landscape until now
     [self initPlot];
 }
 
+/* Method called when screen is rotated. The graph is regenerated
+ */
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self initPlot];
 }
 
+/* Method called when theme button in the toolbar is tapped. An actionsheet is generated from the tabbar that allows the user to change the theme of the graph
+ */
 -(IBAction)themeTapped:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Apply a Theme" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Dark Gradient", @"Plain Black", @"Plain White",@"Slate", @"Name Stocks", nil];
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
 }
-
 
 #pragma mark - Chart behavior
 -(void)initPlot {
@@ -43,6 +44,7 @@
     [self configureChart];
 }
 
+/* Setting up frame */
 -(void)configureHost {
     
     // Set up view frame
@@ -59,6 +61,7 @@
     [self.view addSubview:self.hostView];
 }
 
+/* Configuring the graph*/
 -(void)configureGraph {
     
     // Create and initialize graph
@@ -92,6 +95,7 @@
     
 }
 
+/*Configuring the chart*/
 -(void)configureChart {
     // 1 - Get reference to graph
     CPTGraph *graph = self.hostView.hostedGraph;
@@ -113,7 +117,6 @@
     [graph addPlot:pieChart];
 }
 
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -123,6 +126,7 @@
     return self;
 }
 
+/* Method called when the view is loaded*/
 -(void) viewDidLoad {
     [super viewDidLoad];
     // make sure the toolbar is not displaid
@@ -143,10 +147,10 @@
  */
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
     NSUInteger numberSlices = [self.model.hueHappy count];
-    return numberSlices; // This should always be for because there are four Hue categories
+    return numberSlices; // This should always be 4 because there are four Hue categories
 }
 
-/* This method returns a number 
+/* This method returns the value for each slice
  */
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
     
@@ -177,6 +181,8 @@
     return slicefill;
 }
 
+/* This method creates the labels for every slice
+ */
 -(CPTLayer *)dataLabelForPlot:(CPTPlot *)plot recordIndex:(NSUInteger)index {
    
     // Define label text style
@@ -212,7 +218,6 @@
     return @"";
 }
 
-
 #pragma mark - UIActionSheetDelegate methods
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     // 1 - Get title of tapped button
@@ -236,20 +241,19 @@
 
 }
 
+/* Deze methode wordt aangeroepen net voordat de segue wordt uitgevoerd. We gebruiken deze om het model door te geven aan de volgende controller.*/
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Als de gebruiker op de knop Hue Chart heeft gedrukt, moet een viewcontroller aangemaakt worden.
+    // Als de gebruiker op de knop color knop drukt,
     if ([segue.identifier isEqualToString:@"goToColor"]) {
         ColorViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
         newController.model = self.model;
-        // Als de gebruiker op de knop Saturation Chart heeft gedrukt, moet een resultsviewcontroller aangemaakt worden.
     } else if ([segue.identifier isEqualToString:@"startRecording"]) {
         MoodViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
         newController.model = self.model;
-        // Als de gebruiker op de knop Saturation Chart heeft gedrukt, moet een resultsviewcontroller aangemaakt worden.
     }
 }
 

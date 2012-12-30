@@ -10,7 +10,7 @@
 #import "EnvironmentTrackerModel.h"
 #import "CorePlot-CocoaTouch.h"
 
-@interface TimeChartViewController : UIViewController <CPTBarPlotDataSource, UIActionSheetDelegate>
+@interface TimeChartViewController : UIViewController  <CPTBarPlotDataSource, UIActionSheetDelegate>
 
 @property EnvironmentTrackerModel *model;
 @property (nonatomic, strong) CPTGraphHostingView *hostView;

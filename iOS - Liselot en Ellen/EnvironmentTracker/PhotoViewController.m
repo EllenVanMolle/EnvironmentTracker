@@ -14,8 +14,7 @@
 
 @synthesize model = _model;
 
-/*
- * Deze code wordt aangeroepen wanneer de gebruiker op de cancel button drukt.
+/* Deze code wordt aangeroepen wanneer de gebruiker op de cancel button drukt.
  */
 -(void) cancelRecording {
     // Geef een alert zodanig dat de gebruiker weet dat de gegevens niet worden opgeslagen>
@@ -28,9 +27,12 @@
     
 }
 
+/* This method is called when one of the buttons in the alert is ticked. Depending on the index of the button certain actions are taken. */
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    //  log which button was pressed
     NSLog(@"Button: %i, was pressed.", buttonIndex);
+    //  if YES button was pressed
     if (buttonIndex == 0){
         // Start de volgende notificatie op.
         [self.model startUpNextNotification];
@@ -39,6 +41,8 @@
     }
 }
 
+/* Method called when view is loaded
+ */
 -(void) viewDidLoad {
     [super viewDidLoad];
     // make sure the navigatiebar is displaid
@@ -70,9 +74,10 @@
     }
 }
 
+/* This method is called when the button in the view is pressed to take a picture
+ */
 -(IBAction)takeAPicture
     {
-        //NSLog(@"Methode takeAPicture");
         UIImagePickerController *  picker = [[UIImagePickerController alloc] init];
         picker.delegate = self;
         // Controleer of de device de benodigde resources heeft 
@@ -111,13 +116,13 @@
         [self.model analyseImage];
     });
 }
+
 /* Methode die aangeroepen wordt als het nemen vam de foto gecanceld is
  */
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
 	// Dismiss the image selection and close the program
     [picker dismissViewControllerAnimated:YES completion:nil];
-	
 }
 
 @end

@@ -11,27 +11,32 @@
 
 @implementation AudioViewController
 
-// synthesize the variables from the header
+/*synthesize the variables from the header
+ */
 @synthesize startRecordingButton = _startRecordingButton;
 @synthesize labelCountingDown = _labelCountingDown;
 @synthesize countDownTimer = _countDownTimer;
 @synthesize model = _model;
 
+// private methods
+
+/* save the observation to the database using a public method of the model
+ */
 -(void)saveObservation{
     
+    // Wait until the photo analysis queue is finished
     dispatch_sync(self.model.analysisQueue, ^{});
+    // save observation to database
     [self.model  saveObservationToDatabase];
-    
-    
 }
-
-// Private methods
 
 /* Deze methode wordt aangeroepen wanneer men wil stoppen met geluid op te nemen.
  */
 -(void)stop
-{   self.model.avgDecibels = [NSNumber numberWithInt: (120 + lroundf([audioRecorder averagePowerForChannel:0]))];
+{   // get the average decibels from the audiorecording and save them temporarily to the avgDecibels variabel in the model
+    self.model.avgDecibels = [NSNumber numberWithInt: (120 + lroundf([audioRecorder averagePowerForChannel:0]))];
     
+    // log the avgDecibels
     NSLog(@"decibels %@", self.model.avgDecibels);
     
     NSLog(@"Stop recording audio");
@@ -47,6 +52,7 @@
     
     // Zorg dat de volgende notificatie wordt ingesteld.
     [self.model startUpNextNotification];
+    // Save the observation to the database
     [self saveObservation];
    
 }
@@ -67,8 +73,7 @@
     }
 }
 
-/*
- * Deze code wordt aangeroepen wanneer de gebruiker op de cancel button drukt.
+/* Deze code wordt aangeroepen wanneer de gebruiker op de cancel button drukt.
  */
 -(void) cancelRecording {
     // Geef een alert zodanig dat de gebruiker weet dat de gegevens niet worden opgeslagen>
@@ -81,22 +86,29 @@
     
 }
 
+/* This method is called when one of the buttons in the alert is ticked. Depending on the index of the button certain actions are taken. */
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    // log which button was pressed
     NSLog(@"Button: %i, was pressed.", buttonIndex);
+    // if the YES button was pressed
     if (buttonIndex == 0){
         // Start de volgende notificatie op.
         [self.model startUpNextNotification];
         
+        // Wait until the photo analysis queue is finished
         dispatch_sync(self.model.analysisQueue, ^{});
+        
+        // saveObservation
         [self.model  saveObservationToDatabase];
         
         // Zorg dat de gebruiker terug naar de startpagina gaat.
         [self performSegueWithIdentifier:@"segueAfterRecording" sender:self];
-
     }
 }
 
+/* Method called when the view is loaded
+ */
 -(void) viewDidLoad {
 
     [super viewDidLoad];
@@ -104,7 +116,7 @@
     // make sure the navigatiebar is displaid
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
-    // make sure the toolbar is displaid
+    // make sure the toolbar is not displaid
     [self.navigationController setToolbarHidden:YES animated:YES];
     
     // Verbergen van de back button

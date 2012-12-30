@@ -12,7 +12,6 @@
 
 @interface ColorViewController : UIViewController
 
-
 @property (nonatomic) IBOutlet UIButton *hueChartButton;
 @property (nonatomic) IBOutlet UIButton *saturationChartButton;
 @property (nonatomic) IBOutlet UIButton *brightnessChartButton;

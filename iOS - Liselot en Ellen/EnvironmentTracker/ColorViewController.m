@@ -30,7 +30,7 @@
 @synthesize center = _center;
 @synthesize model = _model;
 
-/* method to open timechart called from a toolbarbutton time*/
+/* method to open timechart called from a toolbarbutton time */
 -(void) openTimeChart
 {
    [self performSegueWithIdentifier:@"openTimeChart" sender:self];
@@ -42,7 +42,7 @@
     [self performSegueWithIdentifier:@"openHome" sender:self];
 }
 
-/* method to open soundchart called from a toobarbutton time*/
+/* method to open soundchart called from a toobarbutton time */
 -(void) openSoundChart{
     [self performSegueWithIdentifier:@"openSoundChart" sender:self];
 }
@@ -82,11 +82,13 @@
     return self;
 }
 
+/* Method called when view is loaded */
 - (void)viewDidLoad
 {   [self.model getDataFromDatabase];
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
     // make sure the navigatiebar is displaid
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
@@ -124,39 +126,46 @@
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
         newController.model = self.model;
-        // Als de gebruiker op de knop Saturation Chart heeft gedrukt, moet een resultsviewcontroller aangemaakt worden.
+    // Als de gebruiker op de knop Saturation Chart heeft gedrukt, moet een viewcontroller aangemaakt worden.
     } else if ([segue.identifier isEqualToString:@"goToSaturationChart"]) {
         saturationChartViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
         newController.model = self.model;
+    // Als de gebruiker op de knop Brightness Chart heeft gedrukt, moet een viewcontroller aangemaakt worden
     } else if ([segue.identifier isEqualToString:@"goToBrightnessChart"]) {
         BrightnessChartViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
         newController.model = self.model;
+    // Als de gebruiker op de knop Pie Charts heeft gedrukt, moeten de viewcontrollers aangemaakt worden. We zorgen ervoor dat alle drie de views of the tabbarcontroller beschikken over het model
     } else if ([segue.identifier isEqualToString:@"goToPieCharts"]) {
         UITabBarController *tabBarController = segue.destinationViewController;
     
+        // We geven het model door aan de volgende controller
         PieChartHappyViewController *firstViewController = [[tabBarController viewControllers] objectAtIndex:0];
         firstViewController.model = self.model;
         
+        // We geven het model door aan de volgende controller
         PieChartFineViewController *secondViewController = [[tabBarController viewControllers] objectAtIndex:1];
         secondViewController.model = self.model;
         
+        // We geven het model door aan de volgende controller
         PieChartUnhappyViewController *thirdViewController = [[tabBarController viewControllers] objectAtIndex:2];
         thirdViewController.model = self.model;
-        
+    // Als de gebruiker op de Time knop in de toolbar drukt, moet een viewcontroller aangemaakt worden
     } else if ([segue.identifier isEqualToString:@"openTimeChart"]) {
         TimeChartViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
         newController.model = self.model;
+    // Als de gebruiker op de Sound knop in de toolbar drukt, moet een viewcontroller aangemaakt worden.
     }else if ([segue.identifier isEqualToString:@"openSoundChart"]) {
         SoundChartViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
         newController.model = self.model;
+    // Als de gebruiker op de Home knop in de Navigationbar drukt, moet een viewcontroller aangemaakt worden.
     } else if ([segue.identifier isEqualToString:@"openHome"]) {
         StartViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen

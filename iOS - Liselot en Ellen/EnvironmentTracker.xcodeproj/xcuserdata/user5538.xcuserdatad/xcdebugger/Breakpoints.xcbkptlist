@@ -26,7 +26,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "57"
          endingLineNumber = "57"
-         landmarkName = "-startUpNextNotification"
+         landmarkName = "-prepareForSegue:sender:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -39,8 +39,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "88"
          endingLineNumber = "88"
-         landmarkName = "-application:didReceiveLocalNotification:"
-         landmarkType = "5">
+         landmarkName = "@implementation EnvironmentTrackerAppDelegate"
+         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

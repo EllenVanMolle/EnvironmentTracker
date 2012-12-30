@@ -18,12 +18,10 @@
 @synthesize avgSaturation = _avgSaturation;
 @synthesize avgBrightness = _avgBrightness;
 
-
 @synthesize hueHappy = _hueHappy;
 @synthesize hueFine = _hueFine;
 @synthesize hueUnhappy = _hueUnhappy;
 @synthesize hueMood = _hueMood;
-@synthesize avgDecibelMood = _avgDecibelMood;
 @synthesize saturationMood = _saturationMood;
 @synthesize brightnessMood = _brightnessMood;
 @synthesize dayOfWeekMood = _dayOfWeekMood;
@@ -100,7 +98,8 @@
     }
 }
 
-/* Deze methode slaat de database op. */
+/* Deze methode slaat de database op. 
+ */
 -(void)saveDatabase {
     [self.database saveToURL:self.database.fileURL
             forSaveOperation:UIDocumentSaveForOverwriting
@@ -110,14 +109,16 @@
 }
  
 
-/* Deze methode sluit de database. */
+/* Deze methode sluit de database. 
+ */
 -(void)closeDatabase {
     [self.database closeWithCompletionHandler:^(BOOL success) {
         if (!success) NSLog(@"failed to close document %@", self.database.localizedName);
     }];
 }
 
-/* Deze methode slaat een observatie op in de database. */
+/* Deze methode slaat een observatie op in de database. 
+ */
 -(void) addObservationToDatabase {
    
     NSManagedObjectContext *context = self.database.managedObjectContext;
@@ -169,7 +170,7 @@
 }
 
 /*
- Het opstarten van de notificaties. De gebruiker heeft het interval bepaald in zijn instellingen. Later moet deze code uitgevoerd worden wanneer de gebruiker zijn instellingen bevestigd, zodanig dat dat het moment is dat de code wordt aangeroepen.
+ Het opstarten van de notificaties. De gebruiker heeft het interval bepaald in zijn instellingen. 
  */
 -(void)startUpNextNotification {
     NSLog(@"StartUpNextNotification");
@@ -223,7 +224,8 @@
 //Macro that selects the maximum of four values
 #define MAX4(a,b,c,d) ( MAX(a, MAX (b, MAX(c,d))) );
 
-/* Method called in a dispatched queque to anayse the image */
+/* Method called in a dispatched queque to anayse the image 
+ */
 -(void)analyseImage {
     
     // sourceImage is the bitmap (rectangular array of pixels)image of the cameraImage
@@ -388,13 +390,13 @@
     // an array for te number of observation in every hue category
     NSMutableArray *moodHueCount = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], nil];
     
-    // an array with the total/average value for the saturation per mood value (1-10)
+    // an array with the total/average value for the saturation per mood value (0-10)
     self.saturationMood = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], nil];
     
-    // an array with the number of observations for every mood value
+    // an array with the number of observations for every mood value (0-10)
     NSMutableArray *moodCount = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], nil];
     
-    // an array with the total/average value for the brightness per mood value (1-10)
+    // an array with the total/average value for the brightness per mood value (0-10)
     self.brightnessMood = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0],[NSNumber numberWithInt:0], nil];
     
     // an array with the total/average value for the mood for every day of the week (1-7 and sunday =1)
@@ -402,8 +404,6 @@
     
     // an array with the number of observations for every day of the week
     NSMutableArray *dayOfWeekCount = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], nil];
-    
-    self.avgDecibelMood =  [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], nil];
     
     // We loop through every observation in the database
     for(Observation *observation in observations) {
@@ -420,8 +420,6 @@
         NSDateComponents *dateComponents = [gregorian components:NSWeekdayCalendarUnit fromDate:date];
         // get the day of the week for the date the observation was added
         NSInteger weekday = [dateComponents weekday];
-        
-       NSLog(@"mood is %i  date is %@", mood,  date);
         
         NSNumber *dummyHue;
         NSNumber *dummyMood;
@@ -475,8 +473,6 @@
         [self.dayOfWeekMood replaceObjectAtIndex: (weekday-1) withObject:day];
         
     }
-    for (id obj in moodClassCount)
-        NSLog(@"Mood count per moodcat: %@", obj);
 
     NSInteger index;
     
@@ -521,28 +517,6 @@
         [self.dayOfWeekMood replaceObjectAtIndex:index withObject: avgMood];
         }
     }
-    
-    for (id obj in self.hueMood)
-        NSLog(@"Mood per cat: %@", obj);
-    
-    for (id obj in self.hueHappy)
-        NSLog(@"percent hue happy: %@", obj);
-    
-    for (id obj in self.hueFine)
-        NSLog(@"percent hue fine: %@", obj);
-    
-    for (id obj in self.hueUnhappy)
-        NSLog(@"percent hue unhappy: %@", obj);
-    
-    for (id obj in self.saturationMood)
-        NSLog(@"saturation for every mood value: %@", obj);
-    
-    for (id obj in self.brightnessMood)
-        NSLog(@"brightness for every mood value: %@", obj);
-    
-    for (id obj in self.dayOfWeekMood)
-        NSLog(@"mood for every day of the week: %@", obj);
-
 }
 
 @end

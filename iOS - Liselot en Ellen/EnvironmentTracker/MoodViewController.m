@@ -18,8 +18,7 @@
 @synthesize model = _model;
 
 
-/*
- * Deze code wordt aangeroepen wanneer de gebruiker op de cancel button drukt.
+/* Deze code wordt aangeroepen wanneer de gebruiker op de cancel button drukt.
  */
 -(void) cancelRecording {
     // Geef een alert zodanig dat de gebruiker weet dat de gegevens niet worden opgeslagen>
@@ -32,9 +31,12 @@
     
 }
 
+/* This method is called when one of the buttons in the alert is ticked. Depending on the index of the button certain actions are taken. */
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    // log which button is pressed
     NSLog(@"Button: %i, was pressed.", buttonIndex);
+    //if the YES button is pressed
     if (buttonIndex == 0){
         // Start de volgende notificatie op.
         [self.model startUpNextNotification];
@@ -43,10 +45,12 @@
     }
 }
 
+/* Method called when the view is loaded
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
     // make sure the navigatiebar is displaid
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
@@ -66,9 +70,9 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Als de gebruiker op de knop continue heeft gedrukt, moet een photoviewcontroller aangemaakt worden.
     if ([segue.identifier isEqualToString:@"goToPhoto"]) {
-        PhotoViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
+        PhotoViewController *newController = segue.destinationViewController;
         newController.model = self.model;
     // als de gebruiker canceld gaat ij terug naar het begin.
     } else if ([segue.identifier isEqualToString:@"backToStartFromMood"]) {
@@ -78,7 +82,6 @@
         newController.model = self.model;
     } 
 }
-
 
 - (void)didReceiveMemoryWarning
 {

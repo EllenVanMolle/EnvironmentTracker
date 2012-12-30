@@ -30,7 +30,6 @@
 @property NSMutableArray *hueFine;
 @property NSMutableArray *hueUnhappy;
 @property NSMutableArray *hueMood;
-@property NSMutableArray *avgDecibelMood;
 @property NSMutableArray *saturationMood;
 @property NSMutableArray *brightnessMood;
 @property NSMutableArray *dayOfWeekMood;
@@ -39,10 +38,10 @@
 @property (nonatomic) NSManagedObjectContext *context;
 
 
--(void)openDatabase;
--(IBAction)saveObservationToDatabase;
+-(void) openDatabase;
+-(IBAction) saveObservationToDatabase;
 -(BOOL) isDatabaseReady;
--(void)startUpNextNotification;
+-(void) startUpNextNotification;
 -(void) getDataFromDatabase;
 -(void) analyseImage;
 

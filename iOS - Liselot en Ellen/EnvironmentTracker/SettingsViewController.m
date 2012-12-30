@@ -16,18 +16,15 @@
 @synthesize intervalTextField = _intervalTextField;
 @synthesize model = _model;
 
-
-
-/*
- * Method to make sure the keyboard dissapears when the background is touched
+/* Method to make sure the keyboard dissapears when the background is touched.
+ * Necessary because there is no BACK button on this type of keyboard
  */
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.intervalTextField resignFirstResponder];
 }
 
-/*
- * This method is called when the user hits the save button. It uses a NSUserDefaults object
+/* This method is called when the user hits the save button. It uses a NSUserDefaults object
  * to save the user's preferences.
  */
 -(void) save {
@@ -43,8 +40,7 @@
     int interval = [[self.intervalTextField text] integerValue];
     NSLog(@"interval is %i", interval);
     
-    /*
-     * Store the data with an NSUserDefaults object, which stores the preferences in
+    /* Store the data with an NSUserDefaults object, which stores the preferences in
      * the IOS default system. This way it's made persistent through sessions and
      * available throughout the code
      */
@@ -52,7 +48,6 @@
     [defaults setBool:notification forKey:@"notification"];
     [defaults setInteger:interval forKey:@"interval"];
     [defaults synchronize];
-    NSLog(@"Data saved");
     
     // after saving the data we startup a first notification taking into account the user settings.
     [self.model startUpNextNotification];
@@ -60,8 +55,7 @@
     [self performSegueWithIdentifier:@"openHomeFromSettings" sender:self];
 }
 
-/*
- * Method called when the switch is touched to enable the IntervalTextField
+/* Method called when the switch is touched to enable the IntervalTextField
  */
 -(void) toggleEnableIntervalTextField:(id)sender{
     
@@ -74,8 +68,6 @@
     
 }
 
-
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -85,8 +77,7 @@
     return self;
 }
 
-/*
- * Method called when the view is loaded. Here we will set the intervalTextField and
+/* Method called when the view is loaded. Here we will set the intervalTextField and
  * notificationSwitch in the UI to the right, stored user preferences.
  */
 - (void)viewDidLoad
@@ -110,7 +101,6 @@
     // Update the UI elements with the saved data
     self.notificationSwitch.on = notification;
     self.intervalTextField.text = intervalString;
-    
     
     // we set the keypad so the user can only enter integers
     [self.intervalTextField setKeyboardType:UIKeyboardTypeNumberPad];
@@ -137,10 +127,7 @@
     
     [self setToolbarItems:[NSArray arrayWithObjects:saveButton, nil]];
     
-    
-    
 }
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -148,8 +135,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+/* Deze methode wordt aangeroepen net voordat de segue wordt uitgevoerd. We gebruiken deze om het model door te geven aan de volgende controller.*/
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Als de gebruiker op de knop Hue Chart heeft gedrukt, moet een viewcontroller aangemaakt worden.
+    // Als de gebruiker op de save button klikt wordt de home pagina geopend
     if ([segue.identifier isEqualToString:@"openHomeFromSettings"]) {
         StartViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen

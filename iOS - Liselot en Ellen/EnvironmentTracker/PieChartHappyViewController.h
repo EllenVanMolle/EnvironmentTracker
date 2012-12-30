@@ -10,11 +10,8 @@
 #import "EnvironmentTrackerModel.h"
 #import "CorePlot-CocoaTouch.h"
 
-/*
- * Declare GraphMoodVersusColorViewController as a delegate of a delegate for CPTPlotDataSource and UIActionSheetDelegate. 
- * The former notes that the view controller will serve as the data source for your plot.
- */
-@interface PieChartHappyViewController : UIViewController <CPTPlotDataSource , UIActionSheetDelegate>
+/* Declare PieChartHappyViewController as a delegate of a delegate for CPTPlotDataSource and UIActionSheetDelegate. */
+@interface PieChartHappyViewController : UIViewController  <CPTPlotDataSource,UIActionSheetDelegate>
 
 @property (nonatomic, strong) CPTGraphHostingView *hostView;
 @property (nonatomic, strong) CPTTheme *selectedTheme;

@@ -23,10 +23,12 @@ CGFloat const CPDBar = 0.25f;
 @synthesize model = _model;
 @synthesize themeButton = _themeButton;
 
+/* Method called when the Color button in the toolbar is tapped, opens the colorview*/
 - (void) openColorChart{
     [self performSegueWithIdentifier:@"openColorfromTime" sender:self];
 }
 
+/* Method called when the Sound button in the toolbar is tapped, opens the soundChartview*/
 - (void) openSoundChart{
     [self performSegueWithIdentifier:@"openSoundfromTime" sender:self];
     
@@ -38,12 +40,15 @@ CGFloat const CPDBar = 0.25f;
     [self initPlot];
 }
 
+/* Method called when screen is rotated. The graph is regenerated
+ */
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self initPlot];
 }
 
-#pragma mark - UIViewController lifecycle methods
+/* Method called when view is loaded
+ */
 -(void)viewDidLoad {
     [super viewDidLoad];
     
@@ -71,7 +76,8 @@ CGFloat const CPDBar = 0.25f;
     
 }
 
-
+/* Method called when theme button in the toolbar is tapped. An actionsheet is generated from the tabbar that allows the user to change the theme of the graph
+ */
 - (void) themeTapped {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Apply a Theme" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Dark Gradient", @"Plain Black", @"Plain White",@"Slate", @"Name Stocks", nil];
     [actionSheet showFromBarButtonItem:self.themeButton animated:YES];
@@ -85,6 +91,7 @@ CGFloat const CPDBar = 0.25f;
     [self configureAxes];
 }
 
+/* Method called to configure the hostview for the graph*/
 -(void) configureHost {
     
     // Set up view frame
@@ -96,6 +103,7 @@ CGFloat const CPDBar = 0.25f;
     [self.view addSubview:self.hostView];
 }
 
+/* Method called to configure the graph */
 -(void)configureGraph {
     // Create the graph
     CPTGraph *graph = [[CPTXYGraph alloc] initWithFrame:self.hostView.bounds];
@@ -112,9 +120,9 @@ CGFloat const CPDBar = 0.25f;
     
     // Set up plot space
     CGFloat xMin = 0.0f;
-    CGFloat xMax = 11.0f;    // maximum aantal bars = aantal hue categories
+    CGFloat xMax = 11.0f; // maximum value for the mood
     CGFloat yMin = 0.0f;
-    CGFloat yMax = 7.0f;  // maximum value for the mood
+    CGFloat yMax = 7.0f;  // maximum value for the days
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *) graph.defaultPlotSpace;
     plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(xMin) length:CPTDecimalFromFloat(xMax)];
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(yMin) length:CPTDecimalFromFloat(yMax)];
@@ -130,6 +138,7 @@ CGFloat const CPDBar = 0.25f;
     
 }
 
+/* Mehtod to configure the actual plots*/
 -(void)configurePlots {
     
     // Set up plots
@@ -140,22 +149,21 @@ CGFloat const CPDBar = 0.25f;
     barLineStyle.lineColor = [CPTColor darkGrayColor];
     barLineStyle.lineWidth = 0.5;
     
-    //    barPlot.baseValue = CPTDecimalFromString(@"0");
     barPlot.dataSource = self;
     barPlot.delegate = self;
     barPlot.barWidth = CPTDecimalFromDouble(CPDBarWidth);
     barPlot.barOffset = CPTDecimalFromDouble(CPDBar);
     barPlot.lineStyle = barLineStyle;
-    // barPlot.identifier = @"Hue BarPlot";
     
     // Add plots to graph
     CPTGraph *graph = self.hostView.hostedGraph;
     
-    // 4 - Add plot to graph
+    // Add plot to graph
     [graph addPlot:barPlot toPlotSpace:graph.defaultPlotSpace];
     
 }
 
+/* Method called to configure the axes */
 -(void)configureAxes {
     CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
     axisTitleStyle.color = [CPTColor grayColor];
@@ -176,7 +184,6 @@ CGFloat const CPDBar = 0.25f;
     x.axisLineStyle = axisLineStyle;
     x.labelingPolicy = CPTAxisLabelingPolicyFixedInterval;
     x.majorIntervalLength = CPTDecimalFromString(@"2");
-   
     
     // Configure the y-axis
     CPTAxis *y = axisSet.yAxis;
@@ -219,14 +226,15 @@ CGFloat const CPDBar = 0.25f;
 }
 
 #pragma mark - CPTPlotDataSource methods
+/* Method that returns the number of bars that are in the plot*/
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
     return 7;
 }
 
+/* Method that returns the value for every bar in the plot */
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
     NSDecimalNumber *barValue = nil;
     if ((fieldEnum == CPTBarPlotFieldBarTip) && (index < 7)) {
-        // NSLog(@"here we are");
         barValue = (NSDecimalNumber *)[self.model.dayOfWeekMood objectAtIndex:(index)];
         
     } else {
@@ -257,14 +265,15 @@ CGFloat const CPDBar = 0.25f;
     
 }
 
+/* Deze methode wordt aangeroepen net voordat de segue wordt uitgevoerd. We gebruiken deze om het model door te geven aan de volgende controller.*/
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Als de gebruiker op de knop Hue Chart heeft gedrukt, moet een viewcontroller aangemaakt worden.
+    // Als de gebruiker op de color knop in the navigationbar heeft gedrukt, moet een viewcontroller aangemaakt worden.
     if ([segue.identifier isEqualToString:@"openColorfromTime"]) {
         ColorViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
         newController.model = self.model;
-        // Als de gebruiker op de knop Saturation Chart heeft gedrukt, moet een resultsviewcontroller aangemaakt worden.
+    // Als de gebruiker op de Sound knop in the navigationbar heeft gedrukt, moet een resultsviewcontroller aangemaakt worden.
     } else if ([segue.identifier isEqualToString:@"openSoundfromTime"]) {
         SoundChartViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen

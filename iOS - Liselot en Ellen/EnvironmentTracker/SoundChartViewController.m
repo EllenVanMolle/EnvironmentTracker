@@ -21,10 +21,12 @@
 @synthesize avgDecibelsLabel = _avgDecibelsLabel;
 @synthesize DecibelRemark = _DecibelRemark;
 
+/* Method called when the time button is tapped*/
 - (void) openTimeChart {
     [self performSegueWithIdentifier:@"openTimefromSound" sender:self];
 }
 
+/* Method called when the color button is tapped*/
 - (void) openColorChart {
     [self performSegueWithIdentifier:@"openColorfromSound" sender:self];
 }
@@ -38,6 +40,7 @@
     return self;
 }
 
+/* Method called when the view is loaded*/
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -73,9 +76,6 @@
     } else {
         [self.DecibelRemark setText:(@"Last record not found")];
     }
-    
-    
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,22 +84,21 @@
     // Dispose of any resources that can be recreated.
 }
 
+/* Deze methode wordt aangeroepen net voordat de segue wordt uitgevoerd. We gebruiken deze om het model door te geven aan de volgende controller.*/
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Als de gebruiker op de knop Hue Chart heeft gedrukt, moet een viewcontroller aangemaakt worden.
+    // Als de gebruiker op de color knop in de navigationbar drukt, moet een viewcontroller aangemaakt worden.
     if ([segue.identifier isEqualToString:@"openColorfromSound"]) {
         ColorViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
         newController.model = self.model;
-        // Als de gebruiker op de knop Saturation Chart heeft gedrukt, moet een resultsviewcontroller aangemaakt worden.
+    // Als de gebruiker op de time knop in de navigationbar heeft gedrukt, moet een resultsviewcontroller aangemaakt worden.
     } else if ([segue.identifier isEqualToString:@"openTimefromSound"]) {
         TimeChartViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
         newController.model = self.model;
-    } else 
-        // Als de gebruiker op de knop Hue Chart heeft gedrukt, moet een viewcontroller aangemaakt worden.
-    if ([segue.identifier isEqualToString:@"startRecording"]) {
+    } else if ([segue.identifier isEqualToString:@"startRecording"]) {
         MoodViewController *newController = segue.destinationViewController;
         // the segue will do the work of putting the new controller on screen
         // We geven het model door aan de volgende controller.
